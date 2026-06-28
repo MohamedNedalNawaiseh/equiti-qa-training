@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Odoo ERP Testing - Complete Guide</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/modules.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="module-page">
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2><i class="fas fa-building"></i> Odoo ERP</h2>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="#intro" class="nav-item active">Introduction</a>
+                <a href="#erp-basics" class="nav-item">ERP Basics</a>
+                <a href="#odoo-overview" class="nav-item">Odoo Overview</a>
+                <a href="#modules" class="nav-item">Modules/Apps</a>
+                <a href="#users" class="nav-item">Users & Access</a>
+                <a href="#testing" class="nav-item">Testing Odoo</a>
+                <a href="#scenarios" class="nav-item">Test Scenarios</a>
+                <a href="#exercises" class="nav-item">Exercises</a>
+                <a href="#quiz" class="nav-item">Quiz</a>
+                <a href="../index.html" class="nav-item" style="margin-top:1rem; border-top:1px solid var(--border-color); padding-top:1rem;">
+                    <i class="fas fa-home"></i> Back to Home
+                </a>
+            </nav>
+        </aside>
+
+        <main class="content">
+            <header class="content-header">
+                <h1><i class="fas fa-building" style="color:#8e44ad"></i> Odoo ERP Testing</h1>
+                <p>Master testing for Odoo ERP systems - concepts, workflows, and scenarios</p>
+            </header>
+
+            <section id="intro" class="module-section">
+                <h2>Introduction to ERP Systems</h2>
+                <p>Enterprise Resource Planning (ERP) systems integrate core business processes into a unified system. Odoo is one of the most popular open-source ERP platforms, used by businesses worldwide for managing operations.</p>
+
+                <div class="info-box">
+                    <h3>Why ERP Testing is Important</h3>
+                    <ul>
+                        <li><strong>Business Critical:</strong> ERP handles core business data and processes</li>
+                        <li><strong>Data Integrity:</strong> Errors can corrupt financial, inventory, or customer data</li>
+                        <li><strong>Integration:</strong> ERP connects multiple departments (sales, inventory, HR, accounting)</li>
+                        <li><strong>Compliance:</strong> Must meet regulatory requirements (tax, accounting standards)</li>
+                        <li><strong>Customization:</strong> Each implementation is customized, requiring thorough testing</li>
+                    </ul>
+                </div>
+
+                <h3>Key ERP Modules (Odoo)</h3>
+                <ul>
+                    <li><strong>CRM:</strong> Customer relationship management, lead/opportunity tracking</li>
+                    <li><strong>Sales:</strong> Quotation, sales orders, invoicing</li>
+                    <li><strong>Purchase:</strong> Vendor management, purchase orders</li>
+                    <li><strong>Inventory:</strong> Warehouse management, stock tracking</li>
+                    <li><strong>Accounting:</strong> Financial transactions, reporting</li>
+                    <li><strong>HR:</strong> Employee management, payroll</li>
+                    <li><strong>Manufacturing:</strong> Production planning, BOMs</li>
+                </ul>
+            </section>
+
+            <section id="erp-basics" class="module-section">
+                <h2>ERP Fundamentals</h2>
+
+                <h3>ERP Architecture</h3>
+                <pre><code>┌─────────────────────────────────────────────────────────────┐
+│                    ODOO ERP ARCHITECTURE                       │
+├─────────────────────────────────────────────────────────────┤
+│  ┌───────────┐  ┌───────────┐  ┌───────────┐  ┌───────────┐ │
+│  │    CRM    │  │   Sales   │  │ Purchase  │  │Inventory  │ │
+│  └─────┬─────┘  └─────┬─────┘  └─────┬─────┘  └─────┬─────┘ │
+│        └──────────────┴──────────────┴──────────────┘        │
+│                          │                                   │
+│                    ┌─────┴─────┐                             │
+│                    │  Database │                             │
+│                    │  (PostgreSQL)│                          │
+│                    └───────────┘                             │
+└─────────────────────────────────────────────────────────────┘</code></pre>
+
+                <h3>Business Workflows in ERP</h3>
+                <pre><code>PROCUREMENT WORKFLOW:
+Vendor → Purchase Order → Goods Receipt → Quality Check → Inventory
+
+SALES WORKFLOW:
+Lead → Opportunity → Quotation → Sales Order → Delivery → Invoice → Payment
+
+INVENTORY WORKFLOW:
+Receive → Store → Pick → Pack → Ship → Track
+
+ACCOUNTING WORKFLOW:
+Transaction → Journal Entry → Ledger → Financial Report → Audit</code></pre>
+
+                <h3>ERP Testing Challenges</h3>
+                <ul>
+                    <li>Complex integrations between modules</li>
+                    <li>Data dependency across modules</li>
+                    <li>Custom field additions</li>
+                    <li>Version upgrades affecting customization</li>
+                    <li>Performance with large data volumes</li>
+                    <li>Security and access control testing</li>
+                </ul>
+            </section>
+
+            <section id="odoo-overview" class="module-section">
+                <h2>Odoo Overview</h2>
+                <p>Odoo is a suite of business management applications including CRM, e-commerce, billing, accounting, manufacturing, warehouse management, project management, and inventory management.</p>
+
+                <h3>Odoo Versions</h3>
+                <table class="data-table">
+                    <thead>
+                        <tr><th>Version</th><th>Status</th><th>Notes</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Odoo 17</td><td>Current (2023)</td><td>Latest stable release</td></tr>
+                        <tr><td>Odoo 16</td><td>Previous</td><td>Still widely used</td></tr>
+                        <tr><td>Odoo 15</td><td>Legacy</td><td>May still be in production</td></tr>
+                        <tr><td>Odoo.sh</td><td>Cloud</td><td>Hosting platform</td></tr>
+                    </tbody>
+                </table>
+
+                <h3>Odoo Architecture</h3>
+                <pre><code>ODOO COMPONENTS:
+├── PostgreSQL Database (data storage)
+├── Python Application Server (business logic)
+├── XML/CSV Definitions (UI, reports, workflows)
+├── JavaScript Web Client (frontend)
+└── Web Server (Nginx/Apache) - serves client
+
+ODOO APP TYPES:
+├── Core Apps (base, web, ir.*)
+├── Official Apps (sale, purchase, inventory, account)
+└── Custom Apps (industry-specific or client-specific)</code></pre>
+            </section>
+
+            <section id="modules" class="module-section">
+                <h2>Odoo Modules/Apps</h2>
+
+                <h3>Core Business Modules</h3>
+
+                <h4>Sales App</h4>
+                <ul>
+                    <li>Quotations and Sales Orders</li>
+                    <li>Customer pricing and discounts</li>
+                    <li>Automatic invoice generation</li>
+                    <li>Sales team and pipeline management</li>
+                </ul>
+
+                <h4>Purchase App</h4>
+                <ul>
+                    <li>Vendor management</li>
+                    <li>Purchase orders and tenders</li>
+                    <li>Automatic procurement</li>
+                    <li>Vendor pricing and contracts</li>
+                </ul>
+
+                <h4>Inventory App</h4>
+                <ul>
+                    <li>Warehouse management</li>
+                    <li>Stock transfers and locations</li>
+                    <li>Lot/Serial number tracking</li>
+                    <li>Reordering rules and automated procurement</li>
+                </ul>
+
+                <h4>Accounting App</h4>
+                <ul>
+                    <li>Chart of accounts</li>
+                    <li>Journal entries</li>
+                    <li>Invoicing (customer and vendor)</li>
+                    <li>Tax management and reporting</li>
+                    <li>Financial statements</li>
+                </ul>
+
+                <h3>Module Dependencies</h3>
+                <pre><code>Example Dependencies:
+sales → account (invoicing)
+inventory → stock (warehouse)
+purchase → inventory (receipts)
+project → hr (timesheets)
+
+Installation Order Matters:
+1. Base system apps
+2. Core business apps (sales, purchase, inventory)
+3. Integration apps
+4. Industry-specific apps
+5. Custom apps</code></pre>
+            </section>
+
+            <section id="users" class="module-section">
+                <h2>Users & Access Control</h2>
+
+                <h3>User Types in Odoo</h3>
+                <table class="data-table">
+                    <thead>
+                        <tr><th>User Type</th><th>Access</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><strong>Administrator</strong></td><td>Full system access, settings, technical menu</td></tr>
+                        <tr><td><strong>Employee</strong></td><td>Basic access based on app permissions</td></tr>
+                        <tr><td><strong>Portal User</strong></td><td>Limited external access (customers, vendors)</td></tr>
+                        <tr><td><strong>Public User</strong></td><td>Website-only access</td></tr>
+                    </tbody>
+                </table>
+
+                <h3>Access Control Levels</h3>
+                <pre><code>ACCESS CONTROL HIERARCHY:
+1. Global Permissions (user type based)
+   ├── Can create/read/write/delete
+   └── App-specific restrictions
+
+2. Record Rules (row-level security)
+   ├── Users see only their records
+   ├── Departments see their records
+   └── Managers see team records
+
+3. Field Level Security
+   ├── Hide fields from certain users
+   └── Make fields read-only
+
+4. Menu Visibility
+   ├── Apps shown based on installed modules
+   └── Custom menu restrictions</code></pre>
+
+                <h3>Testing Access Control</h3>
+                <pre><code>TEST CASES FOR ACCESS CONTROL:
+───────────────────────────────────────────────────────
+1. Admin can access all features
+2. Employee can only access permitted apps
+3. User cannot access records outside their scope
+4. Portal user can only see their own quotations/orders
+5. Hidden fields are not visible to restricted users
+6. Deleted records are not accessible
+7. Menu items are shown/hidden correctly</code></pre>
+            </section>
+
+            <section id="testing" class="module-section">
+                <h2>Testing Odoo Applications</h2>
+
+                <h3>Testing Approaches</h3>
+
+                <h4>1. Functional Testing</h4>
+                <p>Test business workflows end-to-end through the UI.</p>
+
+                <h4>2. Integration Testing</h4>
+                <p>Verify data flows correctly between modules.</p>
+
+                <h4>3. Data Integrity Testing</h4>
+                <p>Verify calculations, balances, and reports are accurate.</p>
+
+                <h4>4. Performance Testing</h4>
+                <p>Test system behavior with large data volumes.</p>
+
+                <h3>Odoo-Specific Test Considerations</h3>
+                <pre><code>SPECIAL TESTING AREAS IN ODOO:
+───────────────────────────────────────────────────────
+1. Workflow Transitions
+   - Button visibility based on state
+   - Automatic state changes
+   - Validation on transitions
+
+2. Computed Fields
+   - Stock quantities (inventory)
+   - Account balances (accounting)
+   - Sales totals and taxes
+
+3. Onchange Methods
+   - Automatic field population
+   - Field validation
+   - Cascading updates
+
+4. Scheduled Actions (Cron Jobs)
+   - Automated procurement
+   - Invoice generation
+   - Email reminders
+
+5. Import/Export
+   - CSV/Excel data import
+   - Data migration testing
+   - Bulk operations</code></pre>
+
+                <h3>Testing the Sales-to-Invoice Flow</h3>
+                <pre><code>END-TO-END TEST: SALES ORDER TO INVOICE
+═══════════════════════════════════════════════════════
+1. Create Quotation
+   - Add customer, products, quantities
+   - Verify prices and taxes calculated
+   - Confirm quotation has expected total
+
+2. Confirm Quotation → Sales Order
+   - Click "Confirm Order"
+   - State changes from Quotation to Sales Order
+   - Reserved stock in inventory
+
+3. Validate Delivery
+   - Confirm delivery order
+   - Update quantities delivered
+   - Verify stock moves recorded
+
+4. Create Invoice
+   - Click "Create Invoice"
+   - Select "Regular" or "By Delivery" invoicing
+   - Verify invoice matches delivery
+
+5. Validate Invoice
+   - Post the invoice
+   - Verify accounting entries created
+   - Check customer balance updated</code></pre>
+            </section>
+
+            <section id="scenarios" class="module-section">
+                <h2>Common Test Scenarios</h2>
+
+                <div class="exercise">
+                    <h3>Scenario 1: Purchase Order Workflow</h3>
+                    <pre><code>TEST CASE: TC-PO-001 - Complete Purchase Order Process
+───────────────────────────────────────────────────────
+Prerequisites:
+- Vendor "ABC Supplies" exists with contact info
+- Product "Laptop Pro" exists with price $1200
+- Current stock: 0 units
+
+Steps:
+1. Create Purchase Order for vendor ABC Supplies
+2. Add product Laptop Pro, quantity: 5
+3. Confirm Purchase Order
+4. Validate incoming shipment
+5. Receive 5 units into stock
+6. Verify vendor bill can be created
+7. Create and post vendor bill
+8. Verify accounting entries are correct
+
+Expected Results:
+- PO status: Purchase Order
+- Inventory: 5 units of Laptop Pro
+- Stock value increased by $6000
+- Vendor bill posted: $6000 credit to Accounts Payable</code></pre>
+                </div>
+
+                <div class="exercise">
+                    <h3>Scenario 2: Inventory Valuation</h3>
+                    <pre><code>TEST CASE: TC-INV-001 - Inventory FIFO Valuation
+───────────────────────────────────────────────────────
+Prerequisites:
+- Product "Widget A" uses FIFO costing
+- Starting stock: 10 units @ $10 = $100
+
+Steps:
+1. Receive 20 units @ $12 = $240 (2 Purchase Orders)
+2. Deliver 15 units to customer
+3. Check inventory valuation
+
+Expected Results:
+- Remaining stock: 15 units
+- Cost calculation (FIFO):
+  - 10 units @ $10 = $100
+  - 5 units @ $12 = $60
+- Total inventory value: $160</code></pre>
+                </div>
+
+                <div class="exercise">
+                    <h3>Scenario 3: Access Control Test</h3>
+                    <pre><code>TEST CASE: TC-SEC-001 - Salesperson Access Restriction
+───────────────────────────────────────────────────────
+Prerequisites:
+- User "Sales Rep" with role: Sales / Salesperson
+- User assigned to "West Region" sales team
+- Customer "Customer West" assigned to West Region
+
+Steps:
+1. Login as Sales Rep
+2. Try to access customer from East Region
+3. Try to access quotation from East Region
+4. Access customer "Customer West"
+
+Expected Results:
+- Cannot see East Region customers/quotes
+- Can see and modify own team's records
+- Cannot access Administrator settings</code></pre>
+                </div>
+            </section>
+
+            <section id="exercises" class="module-section">
+                <h2>Hands-On Exercises</h2>
+
+                <div class="exercise">
+                    <h3>Exercise 1: Create Test Cases for Sales Order</h3>
+                    <p><strong>Task:</strong> Write comprehensive test cases for a sales order workflow:</p>
+                    <ul>
+                        <li>Create quotation with multiple products</li>
+                        <li>Apply discount (global and per line)</li>
+                        <li>Calculate taxes correctly</li>
+                        <li>Confirm order and verify inventory reservation</li>
+                        <li>Partial delivery scenario</li>
+                        <li>Invoice creation and posting</li>
+                    </ul>
+                </div>
+
+                <div class="exercise">
+                    <h3>Exercise 2: Integration Testing</h3>
+                    <p><strong>Task:</strong> Design integration tests for:</p>
+                    <ul>
+                        <li>Sales → Inventory → Accounting flow</li>
+                        <li>Purchase → Inventory → Vendor Bill flow</li>
+                        <li>Multi-company transactions</li>
+                    </ul>
+                </div>
+
+                <div class="exercise">
+                    <h3>Exercise 3: Report Testing</h3>
+                    <p><strong>Task:</strong> Test report accuracy:</p>
+                    <ul>
+                        <li>Verify financial statements match transactions</li>
+                        <li>Test inventory valuation reports</li>
+                        <li>Validate tax reports</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section id="quiz" class="module-section">
+                <h2>Knowledge Quiz</h2>
+                
+                <div class="quiz-container">
+                    <div class="quiz-question" data-correct="b">
+                        <h4>Question 1: What database does Odoo use?</h4>
+                        <div class="quiz-options">
+                            <label><input type="radio" name="q1" value="a"> MySQL</label>
+                            <label><input type="radio" name="q1" value="b"> PostgreSQL</label>
+                            <label><input type="radio" name="q1" value="c"> SQLite</label>
+                            <label><input type="radio" name="q1" value="d"> Oracle</label>
+                        </div>
+                    </div>
+
+                    <div class="quiz-question" data-correct="a">
+                        <h4>Question 2: What does FIFO stand for in inventory?</h4>
+                        <div class="quiz-options">
+                            <label><input type="radio" name="q2" value="a"> First In, First Out</label>
+                            <label><input type="radio" name="q2" value="b"> Fast Inventory, Fast Output</label>
+                            <label><input type="radio" name="q2" value="c"> Financial Inventory Operations</label>
+                            <label><input type="radio" name="q2" value="d"> Fixed Input, Fixed Output</label>
+                        </div>
+                    </div>
+
+                    <div class="quiz-question" data-correct="c">
+                        <h4>Question 3: Which user type has FULL system access?</h4>
+                        <div class="quiz-options">
+                            <label><input type="radio" name="q3" value="a"> Employee</label>
+                            <label><input type="radio" name="q3" value="b"> Portal User</label>
+                            <label><input type="radio" name="q3" value="c"> Administrator</label>
+                            <label><input type="radio" name="q3" value="d"> Manager</label>
+                        </div>
+                    </div>
+
+                    <div class="quiz-question" data-correct="d">
+                        <h4>Question 4: What triggers automatic state change in workflows?</h4>
+                        <div class="quiz-options">
+                            <label><input type="radio" name="q4" value="a"> Manual updates only</label>
+                            <label><input type="radio" name="q4" value="b"> Scheduled jobs only</label>
+                            <label><input type="radio" name="q4" value="c"> Button clicks and scheduled jobs</label>
+                            <label><input type="radio" name="q4" value="d"> Onchange methods</label>
+                        </div>
+                    </div>
+
+                    <div class="quiz-question" data-correct="b">
+                        <h4>Question 5: What is tested at the ROW-LEVEL (record rules)?</h4>
+                        <div class="quiz-options">
+                            <label><input type="radio" name="q5" value="a"> Which apps users can access</label>
+                            <label><input type="radio" name="q5" value="b"> Which specific records users can see</label>
+                            <label><input type="radio" name="q5" value="c"> Which fields are visible</label>
+                            <label><input type="radio" name="q5" value="d"> Which menus are shown</label>
+                        </div>
+                    </div>
+
+                    <button class="btn-primary" onclick="checkQuiz()">Submit Answers</button>
+                    <div id="quiz-results" class="quiz-results"></div>
+                </div>
+            </section>
+
+            <footer class="content-footer">
+                <p>Odoo ERP Testing | <a href="../index.html">Back to Home</a></p>
+                <p>Next: <a href="automation-advanced.html">Advanced Automation</a></p>
+            </footer>
+        </main>
+    </div>
+
+    <script src="../js/app.js"></script>
+    <script>
+        function checkQuiz() {
+            const questions = document.querySelectorAll('.quiz-question');
+            let correct = 0;
+            questions.forEach((q, index) => {
+                const selected = q.querySelector('input[name="q' + (index + 1) + '"]:checked');
+                const options = q.querySelectorAll('.quiz-options label');
+                options.forEach(opt => opt.classList.remove('correct', 'incorrect'));
+                if (selected) {
+                    const parentLabel = selected.closest('label');
+                    if (selected.value === q.dataset.correct) {
+                        correct++;
+                        parentLabel.classList.add('correct');
+                    } else {
+                        parentLabel.classList.add('incorrect');
+                        q.querySelector('input[value="' + q.dataset.correct + '"]').closest('label').classList.add('correct');
+                    }
+                } else {
+                    q.querySelector('input[value="' + q.dataset.correct + '"]').closest('label').classList.add('correct');
+                }
+            });
+            const percentage = Math.round((correct / questions.length) * 100);
+            document.getElementById('quiz-results').innerHTML = `<h4>Results: ${correct}/${questions.length} (${percentage}%)</h4><p>${percentage >= 80 ? 'Excellent!' : percentage >= 60 ? 'Good job!' : 'Keep learning!'}</p>`;
+            document.getElementById('quiz-results').style.display = 'block';
+        }
+    </script>
+</body>
+</html>

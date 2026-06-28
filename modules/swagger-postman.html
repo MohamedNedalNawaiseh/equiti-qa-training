@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Swagger + Postman Integration - Complete Guide</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/modules.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="module-page">
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2><i class="fas fa-paper-plane"></i> Swagger + Postman</h2>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="#intro" class="nav-item active">Introduction</a>
+                <a href="#import" class="nav-item">Importing Swagger</a>
+                <a href="#collections" class="nav-item">Collections</a>
+                <a href="#environments" class="nav-item">Environments</a>
+                <a href="#variables" class="nav-item">Variables</a>
+                <a href="#auth" class="nav-item">Authentication</a>
+                <a href="#scripts" class="nav-item">Test Scripts</a>
+                <a href="#chaining" class="nav-item">Chaining Requests</a>
+                <a href="#exercises" class="nav-item">Exercises</a>
+                <a href="#quiz" class="nav-item">Quiz</a>
+                <a href="../index.html" class="nav-item" style="margin-top:1rem; border-top:1px solid var(--border-color); padding-top:1rem;">
+                    <i class="fas fa-home"></i> Back to Home
+                </a>
+            </nav>
+        </aside>
+
+        <main class="content">
+            <header class="content-header">
+                <h1><i class="fas fa-paper-plane" style="color:#ff9800"></i> Swagger + Postman Integration</h1>
+                <p>Import API definitions and master API testing with Postman</p>
+            </header>
+
+            <section id="intro" class="module-section">
+                <h2>Introduction</h2>
+                <p>Postman is a powerful API testing tool that allows you to design, build, test, and document APIs. Combined with Swagger/OpenAPI specifications, you can quickly generate complete test suites.</p>
+
+                <div class="info-box">
+                    <h3>Why Use Postman?</h3>
+                    <ul>
+                        <li><strong>Import Swagger:</strong> Generate collections from API specs automatically</li>
+                        <li><strong>Organize APIs:</strong> Group related requests into collections</li>
+                        <li><strong>Environment Variables:</strong> Test across dev, staging, prod easily</li>
+                        <li><strong>Test Automation:</strong> Write pre-request and test scripts</li>
+                        <li><strong>Mock Servers:</strong> Simulate APIs before they're built</li>
+                        <li><strong>CI/CD Integration:</strong> Run collections in pipelines</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section id="import" class="module-section">
+                <h2>Importing Swagger into Postman</h2>
+
+                <h3>Import Methods</h3>
+                <pre><code>// Method 1: Import from file
+// File → Import → Select JSON/YAML file with OpenAPI spec
+
+// Method 2: Import from URL
+// File → Import → Enter URL to Swagger JSON/YAML
+
+// Method 3: Paste raw JSON/YAML
+// File → Import → Paste raw text
+
+// Method 4: Use Postman API
+// Collections API to sync with Swagger definitions</code></pre>
+
+                <h3>Import Options</h3>
+                <table class="data-table">
+                    <thead>
+                        <tr><th>Option</th><th>Description</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Generate collection</td><td>Creates a Postman collection from spec</td></tr>
+                        <tr><td>Create update notifications</td><td>Alert when API spec changes</td></tr>
+                        <tr><td>Request naming</td><td>How to name generated requests</td></tr>
+                        <tr><td>Folder organization</td><td>How to organize requests into folders</td></tr>
+                    </tbody>
+                </table>
+
+                <h3>After Import</h3>
+                <pre><code>Generated Collection Structure:
+├── Collection: "E-Commerce API"
+│   ├── Folder: "/products"
+│   │   ├── GET /products (List products)
+│   │   ├── POST /products (Create product)
+│   │   └── GET /products/{id} (Get product)
+│   ├── Folder: "/users"
+│   │   ├── GET /users
+│   │   ├── POST /users
+│   │   └── GET /users/{id}
+│   └── Folder: "/orders"
+│       ├── GET /orders
+│       └── POST /orders</code></pre>
+            </section>
+
+            <section id="collections" class="module-section">
+                <h2>Collections</h2>
+                <p>Collections are containers that organize related API requests. They can include documentation, variables, and auth settings.</p>
+
+                <h3>Collection Structure</h3>
+                <pre><code>Collection (Folder-based)
+├── Auth
+│   ├── POST /auth/login
+│   └── POST /auth/refresh
+├── Users
+│   ├── GET /users
+│   ├── POST /users
+│   ├── GET /users/{id}
+│   ├── PUT /users/{id}
+│   └── DELETE /users/{id}
+└── Documentation
+    └── README.md (collection description)</code></pre>
+
+                <h3>Collection Settings</h3>
+                <ul>
+                    <li><strong>Variables:</strong> Collection-level variables</li>
+                    <li><strong>Auth:</strong> Inherited auth for all requests</li>
+                    <li><strong>Pre-request Script:</strong> Run before each request</li>
+                    <li><strong>Test Script:</strong> Run after each request</li>
+                    <li><strong>Documentation:</strong> Collection description and notes</li>
+                </ul>
+
+                <h3>Running Collections</h3>
+                <pre><code>// Collection Runner options
+- Select environment
+- Set iteration count
+- Add delay between requests
+- Select specific folders/requests
+- Enable/disable requests
+- Save response bodies
+- View test results</code></pre>
+            </section>
+
+            <section id="environments" class="module-section">
+                <h2>Environments</h2>
+                <p>Environments allow you to switch between different configurations (dev, staging, production) without changing your requests.</p>
+
+                <h3>Environment Variables</h3>
+                <pre><code>Environment: Development
+────────────────────────────
+baseUrl:    http://localhost:3000
+apiKey:     dev-key-12345
+dbHost:     localhost:5432
+debugMode:  true
+
+Environment: Production
+────────────────────────────
+baseUrl:    https://api.production.com
+apiKey:     prod-key-xxxxx
+dbHost:     prod-db.example.com
+debugMode:  false</code></pre>
+
+                <h3>Using Variables in Requests</h3>
+                <pre><code>// URL with variable
+GET {{baseUrl}}/users
+
+// Headers with variable
+Authorization: Bearer {{token}}
+
+// Body with variable
+{
+  "email": "{{testEmail}}",
+  "name": "{{testName}}"
+}
+
+// Parameters with variable
+GET {{baseUrl}}/products?category={{category}}&limit={{limit}}</code></pre>
+
+                <h3>Creating Environments</h3>
+                <ol>
+                    <li>Click "Environments" gear icon</li>
+                    <li>Click "New" to create environment</li>
+                    <li>Add variables with initial and current values</li>
+                    <li>Toggle environment in top-right dropdown</li>
+                </ol>
+            </section>
+
+            <section id="variables" class="module-section">
+                <h2>Variables</h2>
+                <p>Postman supports multiple variable scopes: Global, Collection, Environment, Data, and Local.</p>
+
+                <h3>Variable Scopes (Priority: High to Low)</h3>
+                <pre><code>1. Global Variables
+   Available everywhere, set via: pm.globals.set("var", "value")
+   Access via: {{globalVar}} or pm.globals.get("globalVar")
+
+2. Collection Variables
+   Available in collection, set via: pm.collectionVariables.set("var", "value")
+   Access via: {{collectionVar}}
+
+3. Environment Variables
+   Available in active environment, set via: pm.environment.set("var", "value")
+   Access via: {{envVar}}
+
+4. Data Variables
+   From CSV/JSON data files during collection runs
+
+5. Local Variables
+   Temporary, set via: pm.variables.set("var", "value")
+   Only available in current request/script</code></pre>
+
+                <h3>Variable Syntax</h3>
+                <pre><code>// Double curly braces - auto-resolved in:
+- URL
+- Headers
+- Body (JSON/XML raw)
+- Pre-request Script (some cases)
+
+// pm.variables.get() - for scripts
+const baseUrl = pm.variables.get("baseUrl");
+
+// Dynamic variables (built-in)
+{{$guid}}     // Generate UUID
+{{$timestamp}} // Current timestamp
+{{$randomInt}} // Random integer</code></pre>
+            </section>
+
+            <section id="auth" class="module-section">
+                <h2>Authentication</h2>
+
+                <h3>Auth Types in Postman</h3>
+                <table class="data-table">
+                    <thead>
+                        <tr><th>Type</th><th>Use Case</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><strong>No Auth</strong></td><td>Public APIs</td></tr>
+                        <tr><td><strong>API Key</strong></td><td>Key in header or query param</td></tr>
+                        <tr><td><strong>Bearer Token</strong></td><td>JWT tokens</td></tr>
+                        <tr><td><strong>Basic Auth</strong></td><td>Username/password</td></tr>
+                        <tr><td><strong>OAuth 1.0/2.0</strong></td><td>OAuth flows</td></tr>
+                        <tr><td><strong>AWS Signature</strong></td><td>AWS services</td></tr>
+                        <tr><td><strong>Bearer</strong></td><td>JWT/Bearer tokens</td></tr>
+                    </tbody>
+                </table>
+
+                <h3>Setting Up Auth</h3>
+                <pre><code>// Method 1: At collection level (inherited by all requests)
+Collection → Authorization → Bearer Token → {{token}}
+
+// Method 2: At request level (overrides collection)
+Request → Headers → Authorization: Bearer {{token}}
+
+// Method 3: Via pre-request script (dynamic)
+pm.request.headers.add({
+    key: 'Authorization',
+    value: 'Bearer ' + pm.variables.get("token")
+});</code></pre>
+
+                <h3>OAuth 2.0 Flow</h3>
+                <pre><code>// OAuth 2.0 Configuration in Postman
+Auth Type: OAuth 2.0
+
+Configuration:
+- Callback URL: http://localhost:3000/callback
+- Auth URL: https://auth.example.com/authorize
+- Access Token URL: https://auth.example.com/token
+- Client ID: your-client-id
+- Client Secret: your-client-secret
+- Scope: read write
+- State: random-state-string
+
+Token Generation:
+1. Click "Get New Access Token"
+2. Postman opens auth URL in browser
+3. User logs in and grants permission
+4. Postman receives callback with auth code
+5. Postman exchanges code for access token
+6. Token saved and can be used in requests</code></pre>
+            </section>
+
+            <section id="scripts" class="module-section">
+                <h2>Test Scripts</h2>
+                <p>Postman allows you to write JavaScript to validate responses, set variables, and create dynamic workflows.</p>
+
+                <h3>Test Script Example</h3>
+                <pre><code>// Tests tab - runs after request completes
+pm.test("Status is 200", function() {
+    pm.response.to.have.status(200);
+});
+
+pm.test("Response has users array", function() {
+    const response = pm.response.json();
+    pm.expect(response).to.have.property('users');
+    pm.expect(response.users).to.be.an('array');
+});
+
+pm.test("First user has required fields", function() {
+    const user = pm.response.json().users[0];
+    pm.expect(user).to.have.property('id');
+    pm.expect(user).to.have.property('email');
+    pm.expect(user).to.have.property('name');
+});
+
+pm.test("Response time is acceptable", function() {
+    pm.expect(pm.response.responseTime).to.be.below(500);
+});</code></pre>
+
+                <h3>Pre-request Script</h3>
+                <pre><code>// Pre-request Script - runs before request
+// Example: Generate timestamp and add to header
+const timestamp = Date.now();
+pm.request.headers.add({
+    key: 'X-Request-Time',
+    value: timestamp
+});
+
+// Example: Load test data
+const testUser = {
+    email: 'test' + Date.now() + '@example.com',
+    name: 'Test User ' + Math.random().toString(36).substr(2, 9)
+};
+pm.variables.set("testEmail", testUser.email);
+pm.variables.set("testName", testUser.name);
+
+// Example: Set dynamic auth token
+const token = pm.globals.get("authToken");
+if (!token || isTokenExpired(token)) {
+    // Refresh token logic
+}</code></pre>
+
+                <h3>Common Assertions</h3>
+                <pre><code>pm.expect(pm.response.status).to.equal(200);
+pm.expect(pm.response.status).to.be.oneOf([200, 201]);
+pm.expect(response.name).to.include('John');
+pm.expect(response).to.have.property('users').with.lengthOf(10);
+pm.expect(response).to.have.all.keys('id', 'email', 'name');
+pm.expect(response.email).to.be.an('email');</code></pre>
+            </section>
+
+            <section id="chaining" class="module-section">
+                <h2>Chaining Requests</h2>
+                <p>Chain requests by extracting data from one response and using it in subsequent requests.</p>
+
+                <h3>Login → Get Profile Example</h3>
+                <pre><code>// REQUEST 1: POST /auth/login
+// Test Script:
+pm.test("Login successful", function() {
+    pm.response.to.have.status(200);
+});
+
+const response = pm.response.json();
+pm.test("Token received", function() {
+    pm.expect(response).to.have.property('token');
+});
+
+// Save token for next request
+pm.collectionVariables.set("authToken", response.token);
+pm.collectionVariables.set("userId", response.user.id);
+
+// REQUEST 2: GET /users/me (uses {{authToken}} in auth)
+// No test needed, uses inherited token
+
+// REQUEST 3: GET /users/{{userId}}/orders
+// Uses the userId from login response</code></pre>
+
+                <h3>Dynamic Data in Body</h3>
+                <pre><code>// POST /users - Create user with dynamic data
+{
+    "name": "{{userName}}",        // Set in pre-request script
+    "email": "{{userEmail}}",      // Set in pre-request script
+    "createdAt": "{{timestamp}}"   // Generated dynamically
+}
+
+// Pre-request script to set dynamic values
+const timestamp = new Date().toISOString();
+const randomName = 'User_' + Math.random().toString(36).substr(2, 8);
+
+pm.variables.set("timestamp", timestamp);
+pm.variables.set("userName", randomName);
+pm.variables.set("userEmail", randomName + '@test.com');</code></pre>
+            </section>
+
+            <section id="exercises" class="module-section">
+                <h2>Hands-On Exercises</h2>
+
+                <div class="exercise">
+                    <h3>Exercise 1: Import Swagger Spec</h3>
+                    <p><strong>Task:</strong> Import a Swagger spec into Postman:</p>
+                    <ul>
+                        <li>Use https://petstore.swagger.io/v2/swagger.json</li>
+                        <li>Import and explore the generated collection</li>
+                        <li>Configure an environment with baseUrl</li>
+                        <li>Test the /pet endpoint</li>
+                    </ul>
+                </div>
+
+                <div class="exercise">
+                    <h3>Exercise 2: Create Test Suite</h3>
+                    <p><strong>Task:</strong> Build a complete CRUD test suite:</p>
+                    <ul>
+                        <li>POST - Create resource (save ID)</li>
+                        <li>GET - Retrieve by ID (use saved ID)</li>
+                        <li>PUT - Update (use saved ID)</li>
+                        <li>DELETE - Remove (use saved ID)</li>
+                        <li>Add assertions for each request</li>
+                    </ul>
+                </div>
+
+                <div class="exercise">
+                    <h3>Exercise 3: Auth Flow</h3>
+                    <p><strong>Task:</strong> Test an authentication flow:</p>
+                    <ul>
+                        <li>POST /login with credentials</li>
+                        <li>Extract token from response</li>
+                        <li>Use token in subsequent authenticated requests</li>
+                        <li>Test token expiration handling</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section id="quiz" class="module-section">
+                <h2>Knowledge Quiz</h2>
+                
+                <div class="quiz-container">
+                    <div class="quiz-question" data-correct="b">
+                        <h4>Question 1: Where should you set auth to inherit to all requests?</h4>
+                        <div class="quiz-options">
+                            <label><input type="radio" name="q1" value="a"> Individual request</label>
+                            <label><input type="radio" name="q1" value="b"> Collection level</label>
+                            <label><input type="radio" name="q1" value="c"> Environment</label>
+                            <label><input type="radio" name="q1" value="d"> Global</label>
+                        </div>
+                    </div>
+
+                    <div class="quiz-question" data-correct="a">
+                        <h4>Question 2: Which runs BEFORE a request is sent?</h4>
+                        <div class="quiz-options">
+                            <label><input type="radio" name="q2" value="a"> Pre-request script</label>
+                            <label><input type="radio" name="q2" value="b"> Test script</label>
+                            <label><input type="radio" name="q2" value="c"> Response script</label>
+                            <label><input type="radio" name="q2" value="d"> Collection script</label>
+                        </div>
+                    </div>
+
+                    <div class="quiz-question" data-correct="c">
+                        <h4>Question 3: What is the highest priority variable scope?</h4>
+                        <div class="quiz-options">
+                            <label><input type="radio" name="q3" value="a"> Global</label>
+                            <label><input type="radio" name="q3" value="b"> Environment</label>
+                            <label><input type="radio" name="q3" value="c"> Local</label>
+                            <label><input type="radio" name="q3" value="d"> Collection</label>
+                        </div>
+                    </div>
+
+                    <div class="quiz-question" data-correct="d">
+                        <h4>Question 4: How do you save data from response for later use?</h4>
+                        <div class="quiz-options">
+                            <label><input type="radio" name="q4" value="a"> pm.save()</label>
+                            <label><input type="radio" name="q4" value="b"> pm.set()</label>
+                            <label><input type="radio" name="q4" value="c"> pm.storage.set()</label>
+                            <label><input type="radio" name="q4" value="d"> pm.collectionVariables.set()</label>
+                        </div>
+                    </div>
+
+                    <div class="quiz-question" data-correct="b">
+                        <h4>Question 5: What does {{$guid}} generate?</h4>
+                        <div class="quiz-options">
+                            <label><input type="radio" name="q5" value="a"> Timestamp</label>
+                            <label><input type="radio" name="q5" value="b"> UUID</label>
+                            <label><input type="radio" name="q5" value="c"> Random number</label>
+                            <label><input type="radio" name="q5" value="d"> Email address</label>
+                        </div>
+                    </div>
+
+                    <button class="btn-primary" onclick="checkQuiz()">Submit Answers</button>
+                    <div id="quiz-results" class="quiz-results"></div>
+                </div>
+            </section>
+
+            <footer class="content-footer">
+                <p>Swagger + Postman Integration | <a href="../index.html">Back to Home</a></p>
+                <p>Next: <a href="odoo.html">Odoo ERP Testing</a></p>
+            </footer>
+        </main>
+    </div>
+
+    <script src="../js/app.js"></script>
+    <script>
+        function checkQuiz() {
+            const questions = document.querySelectorAll('.quiz-question');
+            let correct = 0;
+            questions.forEach((q, index) => {
+                const selected = q.querySelector('input[name="q' + (index + 1) + '"]:checked');
+                const options = q.querySelectorAll('.quiz-options label');
+                options.forEach(opt => opt.classList.remove('correct', 'incorrect'));
+                if (selected) {
+                    const parentLabel = selected.closest('label');
+                    if (selected.value === q.dataset.correct) {
+                        correct++;
+                        parentLabel.classList.add('correct');
+                    } else {
+                        parentLabel.classList.add('incorrect');
+                        q.querySelector('input[value="' + q.dataset.correct + '"]').closest('label').classList.add('correct');
+                    }
+                } else {
+                    q.querySelector('input[value="' + q.dataset.correct + '"]').closest('label').classList.add('correct');
+                }
+            });
+            const percentage = Math.round((correct / questions.length) * 100);
+            document.getElementById('quiz-results').innerHTML = `<h4>Results: ${correct}/${questions.length} (${percentage}%)</h4><p>${percentage >= 80 ? 'Excellent!' : percentage >= 60 ? 'Good job!' : 'Keep learning!'}</p>`;
+            document.getElementById('quiz-results').style.display = 'block';
+        }
+    </script>
+</body>
+</html>

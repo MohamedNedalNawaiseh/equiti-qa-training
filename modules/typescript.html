@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TypeScript for QA Engineers - Complete Guide</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/modules.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="module-page">
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2><i class="fas fa-file-code"></i> TypeScript</h2>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="#intro" class="nav-item active">Introduction</a>
+                <a href="#variables" class="nav-item">Variables & Types</a>
+                <a href="#functions" class="nav-item">Functions</a>
+                <a href="#arrays" class="nav-item">Arrays & Objects</a>
+                <a href="#interfaces" class="nav-item">Interfaces</a>
+                <a href="#async" class="nav-item">Async/Await</a>
+                <a href="#playwright-ts" class="nav-item">Playwright + TS</a>
+                <a href="#exercises" class="nav-item">Exercises</a>
+                <a href="#quiz" class="nav-item">Quiz</a>
+                <a href="../index.html" class="nav-item" style="margin-top:1rem; border-top:1px solid var(--border-color); padding-top:1rem;">
+                    <i class="fas fa-home"></i> Back to Home
+                </a>
+            </nav>
+        </aside>
+
+        <main class="content">
+            <header class="content-header">
+                <h1><i class="fas fa-file-code" style="color:#0077cc"></i> TypeScript for QA Engineers</h1>
+                <p>Learn TypeScript from scratch - essential for Playwright automation</p>
+            </header>
+
+            <section id="intro" class="module-section">
+                <h2>What is TypeScript?</h2>
+                <p>TypeScript is a strongly-typed programming language that builds on JavaScript. It adds type safety, making code more reliable and easier to debug - perfect for test automation.</p>
+
+                <div class="info-box">
+                    <h3>Why TypeScript for QA?</h3>
+                    <ul>
+                        <li><strong>Catch Errors Early:</strong> Types are checked at compile time, not runtime</li>
+                        <li><strong>Better IDE Support:</strong> Autocomplete, refactoring, navigation</li>
+                        <li><strong>Playwright Native Support:</strong> Playwright is written in TypeScript</li>
+                        <li><strong>Maintainable Code:</strong> Self-documenting code with types</li>
+                        <li><strong>Industry Standard:</strong> Most modern test frameworks use TypeScript</li>
+                    </ul>
+                </div>
+
+                <h3>TypeScript vs JavaScript</h3>
+                <pre><code>// JavaScript (no types)
+function login(email, password) {
+  return fetch('/api/login', {
+    method: 'POST',
+    body: JSON.stringify({ email, password })
+  });
+}
+
+// TypeScript (with types)
+function login(email: string, password: string): Promise<Response> {
+  return fetch('/api/login', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email, password })
+  });
+}</code></pre>
+
+                <h3>TypeScript Setup</h3>
+                <pre><code># Install TypeScript
+npm install -g typescript
+
+# Check version
+tsc --version
+
+# Initialize in project
+npm install -D typescript @playwright/test
+npx tsc --init</code></pre>
+            </section>
+
+            <section id="variables" class="module-section">
+                <h2>Variables & Basic Types</h2>
+
+                <h3>Declaring Variables</h3>
+                <pre><code>// let - mutable variable (prefer this in tests)
+let count = 0;
+count = 5; // OK
+
+// const - immutable (use when value won't change)
+const PI = 3.14159;
+const BASE_URL = 'https://api.example.com';
+// PI = 3; // Error!
+
+// var - old style (avoid in new code)
+var name = 'old'; // Don't use</code></pre>
+
+                <h3>Basic Types</h3>
+                <pre><code>// String
+let username: string = 'testuser';
+let greeting: string = `Hello, ${username}`; // Template literal
+
+// Number
+let age: number = 25;
+let price: number = 19.99;
+let percent: number = 100; // integers and decimals are both number
+
+// Boolean
+let isLoggedIn: boolean = true;
+let hasAccess: boolean = false;
+
+// Array
+let scores: number[] = [95, 87, 92];
+let names: string[] = ['Ali', 'Sara', 'Omar'];
+let mixed: Array<number> = [1, 2, 3]; // Generic syntax
+
+// Tuple (fixed-length array with types)
+let user: [string, number] = ['Ahmed', 30];
+// user = [30, 'Ahmed']; // Error! Order matters
+
+// Any (avoid when possible - defeats type checking)
+let dynamic: any = 'could be anything';
+dynamic = 123; // OK
+dynamic = true; // OK
+
+// Void (no return value)
+function logMessage(message: string): void {
+  console.log(message);
+}
+
+// Null and Undefined
+let empty: null = null;
+let notDefined: undefined = undefined;</code></pre>
+
+                <h3>Type Inference</h3>
+                <pre><code>// TypeScript infers types when not explicitly declared
+let inferred = 'hello'; // TypeScript knows this is string
+inferred = 123; // Error! Type is inferred as string
+
+// But you can still declare types explicitly
+let explicit: string = 'hello';
+explicit = 123; // Error!</code></pre>
+            </section>
+
+            <section id="functions" class="module-section">
+                <h2>Functions</h2>
+
+                <h3>Function Declarations</h3>
+                <pre><code>// Basic function with types
+function add(a: number, b: number): number {
+  return a + b;
+}
+
+// Arrow function (preferred in modern code)
+const multiply = (a: number, b: number): number => {
+  return a * b;
+};
+
+// Short arrow function (implicit return)
+const square = (x: number): number => x * x;
+
+// Optional parameters
+function greet(name: string, greeting?: string): string {
+  return greeting ? `${greeting}, ${name}!` : `Hello, ${name}!`;
+}
+greet('Ahmed');           // "Hello, Ahmed!"
+greet('Ahmed', 'Hi');     // "Hi, Ahmed!"
+
+// Default parameters
+function createUser(name: string, role: string = 'user'): object {
+  return { name, role };
+}
+
+// Rest parameters
+function sum(...numbers: number[]): number {
+  return numbers.reduce((total, n) => total + n, 0);
+}
+sum(1, 2, 3, 4, 5); // 15</code></pre>
+
+                <h3>Function Types</h3>
+                <pre><code>// Function type annotation
+let myFunc: (x: number, y: number) => number;
+
+// Using in practice
+type Operation = (a: number, b: number) => number;
+
+const add: Operation = (a, b) => a + b;
+const subtract: Operation = (a, b) => a - b;
+
+// Callback functions
+function processData(
+  data: string[],
+  callback: (item: string, index: number) => string
+): string[] {
+  return data.map(callback);
+}
+
+const upperCase = processData(
+  ['apple', 'banana', 'cherry'],
+  (item, index) => item.toUpperCase()
+);
+// Result: ['APPLE', 'BANANA', 'CHERRY']</code></pre>
+            </section>
+
+            <section id="arrays" class="module-section">
+                <h2>Arrays & Objects</h2>
+
+                <h3>Array Methods</h3>
+                <pre><code>const numbers = [1, 2, 3, 4, 5];
+
+// map - transform each item
+const doubled = numbers.map(n => n * 2); // [2, 4, 6, 8, 10]
+
+// filter - keep items that pass test
+const evens = numbers.filter(n => n % 2 === 0); // [2, 4]
+
+// find - first item that passes test
+const firstEven = numbers.find(n => n % 2 === 0); // 2
+
+// reduce - combine into single value
+const sum = numbers.reduce((total, n) => total + n, 0); // 15
+
+// some/every - boolean checks
+const hasEven = numbers.some(n => n % 2 === 0); // true
+const allPositive = numbers.every(n => n > 0); // true
+
+// Chaining
+const result = numbers
+  .filter(n => n > 2)
+  .map(n => n * 10)
+  .reduce((a, b) => a + b, 0); // 120 (3+4+5 = 12 * 10 = 120</code></pre>
+
+                <h3>Objects</h3>
+                <pre><code>// Object type declaration
+const user: {
+  name: string;
+  age: number;
+  email?: string; // optional
+  role: 'admin' | 'user' | 'guest'; // union type
+} = {
+  name: 'Ahmed',
+  age: 30,
+  role: 'user'
+};
+
+// Accessing properties
+console.log(user.name); // 'Ahmed'
+console.log(user['age']); // 30
+
+// Modifying (only if not const)
+user.age = 31; // OK
+// user.role = 'superadmin'; // Error! Not in union type
+
+// Object destructuring
+const { name, age, role } = user;
+console.log(name); // 'Ahmed'
+
+// Spread operator
+const updatedUser = { ...user, age: 32, email: 'ahmed@example.com' };
+// { name: 'Ahmed', age: 32, role: 'user', email: 'ahmed@example.com' }</code></pre>
+
+                <h3>Useful Object Methods</h3>
+                <pre><code>const user = { name: 'Ahmed', age: 30, city: 'Amman' };
+
+// Object.keys, values, entries
+Object.keys(user);    // ['name', 'age', 'city']
+Object.values(user);  // ['Ahmed', 30, 'Amman']
+Object.entries(user); // [['name', 'Ahmed'], ['age', 30], ['city', 'Amman']]
+
+// Loop through entries
+Object.entries(user).forEach(([key, value]) => {
+  console.log(`${key}: ${value}`);
+});
+
+// Create object from entries
+const parsed = Object.fromEntries([['a', 1], ['b', 2]]);
+// { a: 1, b: 2 }</code></pre>
+            </section>
+
+            <section id="interfaces" class="module-section">
+                <h2>Interfaces</h2>
+                <p>Interfaces define the structure of objects. They're essential for creating type-safe test utilities and page objects.</p>
+
+                <h3>Basic Interfaces</h3>
+                <pre><code>// Define interface
+interface User {
+  id: number;
+  name: string;
+  email: string;
+  role: 'admin' | 'user' | 'guest';
+  createdAt?: Date; // optional
+}
+
+// Use interface
+const user: User = {
+  id: 1,
+  name: 'Ahmed Hassan',
+  email: 'ahmed@example.com',
+  role: 'user'
+};
+
+// Function with interface parameter
+function printUser(user: User): void {
+  console.log(`${user.name} (${user.email}) - ${user.role}`);
+}
+printUser(user); // "Ahmed Hassan (ahmed@example.com) - user"
+
+// Interface with method
+interface Logger {
+  log(message: string): void;
+  error(message: string, error?: Error): void;
+}
+
+class ConsoleLogger implements Logger {
+  log(message: string): void {
+    console.log(`[LOG] ${message}`);
+  }
+  error(message: string, error?: Error): void {
+    console.error(`[ERROR] ${message}`, error);
+  }
+}</code></pre>
+
+                <h3>Extending Interfaces</h3>
+                <pre><code>// Base interface
+interface BaseEntity {
+  id: number;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+// Extend base
+interface User extends BaseEntity {
+  name: string;
+  email: string;
+  lastLoginAt?: Date;
+}
+
+interface Product extends BaseEntity {
+  name: string;
+  price: number;
+  category: string;
+}
+
+const user: User = {
+  id: 1,
+  name: 'Ahmed',
+  email: 'ahmed@example.com',
+  createdAt: new Date(),
+  updatedAt: new Date()
+};</code></pre>
+
+                <h3>Interface for Test Data</h3>
+                <pre><code>// Define test data structure
+interface LoginTestData {
+  email: string;
+  password: string;
+  expectedResult: 'success' | 'invalid_email' | 'invalid_password' | 'empty_fields';
+  expectedMessage?: string;
+}
+
+// Use in tests
+const loginScenarios: LoginTestData[] = [
+  {
+    email: 'valid@example.com',
+    password: 'ValidPass123',
+    expectedResult: 'success'
+  },
+  {
+    email: 'invalid-email',
+    password: 'pass123',
+    expectedResult: 'invalid_email',
+    expectedMessage: 'Please enter a valid email address'
+  },
+  {
+    email: 'test@example.com',
+    password: 'wrongpassword',
+    expectedResult: 'invalid_password',
+    expectedMessage: 'Incorrect password'
+  }
+];
+
+// Run tests with data
+loginScenarios.forEach(scenario => {
+  test(`login with ${scenario.expectedResult}`, async ({ page }) => {
+    await page.goto('/login');
+    await page.getByLabel('Email').fill(scenario.email);
+    await page.getByLabel('Password').fill(scenario.password);
+    await page.getByRole('button', { name: 'Sign In' }).click();
+    
+    if (scenario.expectedResult === 'success') {
+      await expect(page).toHaveURL('**/dashboard');
+    } else {
+      await expect(page.getByRole('alert')).toHaveText(scenario.expectedMessage!);
+    }
+  });
+});</code></pre>
+            </section>
+
+            <section id="async" class="module-section">
+                <h2>Async/Await & Promises</h2>
+                <p>Async/await is essential for test automation - most operations (API calls, waiting for elements) are asynchronous.</p>
+
+                <h3>Promises</h3>
+                <pre><code>// Promise represents a future value
+const promise = new Promise<string>((resolve, reject) => {
+  setTimeout(() => {
+    resolve('Data loaded!');
+    // or reject(new Error('Failed!'));
+  }, 1000);
+});
+
+// Using promise
+promise
+  .then(data => console.log(data)) // "Data loaded!"
+  .catch(error => console.error(error));
+
+// Promise states
+// - Pending: initial state
+// - Fulfilled: operation completed successfully
+// - Rejected: operation failed</code></pre>
+
+                <h3>Async/Await</h3>
+                <pre><code>// async function returns a Promise
+async function fetchUser(id: number): Promise<User> {
+  const response = await fetch(`/api/users/${id}`);
+  
+  if (!response.ok) {
+    throw new Error(`Failed to fetch user: ${response.status}`);
+  }
+  
+  return response.json();
+}
+
+// Using async function
+async function test() {
+  try {
+    const user = await fetchUser(123);
+    console.log(user.name);
+  } catch (error) {
+    console.error('Failed to fetch user:', error);
+  }
+}
+
+// Multiple async operations
+async function loadData() {
+  // Sequential (slower)
+  const user = await fetchUser(1);
+  const posts = await fetchPosts(user.id);
+  
+  // Parallel (faster) - Promise.all
+  const [user, posts] = await Promise.all([
+    fetchUser(1),
+    fetchPosts(1)
+  ]);
+}</code></pre>
+
+                <h3>Common Patterns in Tests</h3>
+                <pre><code>// Wait for condition with timeout
+async function waitForElement(locator: Locator, timeout = 5000): Promise<void> {
+  const start = Date.now();
+  while (Date.now() - start < timeout) {
+    if (await locator.isVisible()) return;
+    await page.waitForTimeout(100);
+  }
+  throw new Error(`Element not visible after ${timeout}ms`);
+}
+
+// Retry pattern
+async function retry<T>(
+  fn: () => Promise<T>,
+  maxAttempts = 3,
+  delay = 1000
+): Promise<T> {
+  let lastError: Error;
+  
+  for (let i = 0; i < maxAttempts; i++) {
+    try {
+      return await fn();
+    } catch (error) {
+      lastError = error as Error;
+      if (i < maxAttempts - 1) {
+        await page.waitForTimeout(delay);
+      }
+    }
+  }
+  
+  throw lastError!;
+}</code></pre>
+            </section>
+
+            <section id="playwright-ts" class="module-section">
+                <h2>Playwright + TypeScript Integration</h2>
+
+                <h3>Playwright Test File Structure</h3>
+                <pre><code>import { test, expect, Page, Browser } from '@playwright/test';
+
+// Test with page fixture
+test('login flow', async ({ page }) => {
+  await page.goto('/login');
+  await page.getByLabel('Email').fill('test@example.com');
+  await page.getByLabel('Password').fill('password123');
+  await page.getByRole('button', { name: 'Sign In' }).click();
+  await expect(page).toHaveURL('**/dashboard');
+});
+
+// Test with custom fixtures
+test('create user via API', async ({ request }) => {
+  const response = await request.post('/api/users', {
+    data: {
+      name: 'Test User',
+      email: `test${Date.now()}@example.com`
+    }
+  });
+  expect(response.status()).toBe(201);
+  const user = await response.json();
+  expect(user).toHaveProperty('id');
+});
+
+// Parameterized tests
+test.each([
+  { email: 'valid@example.com', password: 'Valid123!', expected: 'success' },
+  { email: 'invalid', password: 'pass', expected: 'validation_error' },
+])('login scenario: $expected', async ({ email, password, expected }) => {
+  // Test implementation
+});</code></pre>
+
+                <h3>Type-Safe Page Objects</h3>
+                <pre><code>import { Page, Locator, expect } from '@playwright/test';
+
+interface LoginPageOptions {
+  baseURL: string;
+  timeout: number;
+}
+
+export class LoginPage {
+  readonly page: Page;
+  readonly emailInput: Locator;
+  readonly passwordInput: Locator;
+  readonly submitButton: Locator;
+  readonly errorAlert: Locator;
+
+  constructor(page: Page, options?: LoginPageOptions) {
+    this.page = page;
+    this.emailInput = page.getByLabel('Email');
+    this.passwordInput = page.getByLabel('Password');
+    this.submitButton = page.getByRole('button', { name: /sign in/i });
+    this.errorAlert = page.locator('[role="alert"]');
+  }
+
+  async goto(baseURL: string = '/'): Promise<void> {
+    await this.page.goto(`${baseURL}/login`);
+  }
+
+  async login(credentials: {
+    email: string;
+    password: string;
+  }): Promise<void> {
+    await this.emailInput.fill(credentials.email);
+    await this.passwordInput.fill(credentials.password);
+    await this.submitButton.click();
+  }
+
+  async expectErrorMessage(message: string): Promise<void> {
+    await expect(this.errorAlert).toHaveText(message);
+  }
+}</code></pre>
+            </section>
+
+            <section id="exercises" class="module-section">
+                <h2>Hands-On Exercises</h2>
+
+                <div class="exercise">
+                    <h3>Exercise 1: Type Annotations</h3>
+                    <p><strong>Task:</strong> Add proper type annotations to this JavaScript code:</p>
+                    <pre><code>// Convert this to TypeScript
+function processOrder(orderId, items, customer) {
+  const total = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  return {
+    orderId,
+    items,
+    customer,
+    total,
+    status: 'pending',
+    createdAt: new Date()
+  };
+}</code></pre>
+                </div>
+
+                <div class="exercise">
+                    <h3>Exercise 2: Create Interface</h3>
+                    <p><strong>Task:</strong> Create TypeScript interfaces for an e-commerce test:</p>
+                    <ul>
+                        <li>Product (id, name, price, category, inStock)</li>
+                        <li>CartItem (product, quantity)</li>
+                        <li>Cart (items, add, remove, calculateTotal)</li>
+                    </ul>
+                </div>
+
+                <div class="exercise">
+                    <h3>Exercise 3: Async Pattern</h3>
+                    <p><strong>Task:</strong> Write a function that:</p>
+                    <ul>
+                        <li>Fetches user data from an API</li>
+                        <li>Retries 3 times on failure</li>
+                        <li>Returns user data or throws error</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section id="quiz" class="module-section">
+                <h2>Knowledge Quiz</h2>
+                
+                <div class="quiz-container">
+                    <div class="quiz-question" data-correct="b">
+                        <h4>Question 1: Which declares an immutable variable?</h4>
+                        <div class="quiz-options">
+                            <label><input type="radio" name="q1" value="a"> let</label>
+                            <label><input type="radio" name="q1" value="b"> const</label>
+                            <label><input type="radio" name="q1" value="c"> var</label>
+                            <label><input type="radio" name="q1" value="d"> static</label>
+                        </div>
+                    </div>
+
+                    <div class="quiz-question" data-correct="c">
+                        <h4>Question 2: What does :void mean in function return type?</h4>
+                        <div class="quiz-options">
+                            <label><input type="radio" name="q2" value="a"> Returns null</label>
+                            <label><input type="radio" name="q2" value="b"> Returns undefined</label>
+                            <label><input type="radio" name="q2" value="c"> Function doesn't return a value</label>
+                            <label><input type="radio" name="q2" value="d"> Function returns any type</label>
+                        </div>
+                    </div>
+
+                    <div class="quiz-question" data-correct="a">
+                        <h4>Question 3: What is the correct way to make a parameter optional?</h4>
+                        <div class="quiz-options">
+                            <label><input type="radio" name="q3" value="a"> param?: type</label>
+                            <label><input type="radio" name="q3" value="b"> param: type?</label>
+                            <label><input type="radio" name="q3" value="c"> optional param: type</label>
+                            <label><input type="radio" name="q3" value="d"> param = undefined: type</label>
+                        </div>
+                    </div>
+
+                    <div class="quiz-question" data-correct="d">
+                        <h4>Question 4: How do you define a tuple with string and number?</h4>
+                        <div class="quiz-options">
+                            <label><input type="radio" name="q4" value="a"> [string, number]</label>
+                            <label><input type="radio" name="q4" value="b"> Array&lt;string | number&gt;</label>
+                            <label><input type="radio" name="q4" value="c"> (string | number)[]</label>
+                            <label><input type="radio" name="q4" value="d"> [string, number]</label>
+                        </div>
+                    </div>
+
+                    <div class="quiz-question" data-correct="b">
+                        <h4>Question 5: What does async/await return?</h4>
+                        <div class="quiz-options">
+                            <label><input type="radio" name="q5" value="a"> The actual value</label>
+                            <label><input type="radio" name="q5" value="b"> A Promise</label>
+                            <label><input type="radio" name="q5" value="c"> A callback</label>
+                            <label><input type="radio" name="q5" value="d"> An error</label>
+                        </div>
+                    </div>
+
+                    <button class="btn-primary" onclick="checkQuiz()">Submit Answers</button>
+                    <div id="quiz-results" class="quiz-results"></div>
+                </div>
+            </section>
+
+            <footer class="content-footer">
+                <p>TypeScript for QA | <a href="../index.html">Back to Home</a></p>
+                <p>Next: <a href="webdriverio.html">WebdriverIO</a></p>
+            </footer>
+        </main>
+    </div>
+
+    <script src="../js/app.js"></script>
+    <script>
+        function checkQuiz() {
+            const questions = document.querySelectorAll('.quiz-question');
+            let correct = 0;
+            questions.forEach((q, index) => {
+                const selected = q.querySelector('input[name="q' + (index + 1) + '"]:checked');
+                const options = q.querySelectorAll('.quiz-options label');
+                options.forEach(opt => opt.classList.remove('correct', 'incorrect'));
+                if (selected) {
+                    const parentLabel = selected.closest('label');
+                    if (selected.value === q.dataset.correct) {
+                        correct++;
+                        parentLabel.classList.add('correct');
+                    } else {
+                        parentLabel.classList.add('incorrect');
+                        q.querySelector('input[value="' + q.dataset.correct + '"]').closest('label').classList.add('correct');
+                    }
+                } else {
+                    q.querySelector('input[value="' + q.dataset.correct + '"]').closest('label').classList.add('correct');
+                }
+            });
+            const percentage = Math.round((correct / questions.length) * 100);
+            document.getElementById('quiz-results').innerHTML = `<h4>Results: ${correct}/${questions.length} (${percentage}%)</h4><p>${percentage >= 80 ? 'Excellent!' : percentage >= 60 ? 'Good job!' : 'Keep learning!'}</p>`;
+            document.getElementById('quiz-results').style.display = 'block';
+        }
+    </script>
+</body>
+</html>

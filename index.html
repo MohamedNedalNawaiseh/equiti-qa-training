@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Comprehensive QA Automation Training Ground - Learn TestRail, Swagger, Playwright, TypeScript, and more">
+  <title>QA Automation Training Ground | Learn QA & Test Automation</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <!-- ==========================================
+       SIDEBAR NAVIGATION
+       ========================================== -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-logo">
+        <i class="fas fa-vial"></i>
+        <span>QA Training</span>
+      </div>
+      <button class="sidebar-toggle" aria-label="Toggle sidebar">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+
+    <nav class="sidebar-nav">
+      <div class="sidebar-section">
+        <div class="sidebar-section-title">Getting Started</div>
+        <a href="index.html" class="nav-item active">
+          <i class="fas fa-home"></i>
+          <span>Home</span>
+        </a>
+        <a href="#prerequisites" class="nav-item">
+          <i class="fas fa-clipboard-check"></i>
+          <span>Prerequisites</span>
+        </a>
+        <a href="#how-to-use" class="nav-item">
+          <i class="fas fa-book-open"></i>
+          <span>How to Use</span>
+        </a>
+      </div>
+
+      <div class="sidebar-section">
+        <div class="sidebar-section-title">Core Modules</div>
+        <a href="modules/manual-testing.html" class="nav-item">
+          <i class="fas fa-clipboard-list"></i>
+          <span>Manual Testing</span>
+          <span class="nav-badge">Beginner</span>
+        </a>
+        <a href="modules/testrail.html" class="nav-item">
+          <i class="fas fa-trello"></i>
+          <span>TestRail</span>
+        </a>
+        <a href="modules/swagger.html" class="nav-item">
+          <i class="fas fa-code"></i>
+          <span>Swagger & APIs</span>
+        </a>
+      </div>
+
+      <div class="sidebar-section">
+        <div class="sidebar-section-title">Automation</div>
+        <a href="modules/typescript.html" class="nav-item">
+          <i class="fas fa-file-code"></i>
+          <span>TypeScript</span>
+        </a>
+        <a href="modules/playwright.html" class="nav-item">
+          <i class="fab fa-playwright"></i>
+          <span>Playwright</span>
+          <span class="nav-badge">Popular</span>
+        </a>
+        <a href="modules/webdriverio.html" class="nav-item">
+          <i class="fas fa-robot"></i>
+          <span>WebdriverIO</span>
+        </a>
+        <a href="modules/automation-advanced.html" class="nav-item">
+          <i class="fas fa-rocket"></i>
+          <span>Advanced Automation</span>
+        </a>
+      </div>
+
+      <div class="sidebar-section">
+        <div class="sidebar-section-title">Tools & Integration</div>
+        <a href="modules/swagger-postman.html" class="nav-item">
+          <i class="fas fa-paper-plane"></i>
+          <span>Swagger + Postman</span>
+        </a>
+        <a href="modules/odoo.html" class="nav-item">
+          <i class="fas fa-building"></i>
+          <span>Odoo ERP</span>
+        </a>
+      </div>
+
+      <div class="sidebar-section">
+        <div class="sidebar-section-title">Practice</div>
+        <a href="playgrounds/manual-testing/" class="nav-item">
+          <i class="fas fa-laptop-code"></i>
+          <span>Manual Testing Playground</span>
+        </a>
+        <a href="playgrounds/api-testing/" class="nav-item">
+          <i class="fas fa-network-wired"></i>
+          <span>API Testing Playground</span>
+        </a>
+        <a href="playgrounds/automation/" class="nav-item">
+          <i class="fas fa-cogs"></i>
+          <span>Automation Playground</span>
+        </a>
+      </div>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="progress-overview">
+        <div class="progress-label">
+          <span>Overall Progress</span>
+          <span class="progress-percentage">0%</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill" style="width: 0%"></div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Modal Backdrop -->
+  <div id="modal-backdrop" class="modal-backdrop"></div>
+
+  <!-- ==========================================
+       MAIN CONTENT
+       ========================================== -->
+  <main class="main-content">
+    <div class="content-wrapper">
+      <!-- Hero Section -->
+      <section class="hero">
+        <h1 class="hero-title">
+          <i class="fas fa-vial" style="color: var(--primary); margin-right: 0.5rem;"></i>
+          QA Automation Training Ground
+        </h1>
+        <p class="hero-subtitle">
+          Your comprehensive, hands-on learning path to becoming a job-ready QA Engineer.
+          From manual testing to advanced automation with Playwright, TypeScript, and real-world projects.
+        </p>
+        <div class="hero-actions">
+          <a href="#modules" class="btn btn-primary btn-lg">
+            <i class="fas fa-play"></i> Start Learning
+          </a>
+          <a href="#prerequisites" class="btn btn-secondary btn-lg">
+            <i class="fas fa-info-circle"></i> Prerequisites
+          </a>
+        </div>
+      </section>
+
+      <!-- Stats Section -->
+      <section class="stats-grid">
+        <div class="stat-item">
+          <div class="stat-value">77+</div>
+          <div class="stat-label">Hours of Content</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value">9</div>
+          <div class="stat-label">Comprehensive Modules</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value">100+</div>
+          <div class="stat-label">Hands-on Exercises</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value">50+</div>
+          <div class="stat-label">Code Examples</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value">30+</div>
+          <div class="stat-label">Interview Questions</div>
+        </div>
+      </section>
+
+      <!-- Features Section -->
+      <section class="features-grid">
+        <div class="feature-item">
+          <div class="feature-icon">
+            <i class="fas fa-graduation-cap"></i>
+          </div>
+          <h3 class="feature-title">Beginner Friendly</h3>
+          <p class="feature-description">
+            Step-by-step explanations starting from absolute basics.
+            No prior experience required.
+          </p>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">
+            <i class="fas fa-hands-on"></i>
+          </div>
+          <h3 class="feature-title">Hands-on Practice</h3>
+          <p class="feature-description">
+            Interactive playgrounds, exercises, and real-world scenarios.
+            Learn by doing, not just reading.
+          </p>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">
+            <i class="fas fa-briefcase"></i>
+          </div>
+          <h3 class="feature-title">Job-Ready Skills</h3>
+          <p class="feature-description">
+            Industry-relevant tools and workflows used in real companies.
+            Prepare for actual QA interviews.
+          </p>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">
+            <i class="fas fa-project-diagram"></i>
+          </div>
+          <h3 class="feature-title">Real Projects</h3>
+          <p class="feature-description">
+            Build actual automation frameworks, test suites, and
+            documentation like a professional QA engineer.
+          </p>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">
+            <i class="fas fa-users"></i>
+          </div>
+          <h3 class="feature-title">Mentor Guidance</h3>
+          <p class="feature-description">
+            Detailed explanations, debugging examples, and best practices
+            from years of industry experience.
+          </p>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">
+            <i class="fas fa-infinity"></i>
+          </div>
+          <h3 class="feature-title">Lifetime Access</h3>
+          <p class="feature-description">
+            Learn at your own pace, revisit anytime, and track your
+            progress as you grow in your QA career.
+          </p>
+        </div>
+      </section>
+
+      <!-- Modules Section -->
+      <section id="modules" class="mt-10">
+        <div class="page-header">
+          <h2 class="page-title">Learning Modules</h2>
+          <p class="page-subtitle">
+            Choose your learning path. Start with Manual Testing if you're new,
+            or jump to any module based on your current skill level.
+          </p>
+        </div>
+
+        <!-- Search -->
+        <div class="mb-6">
+          <input
+            type="text"
+            id="module-search"
+            class="form-input"
+            placeholder="Search modules..."
+            style="max-width: 400px;"
+          >
+        </div>
+
+        <!-- Module Grid -->
+        <div class="module-grid">
+          <!-- Module 1: Manual Testing -->
+          <div class="card module-card" data-module-id="manual-testing" data-total-sections="15">
+            <div class="card-header">
+              <div class="card-icon" style="background: linear-gradient(135deg, #28a745 0%, #20c997 100%);">
+                <i class="fas fa-clipboard-list"></i>
+              </div>
+              <span class="badge badge-success">Beginner</span>
+            </div>
+            <h3 class="card-title">Manual Testing Fundamentals</h3>
+            <p class="card-description">
+              Master the foundations of software testing. Learn SDLC, STLC, bug lifecycle,
+              test case writing, Jira workflow, and Agile/Scrum methodologies.
+            </p>
+            <div class="card-footer">
+              <div class="card-meta">
+                <span><i class="far fa-clock"></i> 8 hours</span>
+                <span><i class="far fa-file-alt"></i> 25 lessons</span>
+              </div>
+              <div class="module-progress">
+                <div class="progress-bar module-progress-bar" style="height: 6px;">
+                  <div class="progress-fill" style="width: 0%"></div>
+                </div>
+                <span class="module-progress-text text-xs text-muted">0% complete</span>
+              </div>
+            </div>
+            <a href="modules/manual-testing.html" class="stretched-link"></a>
+          </div>
+
+          <!-- Module 2: TestRail -->
+          <div class="card module-card" data-module-id="testrail" data-total-sections="12">
+            <div class="card-header">
+              <div class="card-icon" style="background: linear-gradient(135deg, #17a2b8 0%, #6610f2 100%);">
+                <i class="fas fa-trello"></i>
+              </div>
+              <span class="badge badge-info">Popular</span>
+            </div>
+            <h3 class="card-title">TestRail Complete Guide</h3>
+            <p class="card-description">
+              Learn TestRail from scratch. Projects, suites, test cases, runs,
+              milestones, plans, configurations, and professional reporting.
+            </p>
+            <div class="card-footer">
+              <div class="card-meta">
+                <span><i class="far fa-clock"></i> 6 hours</span>
+                <span><i class="far fa-file-alt"></i> 20 lessons</span>
+              </div>
+              <div class="module-progress">
+                <div class="progress-bar module-progress-bar" style="height: 6px;">
+                  <div class="progress-fill" style="width: 0%"></div>
+                </div>
+                <span class="module-progress-text text-xs text-muted">0% complete</span>
+              </div>
+            </div>
+            <a href="modules/testrail.html" class="stretched-link"></a>
+          </div>
+
+          <!-- Module 3: Swagger & APIs -->
+          <div class="card module-card" data-module-id="swagger" data-total-sections="14">
+            <div class="card-header">
+              <div class="card-icon" style="background: linear-gradient(135deg, #ff6b6b 0%, #ffa94d 100%);">
+                <i class="fas fa-code"></i>
+              </div>
+              <span class="badge badge-warning">Essential</span>
+            </div>
+            <h3 class="card-title">Swagger & API Testing</h3>
+            <p class="card-description">
+              Understanding APIs, REST architecture, Swagger UI, endpoints,
+              authentication, request/response validation, and real API testing workflows.
+            </p>
+            <div class="card-footer">
+              <div class="card-meta">
+                <span><i class="far fa-clock"></i> 7 hours</span>
+                <span><i class="far fa-file-alt"></i> 22 lessons</span>
+              </div>
+              <div class="module-progress">
+                <div class="progress-bar module-progress-bar" style="height: 6px;">
+                  <div class="progress-fill" style="width: 0%"></div>
+                </div>
+                <span class="module-progress-text text-xs text-muted">0% complete</span>
+              </div>
+            </div>
+            <a href="modules/swagger.html" class="stretched-link"></a>
+          </div>
+
+          <!-- Module 4: TypeScript -->
+          <div class="card module-card" data-module-id="typescript" data-total-sections="16">
+            <div class="card-header">
+              <div class="card-icon" style="background: linear-gradient(135deg, #0077cc 0%, #005fa3 100%);">
+                <i class="fas fa-file-code"></i>
+              </div>
+              <span class="badge badge-primary">Programming</span>
+            </div>
+            <h3 class="card-title">TypeScript for QA Engineers</h3>
+            <p class="card-description">
+              TypeScript fundamentals specifically tailored for QA. Variables, functions,
+              arrays, objects, interfaces, async/await, and Playwright integration.
+            </p>
+            <div class="card-footer">
+              <div class="card-meta">
+                <span><i class="far fa-clock"></i> 10 hours</span>
+                <span><i class="far fa-file-alt"></i> 30 lessons</span>
+              </div>
+              <div class="module-progress">
+                <div class="progress-bar module-progress-bar" style="height: 6px;">
+                  <div class="progress-fill" style="width: 0%"></div>
+                </div>
+                <span class="module-progress-text text-xs text-muted">0% complete</span>
+              </div>
+            </div>
+            <a href="modules/typescript.html" class="stretched-link"></a>
+          </div>
+
+          <!-- Module 5: Playwright -->
+          <div class="card module-card" data-module-id="playwright" data-total-sections="20">
+            <div class="card-header">
+              <div class="card-icon" style="background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);">
+                <i class="fab fa-playwright"></i>
+              </div>
+              <span class="badge badge-success">Most Popular</span>
+            </div>
+            <h3 class="card-title">Playwright Complete Course</h3>
+            <p class="card-description">
+              Master Playwright from installation to advanced automation. Locators,
+              assertions, fixtures, API testing, Page Object Model, and enterprise patterns.
+            </p>
+            <div class="card-footer">
+              <div class="card-meta">
+                <span><i class="far fa-clock"></i> 15 hours</span>
+                <span><i class="far fa-file-alt"></i> 40 lessons</span>
+              </div>
+              <div class="module-progress">
+                <div class="progress-bar module-progress-bar" style="height: 6px;">
+                  <div class="progress-fill" style="width: 0%"></div>
+                </div>
+                <span class="module-progress-text text-xs text-muted">0% complete</span>
+              </div>
+            </div>
+            <a href="modules/playwright.html" class="stretched-link"></a>
+          </div>
+
+          <!-- Module 6: WebdriverIO -->
+          <div class="card module-card" data-module-id="webdriverio" data-total-sections="12">
+            <div class="card-header">
+              <div class="card-icon" style="background: linear-gradient(135deg, #f59f00 0%, #d97706 100%);">
+                <i class="fas fa-robot"></i>
+              </div>
+              <span class="badge badge-warning">Automation</span>
+            </div>
+            <h3 class="card-title">WebdriverIO Framework</h3>
+            <p class="card-description">
+              Learn WebdriverIO setup, selectors, commands, waits, assertions,
+              test structure, hooks, reporting, and real automation examples.
+            </p>
+            <div class="card-footer">
+              <div class="card-meta">
+                <span><i class="far fa-clock"></i> 8 hours</span>
+                <span><i class="far fa-file-alt"></i> 22 lessons</span>
+              </div>
+              <div class="module-progress">
+                <div class="progress-bar module-progress-bar" style="height: 6px;">
+                  <div class="progress-fill" style="width: 0%"></div>
+                </div>
+                <span class="module-progress-text text-xs text-muted">0% complete</span>
+              </div>
+            </div>
+            <a href="modules/webdriverio.html" class="stretched-link"></a>
+          </div>
+
+          <!-- Module 7: Swagger + Postman -->
+          <div class="card module-card" data-module-id="swagger-postman" data-total-sections="10">
+            <div class="card-header">
+              <div class="card-icon" style="background: linear-gradient(135deg, #ff9800 0%, #f57c00 100%);">
+                <i class="fas fa-paper-plane"></i>
+              </div>
+              <span class="badge badge-warning">Integration</span>
+            </div>
+            <h3 class="card-title">Swagger + Postman Integration</h3>
+            <p class="card-description">
+              Import Swagger specs into Postman, collections, environments,
+              variables, authentication, assertions, and chained requests.
+            </p>
+            <div class="card-footer">
+              <div class="card-meta">
+                <span><i class="far fa-clock"></i> 5 hours</span>
+                <span><i class="far fa-file-alt"></i> 15 lessons</span>
+              </div>
+              <div class="module-progress">
+                <div class="progress-bar module-progress-bar" style="height: 6px;">
+                  <div class="progress-fill" style="width: 0%"></div>
+                </div>
+                <span class="module-progress-text text-xs text-muted">0% complete</span>
+              </div>
+            </div>
+            <a href="modules/swagger-postman.html" class="stretched-link"></a>
+          </div>
+
+          <!-- Module 8: Odoo ERP -->
+          <div class="card module-card" data-module-id="odoo" data-total-sections="10">
+            <div class="card-header">
+              <div class="card-icon" style="background: linear-gradient(135deg, #8e44ad 0%, #6c3483 100%);">
+                <i class="fas fa-building"></i>
+              </div>
+              <span class="badge badge-secondary">Specialized</span>
+            </div>
+            <h3 class="card-title">Odoo ERP Testing</h3>
+            <p class="card-description">
+              ERP basics, Odoo modules, workflows, users, permissions,
+              common QA scenarios, and functional testing strategies for Odoo.
+            </p>
+            <div class="card-footer">
+              <div class="card-meta">
+                <span><i class="far fa-clock"></i> 6 hours</span>
+                <span><i class="far fa-file-alt"></i> 18 lessons</span>
+              </div>
+              <div class="module-progress">
+                <div class="progress-bar module-progress-bar" style="height: 6px;">
+                  <div class="progress-fill" style="width: 0%"></div>
+                </div>
+                <span class="module-progress-text text-xs text-muted">0% complete</span>
+              </div>
+            </div>
+            <a href="modules/odoo.html" class="stretched-link"></a>
+          </div>
+
+          <!-- Module 9: Advanced Automation -->
+          <div class="card module-card" data-module-id="automation-advanced" data-total-sections="14">
+            <div class="card-header">
+              <div class="card-icon" style="background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);">
+                <i class="fas fa-rocket"></i>
+              </div>
+              <span class="badge badge-danger">Advanced</span>
+            </div>
+            <h3 class="card-title">Advanced Playwright + TS</h3>
+            <p class="card-description">
+              Enterprise-level automation architecture, Page Object Model, utility functions,
+              environment configs, CI/CD with GitHub Actions, and debugging.
+            </p>
+            <div class="card-footer">
+              <div class="card-meta">
+                <span><i class="far fa-clock"></i> 12 hours</span>
+                <span><i class="far fa-file-alt"></i> 35 lessons</span>
+              </div>
+              <div class="module-progress">
+                <div class="progress-bar module-progress-bar" style="height: 6px;">
+                  <div class="progress-fill" style="width: 0%"></div>
+                </div>
+                <span class="module-progress-text text-xs text-muted">0% complete</span>
+              </div>
+            </div>
+            <a href="modules/automation-advanced.html" class="stretched-link"></a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Prerequisites Section -->
+      <section id="prerequisites" class="mt-16">
+        <div class="page-header">
+          <h2 class="page-title">Prerequisites</h2>
+          <p class="page-subtitle">
+            What you need before starting this training program.
+          </p>
+        </div>
+
+        <div class="collapsible open" data-module="prerequisites" data-section="prereq-1">
+          <div class="collapsible-header">
+            <div class="collapsible-title">
+              <i class="fas fa-laptop"></i>
+              Computer Requirements
+            </div>
+            <div class="collapsible-icon">
+              <i class="fas fa-chevron-down"></i>
+            </div>
+          </div>
+          <div class="collapsible-content">
+            <div class="collapsible-body">
+              <ul style="list-style: disc; padding-left: 1.5rem; line-height: 1.8;">
+                <li><strong>Operating System:</strong> Windows 10/11, macOS 10.14+, or Ubuntu 18.04+</li>
+                <li><strong>RAM:</strong> Minimum 8GB (16GB recommended for heavy automation)</li>
+                <li><strong>Storage:</strong> At least 10GB free space for Node.js, browsers, and projects</li>
+                <li><strong>Processor:</strong> Any modern multi-core processor (Intel i5 / Ryzen 5 or better)</li>
+                <li><strong>Internet:</strong> Stable internet connection for downloading tools and dependencies</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="collapsible" data-module="prerequisites" data-section="prereq-2">
+          <div class="collapsible-header">
+            <div class="collapsible-title">
+              <i class="fas fa-brain"></i>
+              Knowledge Requirements
+            </div>
+            <div class="collapsible-icon">
+              <i class="fas fa-chevron-down"></i>
+            </div>
+          </div>
+          <div class="collapsible-content">
+            <div class="collapsible-body">
+              <div class="callout callout-info">
+                <div class="callout-icon"><i class="fas fa-info-circle"></i></div>
+                <div class="callout-content">
+                  <div class="callout-title">No Prior Experience Required!</div>
+                  <div class="callout-text">
+                    This training is designed for complete beginners. We'll teach you everything
+                    from the ground up. However, basic computer literacy and willingness to learn are essential.
+                  </div>
+                </div>
+              </div>
+              <h4 class="mt-4 mb-2 font-semibold">Helpful but Not Required:</h4>
+              <ul style="list-style: disc; padding-left: 1.5rem; line-height: 1.8;">
+                <li>Basic understanding of what software testing is</li>
+                <li>Familiarity with any programming language (even basic HTML/CSS)</li>
+                <li>Understanding of how websites and applications work</li>
+                <li>Any experience with command line/terminal</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="collapsible" data-module="prerequisites" data-section="prereq-3">
+          <div class="collapsible-header">
+            <div class="collapsible-title">
+              <i class="fas fa-download"></i>
+              Software to Install
+            </div>
+            <div class="collapsible-icon">
+              <i class="fas fa-chevron-down"></i>
+            </div>
+          </div>
+          <div class="collapsible-content">
+            <div class="collapsible-body">
+              <table class="mt-4">
+                <thead>
+                  <tr>
+                    <th>Software</th>
+                    <th>Purpose</th>
+                    <th>When Needed</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>Node.js 18+</strong></td>
+                    <td>Runtime for Playwright & TypeScript</td>
+                    <td>Module 4 (TypeScript)</td>
+                  </tr>
+                  <tr>
+                    <td><strong>VS Code</strong></td>
+                    <td>Code editor (recommended)</td>
+                    <td>Module 4 (TypeScript)</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Google Chrome</strong></td>
+                    <td>Browser for Playwright testing</td>
+                    <td>Module 5 (Playwright)</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Postman</strong></td>
+                    <td>API testing tool</td>
+                    <td>Module 3 (Swagger) & 7</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Git</strong></td>
+                    <td>Version control</td>
+                    <td>Module 9 (Advanced)</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Docker</strong> (optional)</td>
+                    <td>Containerization for complex setups</td>
+                    <td>Module 9 (Advanced)</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- How to Use Section -->
+      <section id="how-to-use" class="mt-16">
+        <div class="page-header">
+          <h2 class="page-title">How to Use This Training</h2>
+          <p class="page-subtitle">
+            Follow this recommended learning path to get the most out of your training.
+          </p>
+        </div>
+
+        <div class="collapsible open" data-module="how-to-use" data-section="htu-1">
+          <div class="collapsible-header">
+            <div class="collapsible-title">
+              <i class="fas fa-route"></i>
+              Recommended Learning Path
+            </div>
+            <div class="collapsible-icon">
+              <i class="fas fa-chevron-down"></i>
+            </div>
+          </div>
+          <div class="collapsible-content">
+            <div class="collapsible-body">
+              <div class="callout callout-success">
+                <div class="callout-icon"><i class="fas fa-lightbulb"></i></div>
+                <div class="callout-content">
+                  <div class="callout-title">Start Here!</div>
+                  <div class="callout-text">
+                    Follow this order for optimal learning. Each module builds on the previous one.
+                  </div>
+                </div>
+              </div>
+
+              <div class="mt-4" style="display: flex; flex-direction: column; gap: 1rem;">
+                <div class="flex items-center gap-4 p-4" style="background: var(--primary-50); border-radius: var(--radius-lg); border-left: 4px solid var(--primary);">
+                  <span class="badge badge-primary">Step 1</span>
+                  <span><strong>Manual Testing Fundamentals</strong> - Understand the testing basics first</span>
+                </div>
+                <div class="flex items-center gap-4 p-4" style="background: var(--info-50); border-radius: var(--radius-lg); border-left: 4px solid var(--info-500);">
+                  <span class="badge badge-info">Step 2</span>
+                  <span><strong>TestRail</strong> - Learn test case management and professional documentation</span>
+                </div>
+                <div class="flex items-center gap-4 p-4" style="background: var(--warning-50); border-radius: var(--radius-lg); border-left: 4px solid var(--warning-500);">
+                  <span class="badge badge-warning">Step 3</span>
+                  <span><strong>Swagger & API Testing</strong> - Understand APIs before automating them</span>
+                </div>
+                <div class="flex items-center gap-4 p-4" style="background: var(--gray-100); border-radius: var(--radius-lg); border-left: 4px solid var(--gray-500);">
+                  <span class="badge badge-gray">Step 4</span>
+                  <span><strong>TypeScript</strong> - Learn the programming language for automation</span>
+                </div>
+                <div class="flex items-center gap-4 p-4" style="background: var(--success-50); border-radius: var(--radius-lg); border-left: 4px solid var(--success-500);">
+                  <span class="badge badge-success">Step 5</span>
+                  <span><strong>Playwright</strong> - Put it all together with browser automation</span>
+                </div>
+                <div class="flex items-center gap-4 p-4" style="background: var(--secondary-100); border-radius: var(--radius-lg); border-left: 4px solid var(--secondary-500);">
+                  <span class="badge badge-secondary">Step 6+</span>
+                  <span><strong>Advanced Topics</strong> - WebdriverIO, CI/CD, Enterprise patterns</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="collapsible" data-module="how-to-use" data-section="htu-2">
+          <div class="collapsible-header">
+            <div class="collapsible-title">
+              <i class="fas fa-book-reader"></i>
+              Each Module Structure
+            </div>
+            <div class="collapsible-icon">
+              <i class="fas fa-chevron-down"></i>
+            </div>
+          </div>
+          <div class="collapsible-content">
+            <div class="collapsible-body">
+              <p class="mb-4">Every module follows this consistent structure for effective learning:</p>
+
+              <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+                <div class="card" style="padding: 1rem;">
+                  <div class="flex items-center gap-2 mb-2">
+                    <i class="fas fa-book text-primary"></i>
+                    <strong>Theory</strong>
+                  </div>
+                  <p class="text-sm text-secondary">Deep conceptual explanations with real-world examples</p>
+                </div>
+                <div class="card" style="padding: 1rem;">
+                  <div class="flex items-center gap-2 mb-2">
+                    <i class="fas fa-code text-success"></i>
+                    <strong>Examples</strong>
+                  </div>
+                  <p class="text-sm text-secondary">Simple → Intermediate → Advanced code examples</p>
+                </div>
+                <div class="card" style="padding: 1rem;">
+                  <div class="flex items-center gap-2 mb-2">
+                    <i class="fas fa-dumbbell text-warning"></i>
+                    <strong>Exercises</strong>
+                  </div>
+                  <p class="text-sm text-secondary">Hands-on practice challenges to reinforce learning</p>
+                </div>
+                <div class="card" style="padding: 1rem;">
+                  <div class="flex items-center gap-2 mb-2">
+                    <i class="fas fa-project-diagram text-info"></i>
+                    <strong>Mini Projects</strong>
+                  </div>
+                  <p class="text-sm text-secondary">Build real artifacts you can add to your portfolio</p>
+                </div>
+                <div class="card" style="padding: 1rem;">
+                  <div class="flex items-center gap-2 mb-2">
+                    <i class="fas fa-question-circle text-secondary"></i>
+                    <strong>Quizzes</strong>
+                  </div>
+                  <p class="text-sm text-secondary">Test your knowledge with interactive quizzes</p>
+                </div>
+                <div class="card" style="padding: 1rem;">
+                  <div class="flex items-center gap-2 mb-2">
+                    <i class="fas fa-user-tie text-primary"></i>
+                    <strong>Interview Prep</strong>
+                  </div>
+                  <p class="text-sm text-secondary">Real interview questions with detailed answers</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="collapsible" data-module="how-to-use" data-section="htu-3">
+          <div class="collapsible-header">
+            <div class="collapsible-title">
+              <i class="fas fa-gamepad"></i>
+              Interactive Playgrounds
+            </div>
+            <div class="collapsible-icon">
+              <i class="fas fa-chevron-down"></i>
+            </div>
+          </div>
+          <div class="collapsible-content">
+            <div class="collapsible-body">
+              <p class="mb-4">
+                Practice what you learn in our interactive playgrounds. These are safe environments
+                with intentionally included scenarios for testing practice:
+              </p>
+
+              <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem;">
+                <div class="card">
+                  <div class="card-header">
+                    <div class="card-icon" style="background: var(--primary-50); color: var(--primary);">
+                      <i class="fas fa-laptop-code"></i>
+                    </div>
+                  </div>
+                  <h4 class="card-title">Manual Testing Playground</h4>
+                  <p class="card-description">
+                    Practice bug reporting, test case execution, and exploratory testing
+                    on a mock web application.
+                  </p>
+                  <a href="playgrounds/manual-testing/" class="btn btn-outline btn-sm mt-3">
+                    <i class="fas fa-external-link-alt"></i> Open Playground
+                  </a>
+                </div>
+
+                <div class="card">
+                  <div class="card-header">
+                    <div class="card-icon" style="background: var(--warning-50); color: var(--warning-700);">
+                      <i class="fas fa-network-wired"></i>
+                    </div>
+                  </div>
+                  <h4 class="card-title">API Testing Playground</h4>
+                  <p class="card-description">
+                    Test mock APIs, practice request/response validation,
+                    and learn authentication patterns.
+                  </p>
+                  <a href="playgrounds/api-testing/" class="btn btn-outline btn-sm mt-3">
+                    <i class="fas fa-external-link-alt"></i> Open Playground
+                  </a>
+                </div>
+
+                <div class="card">
+                  <div class="card-header">
+                    <div class="card-icon" style="background: var(--success-50); color: var(--success-700);">
+                      <i class="fas fa-cogs"></i>
+                    </div>
+                  </div>
+                  <h4 class="card-title">Automation Playground</h4>
+                  <p class="card-description">
+                    Write and execute Playwright/TypeScript code in a live environment.
+                    See results instantly.
+                  </p>
+                  <a href="playgrounds/automation/" class="btn btn-outline btn-sm mt-3">
+                    <i class="fas fa-external-link-alt"></i> Open Playground
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Footer -->
+      <footer class="footer mt-16">
+        <div class="footer-content">
+          <div class="footer-links">
+            <a href="index.html" class="footer-link">Home</a>
+            <a href="#modules" class="footer-link">Modules</a>
+            <a href="#prerequisites" class="footer-link">Prerequisites</a>
+            <a href="#how-to-use" class="footer-link">How to Use</a>
+          </div>
+          <div class="footer-copyright">
+            QA Automation Training Ground &copy; 2024. Built for learning purposes.
+          </div>
+        </div>
+      </footer>
+    </div>
+  </main>
+
+  <!-- Scripts -->
+  <script src="js/app.js"></script>
+</body>
+</html>

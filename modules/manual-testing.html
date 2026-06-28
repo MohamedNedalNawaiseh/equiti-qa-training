@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manual Testing Fundamentals - Complete Guide</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/modules.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="module-page">
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2><i class="fas fa-clipboard-list"></i> Manual Testing</h2>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="#intro" class="nav-item active">Introduction</a>
+                <a href="#sdlc" class="nav-item">SDLC</a>
+                <a href="#stlc" class="nav-item">STLC</a>
+                <a href="#bug-lifecycle" class="nav-item">Bug Lifecycle</a>
+                <a href="#test-cases" class="nav-item">Test Cases</a>
+                <a href="#test-techniques" class="nav-item">Test Techniques</a>
+                <a href="#agile" class="nav-item">Agile & Scrum</a>
+                <a href="#jira" class="nav-item">Jira Workflow</a>
+                <a href="#exercises" class="nav-item">Exercises</a>
+                <a href="#quiz" class="nav-item">Quiz</a>
+                <a href="../index.html" class="nav-item" style="margin-top:1rem; border-top:1px solid var(--border-color); padding-top:1rem;">
+                    <i class="fas fa-home"></i> Back to Home
+                </a>
+            </nav>
+        </aside>
+
+        <main class="content">
+            <header class="content-header">
+                <h1><i class="fas fa-clipboard-list" style="color:var(--success)"></i> Manual Testing Fundamentals</h1>
+                <p>Master the foundations of software testing - from SDLC to bug reporting</p>
+            </header>
+
+            <section id="intro" class="module-section">
+                <h2>Introduction to Software Testing</h2>
+                <p>Software testing is the process of evaluating a software application to identify defects, verify functionality, and ensure it meets requirements. As a QA engineer, your role is to ensure quality before release.</p>
+
+                <div class="info-box">
+                    <h3>Why Testing Matters</h3>
+                    <ul>
+                        <li><strong>Quality Assurance:</strong> Delivers bug-free software to customers</li>
+                        <li><strong>Cost Savings:</strong> Finding bugs early is 10x cheaper than in production</li>
+                        <li><strong>Customer Satisfaction:</strong> Reliable software builds trust</li>
+                        <li><strong>Security:</strong> Prevents vulnerabilities and data breaches</li>
+                        <li><strong>Compliance:</strong> Meets industry standards and regulations</li>
+                    </ul>
+                </div>
+
+                <h3>Testing Types Overview</h3>
+                <table class="data-table">
+                    <thead>
+                        <tr><th>Type</th><th>Description</th><th>When</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><strong>Smoke Testing</strong></td><td>Quick checks if critical features work</td><td>After every build</td></tr>
+                        <tr><td><strong>Sanity Testing</strong></td><td>Focused tests on specific features</td><td>After bug fixes</td></tr>
+                        <tr><td><strong>Regression Testing</strong></td><td>Ensure existing features still work</td><td>Before releases</td></tr>
+                        <tr><td><strong>Functional Testing</strong></td><td>Test each feature against requirements</td><td>During test cycles</td></tr>
+                        <tr><td><strong>Integration Testing</strong></td><td>Test combined modules together</td><td>After unit tests</td></tr>
+                        <tr><td><strong>UAT</strong></td><td>User acceptance testing</td><td>Before production</td></tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section id="sdlc" class="module-section">
+                <h2>Software Development Life Cycle (SDLC)</h2>
+                <p>SDLC is the process of creating software from conception to deployment. Understanding SDLC helps you know when and how to test.</p>
+
+                <h3>SDLC Phases</h3>
+                <pre><code>┌─────────────┐    ┌─────────────┐    ┌─────────────┐    ┌─────────────┐
+│  Planning   │───▶│    Design   │───▶│ Development │───▶│   Testing   │
+│  & Analysis │    │             │    │             │    │             │
+└─────────────┘    └─────────────┘    └─────────────┘    └──────┬──────┘
+       │                                                           │
+       │    ┌─────────────┐    ┌─────────────┐    ┌──────────────┘
+       └───▶│  Deployment │◀───│  Fix Bugs   │◀───┘
+            │  & Maint.   │    │             │
+            └─────────────┘    └─────────────┘</code></pre>
+
+                <h3>Phase Details</h3>
+                <ul>
+                    <li><strong>1. Planning & Analysis:</strong> Requirements gathering, feasibility study, project plan</li>
+                    <li><strong>2. Design:</strong> System architecture, UI design, database design, test plan creation</li>
+                    <li><strong>3. Development:</strong> Coding, code reviews, unit testing</li>
+                    <li><strong>4. Testing:</strong> Test execution, bug reporting, regression testing</li>
+                    <li><strong>5. Deployment:</strong> Release to production, user training</li>
+                    <li><strong>6. Maintenance:</strong> Bug fixes, updates, performance monitoring</li>
+                </ul>
+
+                <h3>Testing in SDLC</h3>
+                <table class="data-table">
+                    <thead>
+                        <tr><th>SDLC Phase</th><th>Testing Activity</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Requirements</td><td>Review requirements for completeness and testability</td></tr>
+                        <tr><td>Design</td><td>Review test plans, identify testable items</td></tr>
+                        <tr><td>Development</td><td>Verify unit tests, prepare test data</td></tr>
+                        <tr><td>Testing</td><td>Execute test cases, report bugs</td></tr>
+                        <tr><td>Deployment</td><td>Final verification, smoke tests in production</td></tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section id="stlc" class="module-section">
+                <h2>Software Testing Life Cycle (STLC)</h2>
+                <p>STLC is the testing-specific process that runs parallel to SDLC. It has defined entry and exit criteria for each phase.</p>
+
+                <h3>STLC Phases</h3>
+                <pre><code>┌──────────────┐  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐
+│ Requirement  │  │   Test       │  │  Test Case   │  │ Environment  │
+│   Analysis   │──▶│   Planning   │──▶│ Development  │──▶│  Setup       │
+└──────┬───────┘  └──────┬───────┘  └──────┬───────┘  └──────┬───────┘
+       │                 │                 │                 │
+       ▼                 ▼                 ▼                 ▼
+┌──────────────┐  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐
+│ Test Case    │  │ Test Plan    │  │  Traceability│  │   Test Data  │
+│  Review      │  │  Creation    │  │   Matrix     │  │  Prepared    │
+└──────┬───────┘  └──────┬───────┘  └──────┬───────┘  └──────┬───────┘
+       │                 │                 │                 │
+       ▼                 ▼                 ▼                 ▼
+┌──────────────────────────────────────────────────────────────────┐
+│                      TEST EXECUTION PHASE                        │
+│  ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌──────────────────┐  │
+│  │  Test    │  │  Bug     │  │  Retest  │  │  Regression      │  │
+│  │  Execute │──▶│ Reporting│──▶& Confirm│──▶│  Testing         │  │
+│  └──────────┘  └──────────┘  └──────────┘  └──────────────────┘  │
+└──────────────────────────────────────────────────────────────────┘</code></pre>
+
+                <h3>STLC Phase Details</h3>
+                <ul>
+                    <li><strong>Requirement Analysis:</strong> Analyze requirements, identify testable features, prepare RTM</li>
+                    <li><strong>Test Planning:</strong> Create test plan, select testing types, estimate effort</li>
+                    <li><strong>Test Case Development:</strong> Write test cases, peer review, create test data</li>
+                    <li><strong>Environment Setup:</strong> Setup test environment, configure tools, prepare smoke tests</li>
+                    <li><strong>Test Execution:</strong> Execute tests, log defects, retest fixed bugs</li>
+                    <li><strong>Test Closure:</strong> Analyze results, prepare test summary report</li>
+                </ul>
+
+                <div class="info-box">
+                    <h3>Entry vs Exit Criteria</h3>
+                    <p><strong>Entry Criteria:</strong> Conditions that must be met before testing begins (e.g., test plan approved, test environment ready)</p>
+                    <p><strong>Exit Criteria:</strong> Conditions that must be met to conclude testing (e.g., all test cases executed, critical bugs fixed)</p>
+                </div>
+            </section>
+
+            <section id="bug-lifecycle" class="module-section">
+                <h2>Bug Lifecycle</h2>
+                <p>The bug lifecycle tracks a defect from discovery to resolution. Understanding this lifecycle is essential for effective bug reporting.</p>
+
+                <h3>Bug Lifecycle States</h3>
+                <pre><code>                    ┌─────────────────────────────────────────┐
+                    │                                         │
+                    ▼                                         │
+┌─────────┐    ┌─────────┐    ┌─────────┐    ┌─────────┐    │
+│  NEW    │───▶│  OPEN   │───▶│ ASSIGNED│───▶│  FIXED  │    │
+└─────────┘    └─────────┘    └─────────┘    └────┬────┘    │
+     │              │              │              │         │
+     │              │              │              ▼         │
+     │              │              │         ┌─────────┐    │
+     │              │              │         │ RETEST  │    │
+     │              │              │         └────┬────┘    │
+     │              │              │              │         │
+     │              │              │         ┌────┴────┐    │
+     │              │              │         ▼         ▼    │
+     │              │              │    ┌────────┐ ┌────────┐│
+     │              │              │    │ PASSED │ │ FAILED ││
+     │              │              │    └───┬────┘ └───┬────┘│
+     │              │              │        │         │      │
+     │              │              │        ▼         │      │
+     │              │              │    ┌────────┐    │      │
+     │              │              │    │CLOSED  │◀───┘      │
+     │              │              │    └────────┘          │
+     │              │              │              ┌─────────┘
+     │              │              │              │ REOPEN
+     │              │              │              ▼
+     │              │              │         ┌─────────┐
+     └──────────────┴──────────────┴────────▶│ REOPENED│
+                                              └─────────┘</code></pre>
+
+                <h3>Bug Status Definitions</h3>
+                <table class="data-table">
+                    <thead>
+                        <tr><th>Status</th><th>Description</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><strong>New</strong></td><td>Bug reported, awaiting review</td></tr>
+                        <tr><td><strong>Open</strong></td><td>Bug confirmed and accepted</td></tr>
+                        <tr><td><strong>Assigned</strong></td><td>Bug assigned to developer for fix</td></tr>
+                        <tr><td><strong>Fixed</strong></td><td>Developer has implemented the fix</td></tr>
+                        <tr><td><strong>Retest</strong></td><td>QA verifying the fix</td></tr>
+                        <tr><td><strong>Closed</strong></td><td>Fix verified and approved</td></tr>
+                        <tr><td><strong>Reopened</strong></td><td>Fix did not resolve the issue</td></tr>
+                        <tr><td><strong>Rejected</strong></td><td>Not a bug or duplicate</td></tr>
+                        <tr><td><strong>Deferred</strong></td><td>Will not be fixed in current release</td></tr>
+                    </tbody>
+                </table>
+
+                <h3>Bug Report Anatomy</h3>
+                <pre><code>BUG REPORT - Example
+═══════════════════════════════════════════════════════════════
+ID:            BUG-001
+Title:         Login fails when password contains special character @
+Severity:      High (blocks login for affected users)
+Priority:      P1 (must fix before release)
+Environment:   Chrome 120, Windows 11, iPhone 14 Safari
+Project:       E-Commerce Web App
+Module:        Authentication > Login
+Test Date:     January 15, 2024
+Tester:        Ahmed Hassan
+
+STEPS TO REPRODUCE:
+1. Navigate to https://app.example.com/login
+2. Enter username: testuser@example.com
+3. Enter password: Password@123
+4. Click "Sign In" button
+
+ACTUAL RESULT:
+Error message displayed: "Invalid credentials" even though
+the password is correct. User cannot login.
+
+EXPECTED RESULT:
+User should be successfully logged in and redirected to
+the dashboard.
+
+ATTACHMENTS:
+- Screenshot of error message: bug-001-screenshot.png
+- Screen recording: bug-001-recording.webm
+- Console logs: bug-001-console.log
+
+RELATED BUGS: BUG-042 (same issue with password field)
+NOTES: Issue reproduced 3/5 times. Intermittent behavior.</code></pre>
+            </section>
+
+            <section id="test-cases" class="module-section">
+                <h2>Writing Test Cases</h2>
+                <p>A test case is a document that describes a specific test scenario, including inputs, actions, and expected results. Well-written test cases are crucial for effective testing.</p>
+
+                <h3>Test Case Template</h3>
+                <table class="data-table">
+                    <thead>
+                        <tr><th>Field</th><th>Description</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><strong>Test Case ID</strong></td><td>Unique identifier (e.g., TC-LOGIN-001)</td></tr>
+                        <tr><td><strong>Test Description</strong></td><td>What the test verifies</td></tr>
+                        <tr><td><strong>Prerequisites</strong></td><td>Pre-conditions that must be met</td></tr>
+                        <tr><td><strong>Test Steps</strong></td><td>Step-by-step instructions</td></tr>
+                        <tr><td><strong>Test Data</strong></td><td>Data to use in the test</td></tr>
+                        <tr><td><strong>Expected Result</strong></td><td>What should happen</td></tr>
+                        <tr><td><strong>Actual Result</strong></td><td>What actually happened (filled during execution)</td></tr>
+                        <tr><td><strong>Status</strong></td><td>Pass/Fail/Blocked</td></tr>
+                        <tr><td><strong>Priority</strong></td><td>P0, P1, P2, P3 (P0 = highest)</td></tr>
+                    </tbody>
+                </table>
+
+                <h3>Good vs Bad Test Case Examples</h3>
+                <div class="tips-grid">
+                    <div class="tip-card" style="border-left: 4px solid var(--success);">
+                        <h4 style="color: var(--success);">✅ GOOD Test Case</h4>
+                        <pre style="font-size: 0.8rem; white-space: pre-wrap;"><strong>ID:</strong> TC-LOGIN-001
+<strong>Title:</strong> Verify user can login with valid credentials
+
+<strong>Prerequisites:</strong>
+- User must be registered with valid email and password
+- Application must be accessible
+
+<strong>Steps:</strong>
+1. Navigate to login page
+2. Enter "testuser@example.com" in email field
+3. Enter "Test@123" in password field
+4. Click "Sign In" button
+
+<strong>Expected Result:</strong>
+User should be logged in successfully and
+redirected to dashboard within 3 seconds.
+Welcome message should display "Welcome, Test User"</pre>
+                    </div>
+                    <div class="tip-card" style="border-left: 4px solid var(--error);">
+                        <h4 style="color: var(--error);">❌ BAD Test Case</h4>
+                        <pre style="font-size: 0.8rem; white-space: pre-wrap;"><strong>ID:</strong> TC-LOGIN-002
+<strong>Title:</strong> Login test
+
+<strong>Steps:</strong>
+1. Go to login page
+2. Enter some credentials
+3. Click login
+
+<strong>Expected Result:</strong>
+It should work</pre>
+                    </div>
+                </div>
+
+                <h3>Test Case Design Techniques</h3>
+                <ul>
+                    <li><strong>Equivalence Partitioning:</strong> Divide inputs into groups that behave similarly</li>
+                    <li><strong>Boundary Value Analysis:</strong> Test edge cases (min, max, just inside, just outside)</li>
+                    <li><strong>Decision Table Testing:</strong> Test combinations of conditions</li>
+                    <li><strong>State Transition Testing:</strong> Test how the system changes states</li>
+                    <li><strong>Error Guessing:</strong> Use experience to guess where bugs might occur</li>
+                </ul>
+            </section>
+
+            <section id="test-techniques" class="module-section">
+                <h2>Testing Techniques</h2>
+
+                <h3>1. Black Box Testing</h3>
+                <p>Testing based on requirements without knowing internal code structure. Focus on inputs and outputs.</p>
+
+                <h3>2. White Box Testing</h3>
+                <p>Testing with knowledge of internal code structure. Used by developers for unit testing.</p>
+
+                <h3>3. Gray Box Testing</h3>
+                <p>Combination of black and white box. Tester has limited knowledge of internals.</p>
+
+                <h3>Exploratory Testing</h3>
+                <p>Simultaneous learning, test design, and execution. Particularly useful when:</p>
+                <ul>
+                    <li>Documentation is incomplete</li>
+                    <li>Time is limited</li>
+                    <li>Exploring a new feature</li>
+                    <li>Finding unexpected bugs</li>
+                </ul>
+                <pre><code>CHARTER FOR EXPLORATORY SESSION:
+"Explore the checkout flow to verify discount codes
+are applied correctly to the final total"
+
+TIMEBOX: 30 minutes
+COVERAGE AREAS:
+- Apply valid discount code
+- Apply invalid discount code
+- Expired discount code
+- Multiple discount codes
+- Discount code case sensitivity</code></pre>
+            </section>
+
+            <section id="agile" class="module-section">
+                <h2>Agile & Scrum for QA</h2>
+                <p>Most modern software development uses Agile methodologies. Understanding Agile is essential for QA engineers.</p>
+
+                <h3>Agile Manifesto Principles</h3>
+                <ul>
+                    <li>Individuals and interactions over processes and tools</li>
+                    <li>Working software over comprehensive documentation</li>
+                    <li>Customer collaboration over contract negotiation</li>
+                    <li>Responding to change over following a plan</li>
+                </ul>
+
+                <h3>Scrum Roles</h3>
+                <table class="data-table">
+                    <thead>
+                        <tr><th>Role</th><th>Responsibility</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><strong>Product Owner</strong></td><td>Owns the backlog, prioritizes features, defines requirements</td></tr>
+                        <tr><td><strong>Scrum Master</strong></td><td>Facilitates Scrum events, removes impediments</td></tr>
+                        <tr><td><strong>Development Team</strong></td><td>Cross-functional team including QA, devs, designers</td></tr>
+                    </tbody>
+                </table>
+
+                <h3>Scrum Events</h3>
+                <ul>
+                    <li><strong>Sprint Planning:</strong> Plan work for the sprint (2 weeks)</li>
+                    <li><strong>Daily Standup:</strong> 15-minute sync, what did I do, what will I do, blockers?</li>
+                    <li><strong>Sprint Review:</strong> Demo completed work to stakeholders</li>
+                    <li><strong>Sprint Retrospective:</strong> Team reflection on how to improve</li>
+                </ul>
+
+                <h3>QA in Agile</h3>
+                <pre><code>═══════════════════════════════════════════════════
+AGILE QA ENGINEER RESPONSIBILITIES
+═══════════════════════════════════════════════════
+•参与 backlog refinement 和 sprint planning
+•创建和审查 user stories 的 acceptance criteria
+•在开发过程中进行持续测试
+•自动化重复的测试（CI/CD 集成）
+•与开发人员紧密合作进行 bug 调查
+•参与 sprint review 演示测试结果
+•持续改进测试流程和实践
+═══════════════════════════════════════════════════</code></pre>
+            </section>
+
+            <section id="jira" class="module-section">
+                <h2>Jira Workflow for QA</h2>
+                <p>Jira is the most popular issue tracking tool. Understanding Jira workflows is essential for bug reporting and tracking.</p>
+
+                <h3>Typical Jira Workflow</h3>
+                <pre><code>To Do → In Progress → In Review → Testing → Done
+  │          │              │          │
+  │          │              │          └── QA verifies fix
+  │          │              │
+  │          │              └── Dev reviews code
+  │          │
+  │          └── Developer working on fix
+  │
+  └── Newly created issue</code></pre>
+
+                <h3>Issue Types in Jira</h3>
+                <ul>
+                    <li><strong>Epic:</strong> Large feature spanning multiple sprints</li>
+                    <li><strong>Story:</strong> User-facing feature with business value</li>
+                    <li><strong>Task:</strong> Technical work not user-facing</li>
+                    <li><strong>Bug:</strong> Defect in existing functionality</li>
+                    <li><strong>Subtask:</strong> Breakdown of larger issues</li>
+                </ul>
+
+                <h3>Creating a Good Bug Ticket</h3>
+                <pre><code>Summary: [What] happens when [Trigger]
+             "Login fails when password contains @ symbol"
+
+Steps to Reproduce:
+1. Navigate to login page
+2. Enter valid username
+3. Enter password with @ symbol (e.g., Pass@word123)
+4. Click Sign In
+
+Expected: User should login successfully
+Actual: Error "Invalid credentials" displayed
+
+Environment: Chrome 120, Windows 11
+Severity: Major (affects users with @ in password)
+Priority: High
+Attachments: screenshot, logs, video</code></pre>
+            </section>
+
+            <section id="exercises" class="module-section">
+                <h2>Hands-On Exercises</h2>
+
+                <div class="exercise">
+                    <h3>Exercise 1: Create Test Cases for Login</h3>
+                    <p><strong>Task:</strong> Create comprehensive test cases for a login feature:</p>
+                    <ul>
+                        <li>Valid login with correct credentials</li>
+                        <li>Invalid username (non-existent)</li>
+                        <li>Invalid password (wrong)</li>
+                        <li>Empty username field</li>
+                        <li>Empty password field</li>
+                        <li>SQL injection attempt</li>
+                        <li>XSS attack attempt</li>
+                        <li>Case sensitivity in password</li>
+                        <li>Session timeout handling</li>
+                        <li>Remember me functionality</li>
+                    </ul>
+                    <p><strong>Deliverable:</strong> Document 10 test cases with all fields from the template.</p>
+                </div>
+
+                <div class="exercise">
+                    <h3>Exercise 2: Bug Reporting Practice</h3>
+                    <p><strong>Task:</strong> Review the following scenario and create a bug report:</p>
+                    <p><em>"When searching for products on the e-commerce site, if you type a very long search query (more than 100 characters), the search results page shows a blank white screen instead of an error message or truncation."></em></p>
+                </div>
+
+                <div class="exercise">
+                    <h3>Exercise 3: Agile Scenario</h3>
+                    <p><strong>Task:</strong> You're a QA engineer in a 2-week sprint. The team committed to 5 user stories. On day 8, you discover a critical bug that will take 3 days to fix properly. What would you do?</p>
+                    <ul>
+                        <li>How would you communicate this?</li>
+                        <li>What would you prioritize?</li>
+                        <li>How would you work with the team?</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section id="quiz" class="module-section">
+                <h2>Knowledge Quiz</h2>
+                
+                <div class="quiz-container">
+                    <div class="quiz-question" data-correct="b">
+                        <h4>Question 1: Which testing type is performed first?</h4>
+                        <div class="quiz-options">
+                            <label><input type="radio" name="q1" value="a"> Regression Testing</label>
+                            <label><input type="radio" name="q1" value="b"> Smoke Testing</label>
+                            <label><input type="radio" name="q1" value="c"> System Testing</label>
+                            <label><input type="radio" name="q1" value="d"> UAT</label>
+                        </div>
+                    </div>
+
+                    <div class="quiz-question" data-correct="c">
+                        <h4>Question 2: What is the correct order of SDLC phases?</h4>
+                        <div class="quiz-options">
+                            <label><input type="radio" name="q2" value="a"> Development → Planning → Testing → Design</label>
+                            <label><input type="radio" name="q2" value="b"> Planning → Testing → Development → Design</label>
+                            <label><input type="radio" name="q2" value="c"> Planning → Design → Development → Testing</label>
+                            <label><input type="radio" name="q2" value="d"> Design → Planning → Development → Testing</label>
+                        </div>
+                    </div>
+
+                    <div class="quiz-question" data-correct="a">
+                        <h4>Question 3: A bug is assigned to a developer. What is the next status?</h4>
+                        <div class="quiz-options">
+                            <label><input type="radio" name="q3" value="a"> Assigned</label>
+                            <label><input type="radio" name="q3" value="b"> Closed</label>
+                            <label><input type="radio" name="q3" value="c"> New</label>
+                            <label><input type="radio" name="q3" value="d"> Retest</label>
+                        </div>
+                    </div>
+
+                    <div class="quiz-question" data-correct="d">
+                        <h4>Question 4: Which is NOT a black-box testing technique?</h4>
+                        <div class="quiz-options">
+                            <label><input type="radio" name="q4" value="a"> Equivalence Partitioning</label>
+                            <label><input type="radio" name="q4" value="b"> Boundary Value Analysis</label>
+                            <label><input type="radio" name="q4" value="c"> Decision Table Testing</label>
+                            <label><input type="radio" name="q4" value="d"> Code coverage testing</label>
+                        </div>
+                    </div>
+
+                    <div class="quiz-question" data-correct="b">
+                        <h4>Question 5: In Agile, who prioritizes the backlog?</h4>
+                        <div class="quiz-options">
+                            <label><input type="radio" name="q5" value="a"> QA Engineer</label>
+                            <label><input type="radio" name="q5" value="b"> Product Owner</label>
+                            <label><input type="radio" name="q5" value="c"> Scrum Master</label>
+                            <label><input type="radio" name="q5" value="d"> Development Team</label>
+                        </div>
+                    </div>
+
+                    <button class="btn-primary" onclick="checkQuiz()">Submit Answers</button>
+                    <div id="quiz-results" class="quiz-results"></div>
+                </div>
+            </section>
+
+            <footer class="content-footer">
+                <p>Manual Testing Fundamentals | <a href="../index.html">Back to Home</a></p>
+                <p>Next: <a href="testrail.html">TestRail Training</a></p>
+            </footer>
+        </main>
+    </div>
+
+    <script src="../js/app.js"></script>
+    <script>
+        function checkQuiz() {
+            const questions = document.querySelectorAll('.quiz-question');
+            let correct = 0;
+            questions.forEach((q, index) => {
+                const selected = q.querySelector('input[name="q' + (index + 1) + '"]:checked');
+                const options = q.querySelectorAll('.quiz-options label');
+                options.forEach(opt => opt.classList.remove('correct', 'incorrect'));
+                if (selected) {
+                    const parentLabel = selected.closest('label');
+                    if (selected.value === q.dataset.correct) {
+                        correct++;
+                        parentLabel.classList.add('correct');
+                    } else {
+                        parentLabel.classList.add('incorrect');
+                        q.querySelector('input[value="' + q.dataset.correct + '"]').closest('label').classList.add('correct');
+                    }
+                } else {
+                    q.querySelector('input[value="' + q.dataset.correct + '"]').closest('label').classList.add('correct');
+                }
+            });
+            const percentage = Math.round((correct / questions.length) * 100);
+            document.getElementById('quiz-results').innerHTML = `<h4>Results: ${correct}/${questions.length} (${percentage}%)</h4><p>${percentage >= 80 ? 'Excellent!' : percentage >= 60 ? 'Good job!' : 'Keep learning!'}</p>`;
+            document.getElementById('quiz-results').style.display = 'block';
+        }
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
+                if (href.startsWith('#')) {
+                    e.preventDefault();
+                    document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

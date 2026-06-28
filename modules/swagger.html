@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Swagger & API Testing - Complete Guide</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/modules.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="module-page">
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2><i class="fas fa-code"></i> Swagger & APIs</h2>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="#intro" class="nav-item active">Introduction</a>
+                <a href="#what-is-api" class="nav-item">What is an API?</a>
+                <a href="#rest-apis" class="nav-item">REST APIs</a>
+                <a href="#swagger-ui" class="nav-item">Swagger UI</a>
+                <a href="#endpoints" class="nav-item">Endpoints & Methods</a>
+                <a href="#requests" class="nav-item">Request/Response</a>
+                <a href="#authentication" class="nav-item">Authentication</a>
+                <a href="#params" class="nav-item">Parameters</a>
+                <a href="#testing" class="nav-item">API Testing</a>
+                <a href="#exercises" class="nav-item">Exercises</a>
+                <a href="#quiz" class="nav-item">Quiz</a>
+                <a href="../index.html" class="nav-item" style="margin-top:1rem; border-top:1px solid var(--border-color); padding-top:1rem;">
+                    <i class="fas fa-home"></i> Back to Home
+                </a>
+            </nav>
+        </aside>
+
+        <main class="content">
+            <header class="content-header">
+                <h1><i class="fas fa-code" style="color:var(--primary)"></i> Swagger & API Testing Complete Guide</h1>
+                <p>Master API fundamentals, Swagger documentation, and REST API testing</p>
+            </header>
+
+            <section id="intro" class="module-section">
+                <h2>Introduction to APIs</h2>
+                <p>APIs (Application Programming Interfaces) are the backbone of modern software development. As a QA engineer, understanding APIs is essential for effective testing and automation.</p>
+                
+                <div class="info-box">
+                    <h3>Why APIs Matter for QA</h3>
+                    <ul>
+                        <li>APIs handle critical business logic - most bugs originate here</li>
+                        <li>API testing is faster and more reliable than UI testing</li>
+                        <li>You can test functionality before the UI is built</li>
+                        <li>API defects are often security vulnerabilities</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section id="what-is-api" class="module-section">
+                <h2>What is an API?</h2>
+                <p>An API is a set of rules and protocols that allows different software applications to communicate with each other. Think of it as a waiter in a restaurant - you (the user) place an order, and the waiter (API) brings the food (data) from the kitchen (server).</p>
+
+                <h3>Real-World API Example</h3>
+                <pre><code>User clicks "Get Weather" in an app
+    ↓
+App sends request to Weather API: GET /weather?city=Amman
+    ↓
+API server processes request
+    ↓
+API returns: { "temperature": 28, "condition": "Sunny", "humidity": 45 }
+    ↓
+App displays weather information</code></pre>
+
+                <h3>API vs Web UI</h3>
+                <table class="data-table">
+                    <thead>
+                        <tr><th>Aspect</th><th>Web UI</th><th>API</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Interface</td><td>Graphical buttons/forms</td><td>URL endpoints</td></tr>
+                        <tr><td>Communication</td><td>Human-readable</td><td>Machine-readable (JSON/XML)</td></tr>
+                        <tr><td>Speed</td><td>Slower (renders visuals)</td><td>Faster (data only)</td></tr>
+                        <tr><td>Testing Focus</td><td>UX, visual bugs</td><td>Business logic, data</td></tr>
+                        <tr><td>Automation</td><td>Harder (needs browser)</td><td>Easier (HTTP requests)</td></tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section id="rest-apis" class="module-section">
+                <h2>REST APIs</h2>
+                <p>REST (Representational State Transfer) is the most common API architecture. REST APIs use standard HTTP methods to perform operations.</p>
+
+                <h3>HTTP Methods</h3>
+                <table class="data-table">
+                    <thead>
+                        <tr><th>Method</th><th>Purpose</th><th>Example</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><strong>GET</strong></td><td>Retrieve data</td><td>GET /users - Get all users</td></tr>
+                        <tr><td><strong>POST</strong></td><td>Create new data</td><td>POST /users - Create new user</td></tr>
+                        <tr><td><strong>PUT</strong></td><td>Update existing data</td><td>PUT /users/5 - Update user ID 5</td></tr>
+                        <tr><td><strong>PATCH</strong></td><td>Partial update</td><td>PATCH /users/5 - Update some fields</td></tr>
+                        <tr><td><strong>DELETE</strong></td><td>Delete data</td><td>DELETE /users/5 - Delete user 5</td></tr>
+                    </tbody>
+                </table>
+
+                <h3>HTTP Status Codes</h3>
+                <div class="status-grid">
+                    <div class="status-item status-passed">200 OK</div>
+                    <div class="status-item status-passed">201 Created</div>
+                    <div class="status-item status-untested">400 Bad Request</div>
+                    <div class="status-item status-failed">401 Unauthorized</div>
+                    <div class="status-item status-failed">403 Forbidden</div>
+                    <div class="status-item status-blocked">404 Not Found</div>
+                    <div class="status-item status-retest">500 Server Error</div>
+                </div>
+
+                <h3>Status Code Categories</h3>
+                <ul>
+                    <li><strong>1xx:</strong> Informational (request received, continuing)</li>
+                    <li><strong>2xx:</strong> Success (request successfully received and accepted)</li>
+                    <li><strong>3xx:</strong> Redirection (further action needed)</li>
+                    <li><strong>4xx:</strong> Client Error (bad syntax or cannot be fulfilled)</li>
+                    <li><strong>5xx:</strong> Server Error (server failed to fulfill valid request)</li>
+                </ul>
+            </section>
+
+            <section id="swagger-ui" class="module-section">
+                <h2>Swagger UI</h2>
+                <p>Swagger UI is an interactive documentation tool that lets you explore and test APIs directly from your browser. It reads the OpenAPI specification and generates a visual interface.</p>
+
+                <h3>Swagger UI Features</h3>
+                <ul>
+                    <li><strong>Interactive Documentation:</strong> See all endpoints with descriptions</li>
+                    <li><strong>Try It Out:</strong> Execute API calls directly from the browser</li>
+                    <li><strong>Request Builder:</strong> Easily fill in parameters and body data</li>
+                    <li><strong>Response Viewer:</strong> View formatted responses with status codes</li>
+                    <li><strong>Authentication:</strong> Support for various auth methods</li>
+                </ul>
+
+                <h3>Reading Swagger Documentation</h3>
+                <pre><code>{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "E-Commerce API",
+    "version": "1.0.0",
+    "description": "API for online store operations"
+  },
+  "servers": [
+    { "url": "https://api.example.com/v1" }
+  ],
+  "paths": {
+    "/products": {
+      "get": {
+        "summary": "Get all products",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Product" }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}</code></pre>
+            </section>
+
+            <section id="endpoints" class="module-section">
+                <h2>Endpoints & URL Structure</h2>
+                <p>An endpoint is a specific URL where an API can be accessed. Each endpoint corresponds to a specific resource or operation.</p>
+
+                <h3>URL Structure</h3>
+                <pre><code>https://api.example.com/v1/products/123?format=json&lang=en
+\____/  \________/ \__/ \_______/ \__/ \_________/\________/
+  |          |       |      |       |        |         |
+ Scheme   Domain   Version Endpoint  ID    Query     Query
+                                                   Parameter Value</code></pre>
+
+                <h3>Common Endpoint Patterns</h3>
+                <pre><code># Collection endpoints
+GET    /users          # Get all users
+POST   /users          # Create new user
+
+# Single resource endpoints
+GET    /users/123      # Get user with ID 123
+PUT    /users/123      # Full update of user 123
+PATCH  /users/123      # Partial update of user 123
+DELETE /users/123      # Delete user 123
+
+# Nested resources
+GET    /users/123/orders     # Get orders for user 123
+GET    /users/123/orders/5   # Get order 5 for user 123</code></pre>
+            </section>
+
+            <section id="requests" class="module-section">
+                <h2>Request & Response Structure</h2>
+                
+                <h3>Request Components</h3>
+                <ul>
+                    <li><strong>URL:</strong> The endpoint address</li>
+                    <li><strong>Method:</strong> GET, POST, PUT, PATCH, DELETE</li>
+                    <li><strong>Headers:</strong> Metadata (Content-Type, Authorization, etc.)</li>
+                    <li><strong>Query Parameters:</strong> Optional filters in URL (?page=1&limit=10)</li>
+                    <li><strong>Path Parameters:</strong> Resource identifiers in URL (/users/123)</li>
+                    <li><strong>Body:</strong> Data sent with request (for POST/PUT/PATCH)</li>
+                </ul>
+
+                <h3>Request Example</h3>
+                <pre><code>POST https://api.example.com/v1/users
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIs...
+
+{
+  "name": "Ahmed Hassan",
+  "email": "ahmed@example.com",
+  "role": "tester",
+  "department": "QA"
+}</code></pre>
+
+                <h3>Response Structure</h3>
+                <pre><code>HTTP/1.1 201 Created
+Content-Type: application/json
+X-Request-ID: abc123
+Cache-Control: no-cache
+
+{
+  "id": 456,
+  "name": "Ahmed Hassan",
+  "email": "ahmed@example.com",
+  "role": "tester",
+  "department": "QA",
+  "createdAt": "2024-01-15T10:30:00Z",
+  "updatedAt": "2024-01-15T10:30:00Z"
+}</code></pre>
+
+                <h3>Common Data Formats</h3>
+                <table class="data-table">
+                    <thead>
+                        <tr><th>Format</th><th>MIME Type</th><th>Usage</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>JSON</td><td>application/json</td><td>Most common, human-readable</td></tr>
+                        <tr><td>XML</td><td>application/xml</td><td>Legacy systems, some enterprise</td></tr>
+                        <tr><td>HTML</td><td>text/html</td><td>Web pages</td></tr>
+                        <tr><td>Plain Text</td><td>text/plain</td><td>Simple string responses</td></tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section id="authentication" class="module-section">
+                <h2>Authentication</h2>
+                <p>APIs use various authentication methods to secure endpoints and identify users.</p>
+
+                <h3>Common Auth Methods</h3>
+                
+                <h4>1. API Key</h4>
+                <pre><code># API key passed in header
+X-API-Key: your-api-key-here
+
+# Or as query parameter
+GET /users?api_key=your-api-key-here</code></pre>
+
+                <h4>2. Bearer Token (JWT)</h4>
+                <pre><code>Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+# JWT has 3 parts: header.payload.signature</code></pre>
+
+                <h4>3. Basic Auth</h4>
+                <pre><code>Authorization: Basic base64(email:password)
+# e.g., Basic dXNlckBleGFtcGxlLmNvbTpwYXNzd29yZA==</code></pre>
+
+                <h4>4. OAuth 2.0</h4>
+                <pre><code># Authorization flow
+1. Redirect user to: https://auth.example.com/authorize?client_id=...&redirect_uri=...
+2. User logs in and grants permission
+3. Server redirects back with: ?code=authorization_code
+4. Exchange code for token:
+   POST /token
+   { "grant_type": "authorization_code", "code": "...", "client_secret": "..." }
+5. Receive access token</code></pre>
+
+                <div class="info-box">
+                    <h3>Testing Auth APIs</h3>
+                    <p>Always test both positive (valid credentials) and negative (invalid/expired/missing tokens) authentication scenarios.</p>
+                </div>
+            </section>
+
+            <section id="params" class="module-section">
+                <h2>Parameters: Query, Path, and Body</h2>
+
+                <h3>Query Parameters</h3>
+                <pre><code># Optional filters and pagination
+GET /users?role=admin&status=active&page=2&limit=20
+
+GET /products?category=electronics&price_min=100&price_max=500&sort=price_asc</code></pre>
+
+                <h3>Path Parameters</h3>
+                <pre><code># Required resource identifiers
+GET /users/123
+GET /orders/456/items
+GET /products/789/reviews
+
+# Multiple path parameters
+GET /companies/1/departments/5/employees</code></pre>
+
+                <h3>Request Body Parameters</h3>
+                <pre><code>POST /users
+Content-Type: application/json
+
+{
+  "name": "Required field",
+  "email": "Must be valid email",
+  "age": 25,           // number
+  "tags": ["qa","api"], // array
+  "metadata": {         // nested object
+    "source": "web",
+    "referral": "google"
+  }
+}</code></pre>
+
+                <h3>Swagger Parameter Specification</h3>
+                <pre><code>parameters:
+  - name: userId       # Parameter name
+    in: path          # Location: path, query, header, cookie
+    required: true    # Is it mandatory?
+    schema:
+      type: integer
+    description: "The unique user identifier"
+    
+  - name: page
+    in: query
+    required: false
+    schema:
+      type: integer
+      default: 1
+    description: "Page number for pagination"</code></pre>
+            </section>
+
+            <section id="testing" class="module-section">
+                <h2>API Testing Strategies</h2>
+
+                <h3>Test Categories</h3>
+                <ul>
+                    <li><strong>Functional Testing:</strong> Does the API work as expected?</li>
+                    <li><strong>Schema Validation:</strong> Does response match the expected structure?</li>
+                    <li><strong>Boundary Testing:</strong> Edge cases like empty strings, max lengths</li>
+                    <li><strong>Security Testing:</strong> Auth, authorization, data exposure</li>
+                    <li><strong>Performance Testing:</strong> Response time under load</li>
+                    <li><strong>Error Handling:</strong> Invalid inputs, server errors</li>
+                </ul>
+
+                <h3>Example Test Cases</h3>
+                <pre><code>TEST CASE: TC-API-001 - Get User by Valid ID
+------------------------------------------
+Request:  GET /users/123
+Expected: 
+  - Status: 200 OK
+  - Body contains: { "id": 123, "name": "...", "email": "..." }
+  - Response time < 500ms
+
+TEST CASE: TC-API-002 - Get User by Invalid ID
+----------------------------------------------
+Request:  GET /users/999999
+Expected:
+  - Status: 404 Not Found
+  - Body contains: { "error": "User not found", "code": 404 }
+
+TEST CASE: TC-API-003 - Create User with Missing Required Fields
+----------------------------------------------------------------
+Request:  POST /users
+          Body: { "name": "Test" }  // missing email
+Expected:
+  - Status: 400 Bad Request
+  - Body contains: { "error": "Email is required" }
+
+TEST CASE: TC-API-004 - Create User with Invalid Email
+------------------------------------------------------
+Request:  POST /users
+          Body: { "name": "Test", "email": "not-an-email" }
+Expected:
+  - Status: 400 Bad Request
+  - Body contains: { "error": "Invalid email format" }</code></pre>
+
+                <h3>API Testing Best Practices</h3>
+                <div class="tips-grid">
+                    <div class="tip-card">
+                        <h4>Test Independently</h4>
+                        <p>Each test should setup its own data and clean up after</p>
+                    </div>
+                    <div class="tip-card">
+                        <h4>Validate Schema</h4>
+                        <p>Always check response structure matches the contract</p>
+                    </div>
+                    <div class="tip-card">
+                        <h4>Test Edge Cases</h4>
+                        <p>Empty arrays, null values, max lengths, special characters</p>
+                    </div>
+                    <div class="tip-card">
+                        <h4>Chain Requests</h4>
+                        <p>Use response data from one call as input for next</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="exercises" class="module-section">
+                <h2>Hands-On Exercises</h2>
+
+                <div class="exercise">
+                    <h3>Exercise 1: Explore a Public API</h3>
+                    <p><strong>Task:</strong> Using Swagger UI or Postman, explore the JSONPlaceholder API:</p>
+                    <ul>
+                        <li>GET https://jsonplaceholder.typicode.com/users - Get all users</li>
+                        <li>GET /users/1 - Get user with ID 1</li>
+                        <li>GET /users?username=Bret - Filter by username</li>
+                        <li>POST /posts - Create a new post</li>
+                    </ul>
+                    <p><strong>Deliverable:</strong> Document responses for each endpoint with status codes and sample data.</p>
+                </div>
+
+                <div class="exercise">
+                    <h3>Exercise 2: Test Authentication Flow</h3>
+                    <p><strong>Task:</strong> Test a mock login API with various scenarios:</p>
+                    <ul>
+                        <li>Valid credentials → expect 200 + token</li>
+                        <li>Invalid password → expect 401 + error message</li>
+                        <li>Non-existent user → expect 401 or 404</li>
+                        <li>Empty credentials → expect 400 validation error</li>
+                        <li>Missing Content-Type header → expect 415</li>
+                    </ul>
+                </div>
+
+                <div class="exercise">
+                    <h3>Exercise 3: Create Comprehensive Test Suite</h3>
+                    <p><strong>Task:</strong> Build a test suite for a CRUD API with:</p>
+                    <ul>
+                        <li>Create (POST) - Test with valid data, missing fields, invalid data types</li>
+                        <li>Read (GET) - Test existing ID, non-existent ID, multiple records</li>
+                        <li>Update (PUT/PATCH) - Full update, partial update, invalid fields</li>
+                        <li>Delete (DELETE) - Existing ID, non-existent ID</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section id="quiz" class="module-section">
+                <h2>Knowledge Quiz</h2>
+                
+                <div class="quiz-container">
+                    <div class="quiz-question" data-correct="b">
+                        <h4>Question 1: Which HTTP method is used to CREATE a new resource?</h4>
+                        <div class="quiz-options">
+                            <label><input type="radio" name="q1" value="a"> GET</label>
+                            <label><input type="radio" name="q1" value="b"> POST</label>
+                            <label><input type="radio" name="q1" value="c"> PUT</label>
+                            <label><input type="radio" name="q1" value="d"> DELETE</label>
+                        </div>
+                    </div>
+
+                    <div class="quiz-question" data-correct="c">
+                        <h4>Question 2: What status code indicates "Not Found"?</h4>
+                        <div class="quiz-options">
+                            <label><input type="radio" name="q2" value="a"> 200</label>
+                            <label><input type="radio" name="q2" value="b"> 400</label>
+                            <label><input type="radio" name="q2" value="c"> 404</label>
+                            <label><input type="radio" name="q2" value="d"> 500</label>
+                        </div>
+                    </div>
+
+                    <div class="quiz-question" data-correct="a">
+                        <h4>Question 3: Where are REQUIRED resource identifiers typically placed?</h4>
+                        <div class="quiz-options">
+                            <label><input type="radio" name="q3" value="a"> Path parameters</label>
+                            <label><input type="radio" name="q3" value="b"> Query parameters</label>
+                            <label><input type="radio" name="q3" value="c"> Headers</label>
+                            <label><input type="radio" name="q3" value="d"> Request body</label>
+                        </div>
+                    </div>
+
+                    <div class="quiz-question" data-correct="d">
+                        <h4>Question 4: Which status code range indicates a server error?</h4>
+                        <div class="quiz-options">
+                            <label><input type="radio" name="q4" value="a"> 1xx</label>
+                            <label><input type="radio" name="q4" value="b"> 2xx</label>
+                            <label><input type="radio" name="q4" value="c"> 4xx</label>
+                            <label><input type="radio" name="q4" value="d"> 5xx</label>
+                        </div>
+                    </div>
+
+                    <div class="quiz-question" data-correct="b">
+                        <h4>Question 5: What is the purpose of Authorization: Bearer token?</h4>
+                        <div class="quiz-options">
+                            <label><input type="radio" name="q5" value="a"> To specify response format</label>
+                            <label><input type="radio" name="q5" value="b"> To authenticate the request</label>
+                            <label><input type="radio" name="q5" value="c"> To indicate API version</label>
+                            <label><input type="radio" name="q5" value="d"> To set cache duration</label>
+                        </div>
+                    </div>
+
+                    <button class="btn-primary" onclick="checkQuiz()">Submit Answers</button>
+                    <div id="quiz-results" class="quiz-results"></div>
+                </div>
+            </section>
+
+            <footer class="content-footer">
+                <p>Swagger & API Testing Module | <a href="../index.html">Back to Home</a></p>
+                <p>Next: <a href="typescript.html">TypeScript for QA</a></p>
+            </footer>
+        </main>
+    </div>
+
+    <script src="../js/app.js"></script>
+    <script>
+        function checkQuiz() {
+            const questions = document.querySelectorAll('.quiz-question');
+            let correct = 0;
+            let total = questions.length;
+
+            questions.forEach((q, index) => {
+                const correctAnswer = q.dataset.correct;
+                const selected = q.querySelector('input[name="q' + (index + 1) + '"]:checked');
+                const options = q.querySelectorAll('.quiz-options label');
+                options.forEach(opt => opt.classList.remove('correct', 'incorrect'));
+
+                if (selected) {
+                    const parentLabel = selected.closest('label');
+                    if (selected.value === correctAnswer) {
+                        correct++;
+                        parentLabel.classList.add('correct');
+                    } else {
+                        parentLabel.classList.add('incorrect');
+                        q.querySelector('input[value="' + correctAnswer + '"]').closest('label').classList.add('correct');
+                    }
+                } else {
+                    q.querySelector('input[value="' + correctAnswer + '"]').closest('label').classList.add('correct');
+                }
+            });
+
+            const percentage = Math.round((correct / total) * 100);
+            document.getElementById('quiz-results').innerHTML = `
+                <h4>Results: ${correct}/${total} (${percentage}%)</h4>
+                <p>${percentage >= 80 ? 'Excellent! You have mastered API testing!' : percentage >= 60 ? 'Good job! Review incorrect answers.' : 'Keep learning! Review the module content.'}</p>
+            `;
+            document.getElementById('quiz-results').style.display = 'block';
+        }
+
+        // Smooth scroll for nav
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
+                if (href.startsWith('#')) {
+                    e.preventDefault();
+                    document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' });
+                    document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+                    this.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

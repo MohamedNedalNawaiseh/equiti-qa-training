@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TestRail Training - Complete Guide</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/modules.css">
+</head>
+<body class="module-page">
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2>TestRail Training</h2>
+                <span class="badge">Complete</span>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="#introduction" class="nav-item active">Introduction</a>
+                <a href="#getting-started" class="nav-item">Getting Started</a>
+                <a href="#projects" class="nav-item">Projects & Cases</a>
+                <a href="#test-runs" class="nav-item">Test Runs & Suites</a>
+                <a href="#milestones" class="nav-item">Milestones</a>
+                <a href="#reports" class="nav-item">Reports & Metrics</a>
+                <a href="#api" class="nav-item">API Integration</a>
+                <a href="#best-practices" class="nav-item">Best Practices</a>
+                <a href="#exercises" class="nav-item">Exercises</a>
+                <a href="#quiz" class="nav-item">Quiz</a>
+            </nav>
+        </aside>
+
+        <main class="content">
+            <header class="content-header">
+                <h1>Complete TestRail Training</h1>
+                <p>Master TestRail - Industry's Leading Test Management Tool</p>
+            </header>
+
+            <section id="introduction" class="module-section">
+                <h2>Introduction to TestRail</h2>
+                <p>TestRail is a comprehensive test management tool that helps QA teams organize testing efforts, track test execution, and manage test cases efficiently. It's widely used in Agile and Waterfall methodologies.</p>
+                
+                <div class="info-box">
+                    <h3>Key Benefits</h3>
+                    <ul>
+                        <li>Centralized test case repository</li>
+                        <li>Real-time test execution tracking</li>
+                        <li>Detailed reporting and metrics</li>
+                        <li>Integration with CI/CD pipelines</li>
+                        <li>Collaborative teamwork features</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section id="getting-started" class="module-section">
+                <h2>Getting Started</h2>
+                
+                <h3>Navigation Overview</h3>
+                <p>The TestRail interface consists of several key sections:</p>
+                <ul>
+                    <li><strong>Dashboard</strong> - Overview of active projects and recent activity</li>
+                    <li><strong>Test Cases</strong> - Browse and manage test case library</li>
+                    <li><strong>Test Runs & Plans</strong> - Execute tests and track progress</li>
+                    <li><strong>Milestones</strong> - Track progress against deadlines</li>
+                    <li><strong>Reports</strong> - Generate various test reports</li>
+                    <li><strong>Administration</strong> - Manage users, projects, and settings</li>
+                </ul>
+
+                <h3>User Roles</h3>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Role</th>
+                            <th>Permissions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Admin</td>
+                            <td>Full system access, user management, billing</td>
+                        </tr>
+                        <tr>
+                            <td>Lead</td>
+                            <td>Create/edit cases, manage runs, view reports</td>
+                        </tr>
+                        <tr>
+                            <td>Tester</td>
+                            <td>Execute tests, add results, view assigned cases</td>
+                        </tr>
+                        <tr>
+                            <td>Guest</td>
+                            <td>View-only access to specific projects</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section id="projects" class="module-section">
+                <h2>Projects & Cases</h2>
+                
+                <h3>Creating a Project</h3>
+                <ol>
+                    <li>Navigate to Administration → Add Project</li>
+                    <li>Enter project name and description</li>
+                    <li>Select project type (Single suite or Multiple suites)</li>
+                    <li>Configure announcement and settings</li>
+                    <li>Add team members with appropriate roles</li>
+                </ol>
+
+                <h3>Test Case Structure</h3>
+                <p>TestRail uses a hierarchical structure:</p>
+                <pre><code>Project
+├── Section (e.g., "Login Module")
+│   ├── Subsection (e.g., "Valid Login")
+│   │   └── Test Case
+│   └── Subsection (e.g., "Invalid Login")
+│       └── Test Case
+└── Section (e.g., "Dashboard Module")</code></pre>
+
+                <h3>Test Case Fields</h3>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Field</th>
+                            <th>Description</th>
+                            <th>Required</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Title</td>
+                            <td>Clear, descriptive name of the test</td>
+                            <td>Yes</td>
+                        </tr>
+                        <tr>
+                            <td>Type</td>
+                            <td>Functional, Integration, UI, Security, etc.</td>
+                            <td>Yes</td>
+                        </tr>
+                        <tr>
+                            <td>Priority</td>
+                            <td>Critical, High, Medium, Low</td>
+                            <td>Yes</td>
+                        </tr>
+                        <tr>
+                            <td>Estimate</td>
+                            <td>Expected time to execute (e.g., 5m, 1h)</td>
+                            <td>No</td>
+                        </tr>
+                        <tr>
+                            <td>Milestone</td>
+                            <td>Associated project milestone</td>
+                            <td>No</td>
+                        </tr>
+                        <tr>
+                            <td>References</td>
+                            <td>JIRA, GitHub, or other external IDs</td>
+                            <td>No</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>Test Case Template</h3>
+                <pre><code>Title: Verify user login with valid credentials
+
+Type: Functional
+Priority: High
+Estimate: 2m
+
+Prerequisites:
+- User must be registered
+- Application must be accessible
+
+Steps:
+1. Navigate to login page
+2. Enter valid username
+3. Enter valid password
+4. Click "Login" button
+
+Expected Result:
+User should be redirected to dashboard and see welcome message</code></pre>
+            </section>
+
+            <section id="test-runs" class="module-section">
+                <h2>Test Runs & Plans</h2>
+                
+                <h3>Creating a Test Run</h3>
+                <p>A Test Run is a collection of test cases selected for execution in a specific testing cycle.</p>
+                <ol>
+                    <li>Go to Test Runs & Plans</li>
+                    <li>Click "Add Test Run"</li>
+                    <li>Select the test suite</li>
+                    <li>Choose test cases (select all, by section, or individually)</li>
+                    <li>Assign to team member (optional)</li>
+                    <li>Set due date (optional)</li>
+                </ol>
+
+                <h3>Test Run Statuses</h3>
+                <div class="status-grid">
+                    <div class="status-item status-untested">Untested</div>
+                    <div class="status-item status-passed">Passed</div>
+                    <div class="status-item status-failed">Failed</div>
+                    <div class="status-item status-blocked">Blocked</div>
+                    <div class="status-item status-retest">Retest</div>
+                </div>
+
+                <h3>Executing Tests</h3>
+                <pre><code>// Adding test results via UI
+1. Open the test run
+2. Click on a test case
+3. Select status: Passed / Failed / Blocked / Retest
+4. Add comments or attachments
+5. Click "Save" to record result
+
+// Adding test results via API
+POST /index.php?api/v2/add_result/{run_id}/{test_id}
+{
+    "status_id": 1,  // 1=Passed, 5=Failed
+    "comment": "Login successful, user redirected to dashboard"
+}</code></pre>
+
+                <h3>Test Plans</h3>
+                <p>Test Plans group multiple Test Runs together for comprehensive testing:</p>
+                <ul>
+                    <li>Create a Test Plan for a release</li>
+                    <li>Add multiple Test Runs (different configurations, browsers)</li>
+                    <li>Track overall progress across all runs</li>
+                    <li>Compare results across different environments</li>
+                </ul>
+            </section>
+
+            <section id="milestones" class="module-section">
+                <h2>Milestones</h2>
+                <p>Milestones help track testing progress against deadlines and release goals.</p>
+
+                <h3>Creating Milestones</h3>
+                <ol>
+                    <li>Navigate to Milestones</li>
+                    <li>Click "Add Milestone"</li>
+                    <li>Enter name and description</li>
+                    <li>Set start and due dates</li>
+                    <li>Configure notifications (optional)</li>
+                </ol>
+
+                <h3>Milestone Progress</h3>
+                <p>Progress is calculated based on:</p>
+                <ul>
+                    <li>Test cases passed vs total assigned</li>
+                    <li>Test runs completed vs planned</li>
+                    <li>Open defects blocking the milestone</li>
+                </ul>
+
+                <div class="info-box">
+                    <h3>Pro Tip</h3>
+                    <p>Link milestones to JIRA sprints for seamless tracking between development and testing.</p>
+                </div>
+            </section>
+
+            <section id="reports" class="module-section">
+                <h2>Reports & Metrics</h2>
+                
+                <h3>Available Reports</h3>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Report</th>
+                            <th>Purpose</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Test Results</td>
+                            <td>Summary of all test executions</td>
+                        </tr>
+                        <tr>
+                            <td>Milestone Report</td>
+                            <td>Progress against milestone goals</td>
+                        </tr>
+                        <tr>
+                            <td>Assigned Tests</td>
+                            <td>Tests assigned to team members</td>
+                        </tr>
+                        <tr>
+                            <td>Test Coverage</td>
+                            <td>Requirements vs test case mapping</td>
+                        </tr>
+                        <tr>
+                            <td>Trend Report</td>
+                            <td>Historical pass/fail trends</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>Key Metrics to Track</h3>
+                <ul>
+                    <li><strong>Test Coverage</strong> - % of requirements covered by test cases</li>
+                    <li><strong>Pass Rate</strong> - % of tests passed (target: 90%+ for release)</li>
+                    <li><strong>Execution Rate</strong> - % of planned tests executed</li>
+                    <li><strong>Defect Density</strong> - Defects found per test case</li>
+                    <li><strong>Time to Test</strong> - Average time to complete test execution</li>
+                </ul>
+            </section>
+
+            <section id="api" class="module-section">
+                <h2>API Integration</h2>
+                <p>TestRail provides a REST API for integration with CI/CD pipelines and automation tools.</p>
+
+                <h3>Authentication</h3>
+                <pre><code>// API authentication using API keys
+// Add to request header:
+// Authorization: Basic {base64(email:api_key)}
+
+curl -u "user@example.com:api_key_here" \
+  https://your-instance.testrail.io/index.php?/api/v2/get_projects</code></pre>
+
+                <h3>Common API Operations</h3>
+                <pre><code>// Get all projects
+GET /api/v2/get_projects
+
+// Get test cases in a suite
+GET /api/v2/get_cases/{project_id}&suite_id={suite_id}
+
+// Add a test run
+POST /api/v2/add_run/{project_id}
+{
+    "suite_id": 1,
+    "name": "Sprint 24 Regression",
+    "assignedto_id": 5
+}
+
+// Add test result
+POST /api/v2/add_result/{run_id}/{test_id}
+{
+    "status_id": 1,
+    "comment": "Test passed successfully",
+    "version": "1.2.3"
+}
+
+// Get milestones
+GET /api/v2/get_milestones/{project_id}</code></pre>
+
+                <h3>Status ID Reference</h3>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Status ID</th>
+                            <th>Name</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>1</td><td>Passed</td></tr>
+                        <tr><td>2</td><td>Blocked</td></tr>
+                        <tr><td>3</td><td>Untested</td></tr>
+                        <tr><td>4</td><td>Retest</td></tr>
+                        <tr><td>5</td><td>Failed</td></tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section id="best-practices" class="module-section">
+                <h2>Best Practices</h2>
+                
+                <div class="tips-grid">
+                    <div class="tip-card">
+                        <h4>Case Naming</h4>
+                        <p>Use clear, descriptive names: "Verify [feature] when [condition] then [expected]"</p>
+                    </div>
+                    <div class="tip-card">
+                        <h4>Case Independence</h4>
+                        <p>Each test case should be able to run independently without dependencies.</p>
+                    </div>
+                    <div class="tip-card">
+                        <h4>Regular Updates</h4>
+                        <p>Review and update test cases after each sprint to keep them relevant.</p>
+                    </div>
+                    <div class="tip-card">
+                        <h4>Use Templates</h4>
+                        <p>Create templates for common test types to ensure consistency.</p>
+                    </div>
+                </div>
+
+                <h3>Recommended Workflow</h3>
+                <pre><code>1. Sprint Planning → Create/update test cases
+2. Development → Update case prerequisites
+3. Testing Phase → Execute tests, record results
+4. Daily Standup → Review progress, discuss blockers
+5. Sprint End → Generate report, analyze metrics
+6. Retrospective → Identify improvements</code></pre>
+            </section>
+
+            <section id="exercises" class="module-section">
+                <h2>Hands-On Exercises</h2>
+                
+                <div class="exercise">
+                    <h3>Exercise 1: Create Test Cases</h3>
+                    <p><strong>Task:</strong> Create a comprehensive set of test cases for a login module including:</p>
+                    <ul>
+                        <li>Valid login with correct credentials</li>
+                        <li>Invalid username</li>
+                        <li>Invalid password</li>
+                        <li>Empty fields submission</li>
+                        <li>Case sensitivity in password</li>
+                        <li>Special characters in credentials</li>
+                        <li>Session timeout handling</li>
+                        <li>Remember me functionality</li>
+                    </ul>
+                    <p><strong>Deliverable:</strong> Document at least 8 test cases with all required fields.</p>
+                </div>
+
+                <div class="exercise">
+                    <h3>Exercise 2: Execute Test Run</h3>
+                    <p><strong>Task:</strong> Create a test run and execute the following scenarios:</p>
+                    <ol>
+                        <li>Create a new test run named "Sprint 24 - Login Module"</li>
+                        <li>Add at least 5 test cases</li>
+                        <li>Execute each test case with appropriate status</li>
+                        <li>Add comments for failed tests</li>
+                        <li>Generate a summary report</li>
+                    </ol>
+                </div>
+
+                <div class="exercise">
+                    <h3>Exercise 3: API Integration</h3>
+                    <p><strong>Task:</strong> Use TestRail API to:</p>
+                    <ol>
+                        <li>Fetch all projects</li>
+                        <li>Create a new test run programmatically</li>
+                        <li>Add test results for multiple cases</li>
+                        <li>Retrieve milestone progress</li>
+                    </ol>
+                    <p><strong>Hint:</strong> Use Postman or cURL to test the API endpoints.</p>
+                </div>
+            </section>
+
+            <section id="quiz" class="module-section">
+                <h2>Knowledge Quiz</h2>
+                <p>Test your understanding of TestRail with these questions.</p>
+
+                <div class="quiz-container">
+                    <div class="quiz-question" data-correct="b">
+                        <h4>Question 1: What is the maximum hierarchy depth for test cases in TestRail?</h4>
+                        <div class="quiz-options">
+                            <label><input type="radio" name="q1" value="a"> 2 levels (Project → Case)</label>
+                            <label><input type="radio" name="q1" value="b"> 3 levels (Project → Section → Case)</label>
+                            <label><input type="radio" name="q1" value="c"> 4 levels (Project → Suite → Section → Case)</label>
+                            <label><input type="radio" name="q1" value="d"> Unlimited</label>
+                        </div>
+                    </div>
+
+                    <div class="quiz-question" data-correct="a">
+                        <h4>Question 2: Which status ID represents a FAILED test in TestRail API?</h4>
+                        <div class="quiz-options">
+                            <label><input type="radio" name="q2" value="a"> 5</label>
+                            <label><input type="radio" name="q2" value="b"> 1</label>
+                            <label><input type="radio" name="q2" value="c"> 3</label>
+                            <label><input type="radio" name="q2" value="d"> 4</label>
+                        </div>
+                    </div>
+
+                    <div class="quiz-question" data-correct="c">
+                        <h4>Question 3: What is the primary purpose of a Test Plan?</h4>
+                        <div class="quiz-options">
+                            <label><input type="radio" name="q3" value="a"> To store test cases</label>
+                            <label><input type="radio" name="q3" value="b"> To assign tests to testers</label>
+                            <label><input type="radio" name="q3" value="c"> To group multiple test runs for comprehensive testing</label>
+                            <label><input type="radio" name="q3" value="d"> To generate reports</label>
+                        </div>
+                    </div>
+
+                    <div class="quiz-question" data-correct="b">
+                        <h4>Question 4: How is milestone progress calculated?</h4>
+                        <div class="quiz-options">
+                            <label><input type="radio" name="q4" value="a"> Number of test cases created</label>
+                            <label><input type="radio" name="q4" value="b"> Test cases passed vs total assigned</label>
+                            <label><input type="radio" name="q4" value="c"> Number of defects found</label>
+                            <label><input type="radio" name="q4" value="d"> Time elapsed since creation</label>
+                        </div>
+                    </div>
+
+                    <div class="quiz-question" data-correct="d">
+                        <h4>Question 5: Which role has permission to create new projects?</h4>
+                        <div class="quiz-options">
+                            <label><input type="radio" name="q5" value="a"> Lead only</label>
+                            <label><input type="radio" name="q5" value="b"> Tester only</label>
+                            <label><input type="radio" name="q5" value="c"> Lead and Tester</label>
+                            <label><input type="radio" name="q5" value="d"> Admin only</label>
+                        </div>
+                    </div>
+
+                    <button class="btn-primary" onclick="checkQuiz()">Submit Answers</button>
+                    <div id="quiz-results" class="quiz-results"></div>
+                </div>
+            </section>
+
+            <footer class="content-footer">
+                <p>TestRail Training Module - Complete Guide</p>
+                <p>Next: <a href="swagger.html">Swagger/API Training</a> → <a href="../index.html">Back to Home</a></p>
+            </footer>
+        </main>
+    </div>
+
+    <script>
+        // Sidebar navigation
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', function(e) {
+                document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // Quiz functionality
+        function checkQuiz() {
+            const questions = document.querySelectorAll('.quiz-question');
+            let correct = 0;
+            let total = questions.length;
+
+            questions.forEach((q, index) => {
+                const correctAnswer = q.dataset.correct;
+                const selected = q.querySelector('input[name="q' + (index + 1) + '"]:checked');
+                const options = q.querySelectorAll('.quiz-options label');
+
+                options.forEach(opt => opt.classList.remove('correct', 'incorrect'));
+
+                if (selected) {
+                    if (selected.value === correctAnswer) {
+                        correct++;
+                        opt = q.querySelector('input[value="' + selected.value + '"]').closest('label');
+                        opt.classList.add('correct');
+                    } else {
+                        opt = q.querySelector('input[value="' + selected.value + '"]').closest('label');
+                        opt.classList.add('incorrect');
+                        correctOpt = q.querySelector('input[value="' + correctAnswer + '"]').closest('label');
+                        correctOpt.classList.add('correct');
+                    }
+                } else {
+                    correctOpt = q.querySelector('input[value="' + correctAnswer + '"]').closest('label');
+                    correctOpt.classList.add('correct');
+                }
+            });
+
+            const percentage = Math.round((correct / total) * 100);
+            const resultsDiv = document.getElementById('quiz-results');
+            resultsDiv.innerHTML = `
+                <h4>Results: ${correct}/${total} (${percentage}%)</h4>
+                <p>${percentage >= 80 ? 'Excellent! You have mastered TestRail!' : 
+                  percentage >= 60 ? 'Good job! Review the incorrect answers.' : 
+                  'Keep learning! Review the module content.'}</p>
+            `;
+            resultsDiv.style.display = 'block';
+        }
+
+        // Smooth scroll for navigation
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetSection = document.querySelector(targetId);
+                if (targetSection) {
+                    targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

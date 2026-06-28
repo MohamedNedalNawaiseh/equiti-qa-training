@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Playwright Complete Course - Modern Test Automation</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/modules.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="module-page">
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2><i class="fab fa-playwright"></i> Playwright</h2>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="#intro" class="nav-item active">Introduction</a>
+                <a href="#setup" class="nav-item">Setup & Installation</a>
+                <a href="#architecture" class="nav-item">Architecture</a>
+                <a href="#locators" class="nav-item">Locators & Selectors</a>
+                <a href="#interactions" class="nav-item">User Interactions</a>
+                <a href="#assertions" class="nav-item">Assertions & Waits</a>
+                <a href="#page-object" class="nav-item">Page Object Model</a>
+                <a href="#api-testing" class="nav-item">API Testing</a>
+                <a href="#best-practices" class="nav-item">Best Practices</a>
+                <a href="#exercises" class="nav-item">Exercises</a>
+                <a href="#quiz" class="nav-item">Quiz</a>
+                <a href="../index.html" class="nav-item" style="margin-top:1rem; border-top:1px solid var(--border-color); padding-top:1rem;">
+                    <i class="fas fa-home"></i> Back to Home
+                </a>
+            </nav>
+        </aside>
+
+        <main class="content">
+            <header class="content-header">
+                <h1><i class="fab fa-playwright" style="color:#2ecc71"></i> Playwright Complete Course</h1>
+                <p>Master modern browser automation with Playwright and TypeScript</p>
+            </header>
+
+            <section id="intro" class="module-section">
+                <h2>What is Playwright?</h2>
+                <p>Playwright is a powerful Node.js library for browser automation developed by Microsoft. It allows you to control Chromium, Firefox, and WebKit browsers with a single API.</p>
+
+                <div class="info-box">
+                    <h3>Why Playwright?</h3>
+                    <ul>
+                        <li><strong>Cross-browser:</strong> Test on Chromium, Firefox, and WebKit with one API</li>
+                        <li><strong>Fast & Reliable:</strong> Auto-waiting, network interception, parallel testing</li>
+                        <li><strong>TypeScript Support:</strong> Built-in TypeScript support, excellent IDE autocomplete</li>
+                        <li><strong>Powerful Features:</strong> Screenshots, videos, tracing, mocking</li>
+                        <li><strong>Modern Architecture:</strong> Designed for modern web apps (SPA, PWAs)</li>
+                        <li><strong>Active Development:</strong> Backed by Microsoft, frequent updates</li>
+                    </ul>
+                </div>
+
+                <h3>Playwright vs Other Tools</h3>
+                <table class="data-table">
+                    <thead>
+                        <tr><th>Feature</th><th>Playwright</th><th>Selenium</th><th>Cypress</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Browsers</td><td>Chromium, Firefox, WebKit</td><td>All major browsers</td><td>Chromium only</td></tr>
+                        <tr><td>Languages</td><td>JS, TS, Python, C#, Java</td><td>Multiple</td><td>JS, TS</td></tr>
+                        <tr><td>API Stability</td><td>Excellent</td><td>Varies by binding</td><td>Good</td></tr>
+                        <tr><td>Parallel Execution</td><td>Built-in</td><td>With Grid</td><td>Limited</td></tr>
+                        <tr><td>Auto-waiting</td><td>Smart & automatic</td><td>Manual waits needed</td><td>Good</td></tr>
+                        <tr><td>Mobile Testing</td><td>Yes (emulation)</td><td>Yes (Appium)</td><td>No</td></tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section id="setup" class="module-section">
+                <h2>Setup & Installation</h2>
+
+                <h3>Prerequisites</h3>
+                <ul>
+                    <li>Node.js 18+ (download from nodejs.org)</li>
+                    <li>VS Code or your preferred IDE</li>
+                    <li>Basic JavaScript/TypeScript knowledge</li>
+                </ul>
+
+                <h3>Installation Steps</h3>
+                <pre><code># 1. Create a new project
+mkdir my-playwright-tests
+cd my-playwright-tests
+npm init -y
+
+# 2. Install Playwright
+npm install @playwright/test
+
+# 3. Install browsers
+npx playwright install
+
+# 4. Create a simple test
+# Create file: tests/example.spec.ts
+
+# 5. Run tests
+npx playwright test</code></pre>
+
+                <h3>Playwright Test Configuration</h3>
+                <pre><code>// playwright.config.ts
+import { defineConfig, devices } from '@playwright/test';
+
+export default defineConfig({
+  testDir: './tests',
+  fullyParallel: true,
+  forbidOnly: !!process.env.CI,
+  retries: process.env.CI ? 2 : 0,
+  workers: process.env.CI ? 1 : undefined,
+  reporter: 'html',
+  
+  use: {
+    baseURL: 'http://localhost:3000',
+    trace: 'on-first-retry',
+    screenshot: 'only-on-failure',
+  },
+
+  projects: [
+    {
+      name: 'chromium',
+      use: { ...devices['Desktop Chrome'] },
+    },
+    {
+      name: 'firefox',
+      use: { ...devices['Desktop Firefox'] },
+    },
+    {
+      name: 'webkit',
+      use: { ...devices['Desktop Safari'] },
+    },
+    {
+      name: 'Mobile Chrome',
+      use: { ...devices['Pixel 5'] },
+    },
+  ],
+});</code></pre>
+            </section>
+
+            <section id="architecture" class="module-section">
+                <h2>Playwright Architecture</h2>
+
+                <h3>How Playwright Works</h3>
+                <pre><code>┌─────────────────────────────────────────────────────────────┐
+│                      TEST CODE (TypeScript)                    │
+│  await page.goto('https://example.com')                       │
+│  await page.click('#submit-btn')                              │
+└───────────────────────┬───────────────────────────────────────┘
+                        │ Playwright API
+                        ▼
+┌─────────────────────────────────────────────────────────────┐
+│                    PLAYWRIGHT DRIVER                         │
+│  • WebSocket connection to browser                           │
+│  • Protocol serialization/deserialization                    │
+│  • Auto-waiting & retry logic                                │
+└───────────────────────┬───────────────────────────────────────┘
+                        │ DevTools Protocol
+                        ▼
+┌─────────────────────────────────────────────────────────────┐
+│                    BROWSER INSTANCE                          │
+│  Chromium / Firefox / WebKit                                 │
+│  • Separate browser process                                  │
+│  • Context isolation (like incognito)                        │
+│  • Multiple pages per context                                │
+└─────────────────────────────────────────────────────────────┘</code></pre>
+
+                <h3>Key Concepts</h3>
+                <ul>
+                    <li><strong>Browser:</strong> Instance of Chromium, Firefox, or WebKit</li>
+                    <li><strong>BrowserContext:</strong> Isolated session within a browser (like incognito)</li>
+                    <li><strong>Page:</strong> Single tab or popup window</li>
+                    <li><strong>Frame:</strong> iframe within a page</li>
+                    <li><strong>Locator:</strong> Way to find elements on a page</li>
+                </ul>
+
+                <h3>Browser, Context, Page Relationship</h3>
+                <pre><code>Browser (Chromium)
+├── BrowserContext 1 (New User Session)
+│   ├── Page 1 (Main Tab)
+│   ├── Page 2 (Popup)
+│   └── Frame (iframe in Page 1)
+├── BrowserContext 2 (Another User Session)
+│   └── Page 3
+└── BrowserContext 3 (Admin Session)
+    └── Page 4</code></pre>
+            </section>
+
+            <section id="locators" class="module-section">
+                <h2>Locators & Selectors</h2>
+                <p>Locators are how Playwright finds elements on a page. Choosing the right locator is crucial for reliable tests.</p>
+
+                <h3>Locator Types (Best to Worst)</h3>
+                <pre><code>// 1. ROLE LOCATOR (Recommended - accessible, semantic)
+await page.getByRole('button', { name: 'Submit' }).click()
+await page.getByRole('textbox', { name: 'Email' }).fill('test@example.com')
+await page.getByRole('checkbox', { checked: true })
+
+// 2. TEXT LOCATOR
+await page.getByText('Welcome back').click()
+await page.getByLabel('Password').fill('secret')
+
+// 3. TEST ID LOCATOR (if data-testid attribute is set)
+await page.getByTestId('submit-button').click()
+
+// 4. CSS SELECTOR (when above don't work)
+await page.locator('.btn-primary').first().click()
+await page.locator('#login-form input[name="email"]').fill('test@example.com')
+
+// 5. XPATH (last resort - brittle)
+await page.locator('xpath=//button[contains(text(), "Submit")]').click()</code></pre>
+
+                <h3>Creating Locators</h3>
+                <pre><code>const locator = page.locator('selector');
+
+// Chain locators for specificity
+const form = page.locator('#login-form');
+const emailInput = form.locator('input[name="email"]');
+
+// Find elements within a locator
+const items = page.locator('.item');
+await items.first().click();      // First item
+await items.last().click();       // Last item
+await items.nth(2).click();       // Third item
+await items.count();              // Get total count</code></pre>
+
+                <h3>Best Practices for Locators</h3>
+                <div class="tips-grid">
+                    <div class="tip-card">
+                        <h4>✅ DO</h4>
+                        <ul style="font-size:0.85rem;">
+                            <li>Use semantic locators (role, label, text)</li>
+                            <li>Add data-testid for critical elements</li>
+                            <li>Use chained locators for context</li>
+                            <li>Prefer locators over XPath</li>
+                        </ul>
+                    </div>
+                    <div class="tip-card">
+                        <h4>❌ DON'T</h4>
+                        <ul style="font-size:0.85rem;">
+                            <li>Use fragile CSS like :nth-child</li>
+                            <li>Use indices (they change!)</li>
+                            <li>Use long XPath expressions</li>
+                            <li>Select by random generated classes</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section id="interactions" class="module-section">
+                <h2>User Interactions</h2>
+                <p>Playwright provides intuitive methods for simulating user actions.</p>
+
+                <h3>Common Actions</h3>
+                <pre><code>// Clicking
+await page.getByRole('button', { name: 'Submit' }).click();
+await page.locator('#btn').dblclick();
+await page.locator('#btn').click({ button: 'right' }); // Right click
+
+// Typing
+await page.getByLabel('Email').fill('test@example.com');
+await page.getByRole('textbox').pressSequentially('hello', { delay: 100 });
+
+// Clearing
+await page.getByLabel('Search').clear();
+
+// Checkboxes & Radio buttons
+await page.getByRole('checkbox', { name: 'Remember me' }).check();
+await page.getByRole('radio', { name: 'Premium Plan' }).selectRadio();
+
+// Dropdowns (select element)
+await page.locator('select#country').selectOption('jordan');
+await page.locator('select#country').selectOption({ label: 'Jordan' });
+await page.locator('select#country').selectOption(['jo', 'ae']); // Multiple
+
+// Hover & Focus
+await page.locator('.dropdown').hover();
+await page.getByLabel('Email').focus();</code></pre>
+
+                <h3>Keyboard & Mouse</h3>
+                <pre><code>// Keyboard
+await page.keyboard.press('Enter');
+await page.keyboard.press('Control+A');
+await page.keyboard.type('Hello World');
+await page.keyboard.down('Shift');
+await page.keyboard.up('Shift');
+
+// Mouse
+await page.mouse.click(100, 200);
+await page.mouse.dblclick(100, 200);
+await page.mouse.move(100, 200);
+await page.mouse.down();
+await page.mouse.up();
+
+// Drag and Drop
+await page.locator('#source').dragTo(page.locator('#target'));</code></pre>
+
+                <h3>File Upload/Download</h3>
+                <pre><code>// Upload file
+await page.locator('input[type="file"]').setInputFiles('path/to/file.pdf');
+await page.locator('input[type="file"]').setInputFiles([
+  'file1.pdf',
+  'file2.pdf',
+]);
+// Clear file selection
+await page.locator('input[type="file"]').setInputFiles([]);
+
+// Download (setup before action)
+const [download] = await Promise.all([
+  page.waitForEvent('download'),
+  page.locator('#download-btn').click()
+]);
+await download.saveAs('path/to/save/' + download.suggestedFilename());</code></pre>
+            </section>
+
+            <section id="assertions" class="module-section">
+                <h2>Assertions & Waits</h2>
+                <p>Playwright has smart auto-waiting - it waits for elements to be actionable before performing actions. But you still need assertions to verify expected behavior.</p>
+
+                <h3>Built-in Assertions</h3>
+                <pre><code>// Expect library (recommended)
+import { expect } from '@playwright/test';
+
+// Basic assertions
+await expect(page.locator('.title')).toHaveText('Welcome');
+await expect(page.locator('.title')).not.toHaveText('Error');
+await expect(page.locator('#count')).toContainText('5 items');
+
+// Visibility
+await expect(page.getByRole('button')).toBeVisible();
+await expect(page.getByRole('button')).toBeHidden();
+await expect(page.getByRole('button')).toBeEnabled();
+await expect(page.getByRole('button')).toBeDisabled();
+
+// Form fields
+await expect(page.getByLabel('Email')).toHaveValue('test@example.com');
+await expect(page.getByLabel('Accept Terms')).toBeChecked();
+
+// Counts
+await expect(page.locator('.item')).toHaveCount(5);
+await expect(page.locator('.item')).toHaveLength(5);
+
+// Custom messages
+await expect(page.locator('.error')).toHaveText('Invalid input', {
+  timeout: 5000
+});</code></pre>
+
+                <h3>Waiting for Conditions</h3>
+                <pre><code>// Auto-wait (built into every action)
+await page.click('#btn'); // Waits for button to be visible & enabled
+
+// Explicit waits (when needed)
+await page.waitForSelector('#loaded-content', { state: 'visible' });
+await page.waitForSelector('#loading', { state: 'hidden' });
+await page.waitForURL('**/dashboard');
+await page.waitForResponse(response => response.url().includes('/api/data'));
+
+// Wait for navigation
+await page.click('#btn');
+await page.waitForURL('**/success');
+
+// Wait for function
+await page.waitForFunction(() => window.innerWidth > 768);
+
+// Network idle (wait for no network for 500ms)
+await page.waitForLoadState('networkidle');</code></pre>
+
+                <h3>Common Wait Patterns</h3>
+                <pre><code>// ❌ BAD - Never use arbitrary sleeps
+await page.waitForTimeout(5000); // This is a code smell!
+
+// ✅ GOOD - Wait for specific conditions
+// Wait for element to appear
+await expect(page.getByText('Success')).toBeVisible();
+
+// Wait for API response
+const response = await page.waitForResponse(
+  r => r.url().includes('/api/users') && r.status() === 200
+);
+
+// Wait for function to return true
+await page.waitForFunction(() => document.querySelectorAll('.item').length > 0);</code></pre>
+            </section>
+
+            <section id="page-object" class="module-section">
+                <h2>Page Object Model</h2>
+                <p>Page Object Model (POM) is a design pattern that creates an object-oriented representation of pages, making tests more maintainable and reducing code duplication.</p>
+
+                <h3>Page Object Example</h3>
+                <pre><code>// pages/LoginPage.ts
+import { Page, Locator, expect } from '@playwright/test';
+
+export class LoginPage {
+  readonly page: Page;
+  readonly emailInput: Locator;
+  readonly passwordInput: Locator;
+  readonly submitButton: Locator;
+  readonly errorMessage: Locator;
+
+  constructor(page: Page) {
+    this.page = page;
+    this.emailInput = page.getByLabel('Email');
+    this.passwordInput = page.getByLabel('Password');
+    this.submitButton = page.getByRole('button', { name: 'Sign In' });
+    this.errorMessage = page.locator('.error-message');
+  }
+
+  async goto() {
+    await this.page.goto('/login');
+  }
+
+  async login(email: string, password: string) {
+    await this.emailInput.fill(email);
+    await this.passwordInput.fill(password);
+    await this.submitButton.click();
+  }
+
+  async expectError(message: string) {
+    await expect(this.errorMessage).toHaveText(message);
+  }
+}</code></pre>
+
+                <h3>Using Page Objects in Tests</h3>
+                <pre><code>// tests/login.spec.ts
+import { test, expect } from '@playwright/test';
+import { LoginPage } from '../pages/LoginPage';
+import { DashboardPage } from '../pages/DashboardPage';
+
+test('user can login with valid credentials', async ({ page }) => {
+  const loginPage = new LoginPage(page);
+  const dashboardPage = new DashboardPage(page);
+
+  await loginPage.goto();
+  await loginPage.login('test@example.com', 'password123');
+
+  await expect(dashboardPage.welcomeMessage).toBeVisible();
+  await expect(dashboardPage.welcomeMessage).toContainText('Welcome');
+});
+
+test('shows error with invalid credentials', async ({ page }) => {
+  const loginPage = new LoginPage(page);
+
+  await loginPage.goto();
+  await loginPage.login('invalid@example.com', 'wrongpass');
+
+  await loginPage.expectError('Invalid email or password');
+});</code></pre>
+
+                <h3>Project Structure</h3>
+                <pre><code>my-tests/
+├── playwright.config.ts
+├── package.json
+├── tests/
+│   ├── login.spec.ts
+│   ├── dashboard.spec.ts
+│   └── checkout.spec.ts
+├── pages/
+│   ├── LoginPage.ts
+│   ├── DashboardPage.ts
+│   ├── CheckoutPage.ts
+│   └── BasePage.ts (shared functionality)
+├── components/ (reusable UI components)
+│   ├── Header.ts
+│   ├── Modal.ts
+│   └── Toast.ts
+├── helpers/
+│   ├── api.ts
+│   ├── test-data.ts
+│   └── fixtures.ts
+└── reports/
+    └── test-results</code></pre>
+            </section>
+
+            <section id="api-testing" class="module-section">
+                <h2>API Testing with Playwright</h2>
+                <p>Playwright can also make direct HTTP requests without a browser, perfect for API testing.</p>
+
+                <h3>Making API Requests</h3>
+                <pre><code>import { test, request } from '@playwright/test';
+
+test('API - Get user list', async ({ }) => {
+  const apiContext = await request.newContext({
+    baseURL: 'https://api.example.com',
+    extraHTTPHeaders: {
+      'Authorization': `Bearer ${process.env.API_TOKEN}`,
+    },
+  });
+
+  const response = await apiContext.get('/users');
+  expect(response.status()).toBe(200);
+  
+  const users = await response.json();
+  expect(users).toHaveLength(10);
+  expect(users[0]).toHaveProperty('id');
+  expect(users[0]).toHaveProperty('email');
+});
+
+test('API - Create new user', async ({ }) => {
+  const apiContext = await request.newContext({
+    baseURL: 'https://api.example.com',
+  });
+
+  const newUser = {
+    name: 'Test User',
+    email: `test${Date.now()}@example.com`,
+    role: 'user',
+  };
+
+  const response = await apiContext.post('/users', {
+    data: newUser,
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+
+  expect(response.status()).toBe(201);
+  
+  const createdUser = await response.json();
+  expect(createdUser).toMatchObject(newUser);
+  expect(createdUser).toHaveProperty('id');
+});</code></pre>
+
+                <h3>Combining API and UI Testing</h3>
+                <pre><code>test('UI + API - Create user and verify in UI', async ({ page, request }) => {
+  // 1. Create user via API
+  const apiContext = await request.newContext({
+    baseURL: 'https://api.example.com',
+  });
+
+  const newUser = {
+    name: 'John Doe',
+    email: 'john@example.com',
+  };
+
+  const createResponse = await apiContext.post('/users', { data: newUser });
+  const created = await createResponse.json();
+
+  // 2. Login as admin in UI
+  const loginPage = new LoginPage(page);
+  await loginPage.goto();
+  await loginPage.login('admin@example.com', 'adminpass');
+
+  // 3. Navigate to users list
+  const usersPage = new UsersPage(page);
+  await usersPage.goto();
+
+  // 4. Verify user appears in UI
+  await expect(usersPage.getUserRow(created.id)).toBeVisible();
+  await expect(usersPage.getUserEmail(created.id)).toHaveText(newUser.email);
+});</code></pre>
+            </section>
+
+            <section id="best-practices" class="module-section">
+                <h2>Playwright Best Practices</h2>
+
+                <div class="tips-grid">
+                    <div class="tip-card">
+                        <h4>✅ Use Page Objects</h4>
+                        <p>Encapsulate page logic in classes, don't use selectors directly in tests</p>
+                    </div>
+                    <div class="tip-card">
+                        <h4>✅ Meaningful Test Names</h4>
+                        <p>test('should show error when password is empty') not test('test1')</p>
+                    </div>
+                    <div class="tip-card">
+                        <h4>✅ Use Data-TestIDs</h4>
+                        <p>Add data-testid attributes for critical elements that change often</p>
+                    </div>
+                    <div class="tip-card">
+                        <h4>✅ Clean Up Test Data</h4>
+                        <p>Delete or reset data created during tests to avoid pollution</p>
+                    </div>
+                    <div class="tip-card">
+                        <h4>✅ Parallel Execution</h4>
+                        <p>Run tests in parallel to reduce execution time</p>
+                    </div>
+                    <div class="tip-card">
+                        <h4>✅ Retry Flaky Tests</h4>
+                        <p>Use retries for infrastructure issues, fix test if it fails consistently</p>
+                    </div>
+                </div>
+
+                <h3>Common Pitfalls</h3>
+                <pre><code>// ❌ BAD PRACTICES
+// 1. Using sleep instead of proper waits
+await page.waitForTimeout(3000);
+
+// 2. Using generic selectors
+await page.locator('div > div:nth-child(3) > span').click();
+
+// 3. Not cleaning up state between tests
+// 4. Hardcoding data instead of using fixtures
+// 5. Not using TypeScript types
+
+// ✅ GOOD PRACTICES
+// 1. Use built-in auto-waiting
+await page.getByRole('button').click();
+
+// 2. Use semantic selectors
+await page.getByRole('button', { name: 'Submit' }).click();
+
+// 3. Use test.beforeEach for setup
+// 4. Use fixtures for test data
+// 5. Use TypeScript for type safety</code></pre>
+            </section>
+
+            <section id="exercises" class="module-section">
+                <h2>Hands-On Exercises</h2>
+
+                <div class="exercise">
+                    <h3>Exercise 1: Setup Playwright</h3>
+                    <p><strong>Task:</strong> Set up a Playwright project from scratch:</p>
+                    <ul>
+                        <li>Initialize a new Node.js project</li>
+                        <li>Install Playwright</li>
+                        <li>Install Chromium browser</li>
+                        <li>Create a basic test that opens Google and searches for something</li>
+                    </ul>
+                </div>
+
+                <div class="exercise">
+                    <h3>Exercise 2: Write Login Tests</h3>
+                    <p><strong>Task:</strong> Write comprehensive tests for a login form:</p>
+                    <ul>
+                        <li>Valid login → expect redirect to dashboard</li>
+                        <li>Invalid email → expect error message</li>
+                        <li>Invalid password → expect error message</li>
+                        <li>Empty fields → expect validation errors</li>
+                        <li>Use Page Object pattern</li>
+                    </ul>
+                </div>
+
+                <div class="exercise">
+                    <h3>Exercise 3: API + UI Integration</h3>
+                    <p><strong>Task:</strong> Test a complete user flow:</p>
+                    <ul>
+                        <li>Create user via API</li>
+                        <li>Login in UI with created user</li>
+                        <li>Update profile in UI</li>
+                        <li>Verify update via API</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section id="quiz" class="module-section">
+                <h2>Knowledge Quiz</h2>
+                
+                <div class="quiz-container">
+                    <div class="quiz-question" data-correct="b">
+                        <h4>Question 1: Which locator type is recommended first?</h4>
+                        <div class="quiz-options">
+                            <label><input type="radio" name="q1" value="a"> XPath</label>
+                            <label><input type="radio" name="q1" value="b"> Role locator</label>
+                            <label><input type="radio" name="q1" value="c"> CSS selector</label>
+                            <label><input type="radio" name="q1" value="d"> ID selector</label>
+                        </div>
+                    </div>
+
+                    <div class="quiz-question" data-correct="a">
+                        <h4>Question 2: What is a BrowserContext?</h4>
+                        <div class="quiz-options">
+                            <label><input type="radio" name="q2" value="a"> Isolated session within a browser</label>
+                            <label><input type="radio" name="q2" value="b"> A single browser tab</label>
+                            <label><input type="radio" name="q2" value="c"> The browser executable</label>
+                            <label><input type="radio" name="q2" value="d"> A test file</label>
+                        </div>
+                    </div>
+
+                    <div class="quiz-question" data-correct="c">
+                        <h4>Question 3: How do you wait for an element to have specific text?</h4>
+                        <div class="quiz-options">
+                            <label><input type="radio" name="q3" value="a"> page.waitForTimeout(3000)</label>
+                            <label><input type="radio" name="q3" value="b"> page.waitForSelector('#element')</label>
+                            <label><input type="radio" name="q3" value="c"> expect(locator).toHaveText('expected')</label>
+                            <label><input type="radio" name="q3" value="d"> page.waitForNavigation()</label>
+                        </div>
+                    </div>
+
+                    <div class="quiz-question" data-correct="d">
+                        <h4>Question 4: What is Page Object Model?</h4>
+                        <div class="quiz-options">
+                            <label><input type="radio" name="q4" value="a"> A type of test</label>
+                            <label><input type="radio" name="q4" value="b"> A configuration file</label>
+                            <label><input type="radio" name="q4" value="c"> A browser type</label>
+                            <label><input type="radio" name="q4" value="d"> Design pattern for maintainable tests</label>
+                        </div>
+                    </div>
+
+                    <div class="quiz-question" data-correct="b">
+                        <h4>Question 5: Can Playwright make HTTP requests without a browser?</h4>
+                        <div class="quiz-options">
+                            <label><input type="radio" name="q5" value="a"> No, it only controls browsers</label>
+                            <label><input type="radio" name="q5" value="b"> Yes, using request.newContext()</label>
+                            <label><input type="radio" name="q5" value="c"> Only with external libraries</label>
+                            <label><input type="radio" name="q5" value="d"> Only in paid version</label>
+                        </div>
+                    </div>
+
+                    <button class="btn-primary" onclick="checkQuiz()">Submit Answers</button>
+                    <div id="quiz-results" class="quiz-results"></div>
+                </div>
+            </section>
+
+            <footer class="content-footer">
+                <p>Playwright Complete Course | <a href="../index.html">Back to Home</a></p>
+                <p>Next: <a href="typescript.html">TypeScript for QA</a></p>
+            </footer>
+        </main>
+    </div>
+
+    <script src="../js/app.js"></script>
+    <script>
+        function checkQuiz() {
+            const questions = document.querySelectorAll('.quiz-question');
+            let correct = 0;
+            questions.forEach((q, index) => {
+                const selected = q.querySelector('input[name="q' + (index + 1) + '"]:checked');
+                const options = q.querySelectorAll('.quiz-options label');
+                options.forEach(opt => opt.classList.remove('correct', 'incorrect'));
+                if (selected) {
+                    const parentLabel = selected.closest('label');
+                    if (selected.value === q.dataset.correct) {
+                        correct++;
+                        parentLabel.classList.add('correct');
+                    } else {
+                        parentLabel.classList.add('incorrect');
+                        q.querySelector('input[value="' + q.dataset.correct + '"]').closest('label').classList.add('correct');
+                    }
+                } else {
+                    q.querySelector('input[value="' + q.dataset.correct + '"]').closest('label').classList.add('correct');
+                }
+            });
+            const percentage = Math.round((correct / questions.length) * 100);
+            document.getElementById('quiz-results').innerHTML = `<h4>Results: ${correct}/${questions.length} (${percentage}%)</h4><p>${percentage >= 80 ? 'Excellent!' : percentage >= 60 ? 'Good job!' : 'Keep learning!'}</p>`;
+            document.getElementById('quiz-results').style.display = 'block';
+        }
+    </script>
+</body>
+</html>

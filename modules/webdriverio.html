@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebdriverIO Complete Guide - Test Automation Framework</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/modules.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="module-page">
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2><i class="fas fa-robot"></i> WebdriverIO</h2>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="#intro" class="nav-item active">Introduction</a>
+                <a href="#setup" class="nav-item">Setup & Config</a>
+                <a href="#selectors" class="nav-item">Selectors</a>
+                <a href="#commands" class="nav-item">Commands</a>
+                <a href="#assertions" class="nav-item">Assertions</a>
+                <a href="#page-objects" class="nav-item">Page Objects</a>
+                <a href="#hooks" class="nav-item">Hooks</a>
+                <a href="#exercises" class="nav-item">Exercises</a>
+                <a href="#quiz" class="nav-item">Quiz</a>
+                <a href="../index.html" class="nav-item" style="margin-top:1rem; border-top:1px solid var(--border-color); padding-top:1rem;">
+                    <i class="fas fa-home"></i> Back to Home
+                </a>
+            </nav>
+        </aside>
+
+        <main class="content">
+            <header class="content-header">
+                <h1><i class="fas fa-robot" style="color:#f59f00"></i> WebdriverIO Complete Guide</h1>
+                <p>Master the WebdriverIO automation framework for browser testing</p>
+            </header>
+
+            <section id="intro" class="module-section">
+                <h2>What is WebdriverIO?</h2>
+                <p>WebdriverIO is a popular test automation framework built on Node.js. It provides a powerful and flexible API for browser and mobile testing, with built-in support for Mocha, Jasmine, and Cucumber test runners.</p>
+
+                <div class="info-box">
+                    <h3>Why WebdriverIO?</h3>
+                    <ul>
+                        <li><strong>Simple Syntax:</strong> Easy to learn and write tests</li>
+                        <li><strong>Built-in Wait Logic:</strong> Automatic waiting for elements</li>
+                        <li><strong>Custom Commands:</strong> Extend functionality easily</li>
+                        <li><strong>Service Integrations:</strong> Appium, Sauce Labs, BrowserStack</li>
+                        <li><strong>Modern Architecture:</strong> Built for modern web apps</li>
+                        <li><strong>TypeScript Support:</strong> Full TypeScript support out of the box</li>
+                    </ul>
+                </div>
+
+                <h3>WebdriverIO vs Playwright</h3>
+                <table class="data-table">
+                    <thead>
+                        <tr><th>Feature</th><th>WebdriverIO</th><th>Playwright</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Architecture</td><td>Selenium WebDriver</td><td>Custom DevTools protocol</td></tr>
+                        <tr><td>Browser Support</td><td>All via WebDriver</td><td>Chromium, Firefox, WebKit</td></tr>
+                        <tr><td>Mobile Testing</td><td>Appium integration</td><td>Limited (emulation only)</td></tr>
+                        <tr><td>Learning Curve</td><td>Moderate</td><td>Easy</td></tr>
+                        <tr><td>Configuration</td><td>More setup required</td><td>Simpler setup</td></tr>
+                        <tr><td>Community</td><td>Large, established</td><td>Growing rapidly</td></tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section id="setup" class="module-section">
+                <h2>Setup & Configuration</h2>
+
+                <h3>Quick Setup</h3>
+                <pre><code># Create project directory
+mkdir my-wdio-tests && cd my-wdio-tests
+
+# Initialize npm project
+npm init -y
+
+# Install WebdriverIO CLI and test runner
+npm install @wdio/cli
+
+# Run setup wizard (creates wdio.conf.js)
+npx wdio config
+
+# Install browsers (if needed)
+npx wdio install chromium
+
+# Run tests
+npx wdio run wdio.conf.js</code></pre>
+
+                <h3>Configuration File (wdio.conf.js)</h3>
+                <pre><code>export const config = {
+    // Spec files pattern
+    specs: ['./tests/**/*.spec.ts'],
+    
+    // Capabilities
+    capabilities: [{
+        maxInstances: 5,
+        browserName: 'chrome',
+        'goog:chromeOptions': {
+            args: ['--headless', '--disable-gpu']
+        }
+    }],
+    
+    // Test runner
+    runner: 'local',
+    
+    // Framework (mocha, jasmine, or cucumber)
+    framework: 'mocha',
+    
+    // Reporter options
+    reporters: ['spec'],
+    
+    // Mocha options
+    mochaOpts: {
+        ui: 'bdd',
+        timeout: 60000
+    },
+    
+    // Base URL for tests
+    baseUrl: 'http://localhost:3000',
+    
+    // Auto-wait settings
+    waitforTimeout: 5000,
+    waitforInterval: 500,
+    
+    // Hooks
+    before: () => { /* Before all tests */ },
+    after: () => { /* After all tests */ },
+    beforeTest: () => { /* Before each test */ },
+    afterTest: () => { /* After each test */ }
+};</code></pre>
+
+                <h3>Project Structure</h3>
+                <pre><code>my-wdio-tests/
+├── wdio.conf.js
+├── package.json
+├── tests/
+│   ├── pageobjects/
+│   │   ├── LoginPage.js
+│   │   └── DashboardPage.js
+│   ├── specs/
+│   │   ├── login.spec.js
+│   │   └── checkout.spec.js
+│   └── helpers/
+│       └── utilities.js
+└── node_modules/</code></pre>
+            </section>
+
+            <section id="selectors" class="module-section">
+                <h2>Selectors</h2>
+                <p>WebdriverIO provides multiple selector strategies to find elements on a page.</p>
+
+                <h3>Selector Priority (Best to Worst)</h3>
+                <pre><code>// 1. Accessibility Selectors (Recommended)
+$('~accessibility-id')           // iOS
+$('android=UiSelector().xxx')    // Android
+
+// 2. CSS Selectors (Preferred for web)
+$('#submit-button')
+$('.btn-primary')
+$('input[type="email"]')
+$('div.container > .card')
+
+// 3. Link Text
+$('=Sign In')                    // Partial: contains
+$('*=ign')                       // Exact: equals
+
+// 4. XPath
+$('//button[contains(text(), "Submit")]')
+$('//div[@id="form"]//input[@name="email"]')
+
+// 5. Chain Selectors
+const form = $('#login-form');
+const emailInput = form.$('input[name="email"]');</code></pre>
+
+                <h3>Working with Elements</h3>
+                <pre><code>// Single element
+const submitBtn = $('#submit-btn');
+await submitBtn.click();
+
+// Multiple elements (returns array)
+const listItems = $$('.item');
+for (const item of listItems) {
+    console.log(await item.getText());
+}
+
+// Element state checks
+await $('#btn').waitForDisplayed({ timeout: 5000 });
+await $('#btn').waitForEnabled({ timeout: 5000 });
+await $('#btn').waitForExist({ timeout: 5000 });
+
+// Get element info
+const text = await $('h1').getText();
+const isVisible = await $('h1').isDisplayed();
+const isEnabled = await $('input').isEnabled();
+const tagName = await $('div').getTagName();
+const attr = await $('a').getAttribute('href');</code></pre>
+            </section>
+
+            <section id="commands" class="module-section">
+                <h2>Browser Commands</h2>
+
+                <h3>Navigation</h3>
+                <pre><code>// Navigate to URL
+await browser.url('https://example.com');
+await browser.url('/login');  // Uses baseUrl from config
+
+// Navigation commands
+await browser.back();
+await browser.forward();
+await browser.refresh();
+
+// Window management
+await browser.newWindow('https://google.com');
+await browser.switchWindow('https://example.com');
+await browser.closeWindow();
+await browser.switchToFrame(0);  // iframe index
+await browser.switchToParentFrame();
+
+// Get URL and title
+const url = await browser.getUrl();
+const title = await browser.getTitle();</code></pre>
+
+                <h3>User Interactions</h3>
+                <pre><code>// Click
+await $('button').click();
+await $('button').click({ x: 10, y: 5 }); // Offset click
+
+// Input operations
+await $('input').setValue('text');
+await $('input').addValue(' more text');
+await $('input').clearValue();
+
+// Special keys
+await browser.keys(['Enter']);
+await browser.keys(['Control', 'a']);  // Ctrl+A
+await browser.keys('Tab');
+
+// Form interactions
+await $('select').selectByVisibleText('Option 1');
+await $('select').selectByIndex(2);
+await $('select').selectByAttribute('value', 'opt1');
+await $('input[type="checkbox"]').setValue(true);
+
+// Mouse actions
+await browser.moveToElement($('div'), 10, 10);
+await browser.buttonDown();
+await browser.buttonUp();</code></pre>
+
+                <h3>Waiting</h3>
+                <pre><code>// Built-in implicit wait (in config)
+await browser.setTimeout({ 'implicit': 5000 });
+
+// Explicit waits
+await $('button').waitForDisplayed({ timeout: 5000, reverse: true });
+await $('button').waitForEnabled({ timeout: 5000 });
+await $('button').waitForExist({ timeout: 5000 });
+
+// Custom wait
+await browser.waitUntil(
+    async () => (await browser.getTitle()) === 'Expected Title',
+    { timeout: 5000, timeoutMsg: 'Title did not match' }
+);
+
+// Pause (avoid in real tests!)
+await browser.pause(1000);</code></pre>
+            </section>
+
+            <section id="assertions" class="module-section">
+                <h2>Assertions</h2>
+
+                <h3>Built-in Assertions (expect-webdriverio)</h3>
+                <pre><code>import expect from 'expect-webdriverio';
+
+// Text assertions
+await expect($('h1')).toHaveText('Welcome');
+await expect($('h1')).not.toHaveText('Error');
+await expect($('h1')).toContainText('Welcome');
+
+// Value assertions
+await expect($('input')).toHaveValue('default');
+await expect($('input')).toHaveValueContaining('part');
+
+// Visibility assertions
+await expect($('button')).toBeDisplayed();
+await expect($('button')).not.toBeDisplayed();
+await expect($('button')).toBeVisible();
+await expect($('button')).toBeHidden();
+
+// Attribute assertions
+await expect($('a')).toHaveAttr('href', 'https://example.com');
+await expect($('input')).toHaveClass('active');
+await expect($('input')).not.toHaveClass('error');
+
+// State assertions
+await expect($('input')).toBeEnabled();
+await expect($('input')).toBeDisabled();
+await expect($('input[type="checkbox"]')).toBeChecked();</code></pre>
+
+                <h3>Custom Assertions</h3>
+                <pre><code>// Add custom assertion
+expect.extend({
+    async toHaveCssProperty(received, property, value) {
+        const actual = await received.getCSSProperty(property);
+        const pass = actual.value === value;
+        return {
+            pass,
+            message: () => pass
+                ? `Expected element not to have CSS ${property}: ${value}`
+                : `Expected element to have CSS ${property}: ${value}, but got: ${actual.value}`
+        };
+    }
+});
+
+// Use in test
+await expect($('#box')).toHaveCssProperty('background-color', 'rgb(255, 0, 0)');</code></pre>
+            </section>
+
+            <section id="page-objects" class="module-section">
+                <h2>Page Objects</h2>
+
+                <h3>Login Page Object Example</h3>
+                <pre><code>// pageobjects/LoginPage.js
+class LoginPage {
+    // Selectors
+    get emailInput() { return $('input[type="email"]'); }
+    get passwordInput() { return $('input[type="password"]'); }
+    get submitButton() { return $('button[type="submit"]'); }
+    get errorMessage() { return $('.alert-danger'); }
+
+    // Methods
+    async open() {
+        await browser.url('/login');
+    }
+
+    async login(email, password) {
+        await this.emailInput.setValue(email);
+        await this.passwordInput.setValue(password);
+        await this.submitButton.click();
+    }
+
+    async getErrorMessage() {
+        await this.errorMessage.waitForDisplayed();
+        return this.errorMessage.getText();
+    }
+}
+
+export default new LoginPage();</code></pre>
+
+                <h3>Using Page Objects in Tests</h3>
+                <pre><code>// specs/login.spec.js
+import LoginPage from '../pageobjects/LoginPage';
+import DashboardPage from '../pageobjects/DashboardPage';
+
+describe('Login Flow', () => {
+    it('should login with valid credentials', async () => {
+        await LoginPage.open();
+        await LoginPage.login('test@example.com', 'password123');
+        
+        // Assert redirect to dashboard
+        await expect(browser).toHaveUrl('**/dashboard');
+    });
+
+    it('should show error with invalid credentials', async () => {
+        await LoginPage.open();
+        await LoginPage.login('invalid@example.com', 'wrongpass');
+        
+        // Assert error message
+        const errorMsg = await LoginPage.getErrorMessage();
+        await expect(errorMsg).toContain('Invalid credentials');
+    });
+});</code></pre>
+            </section>
+
+            <section id="hooks" class="module-section">
+                <h2>Hooks & Lifecycle</h2>
+
+                <h3>Test Lifecycle Hooks</h3>
+                <pre><code>// wdio.conf.js
+export const config = {
+    // Runs before all tests start
+    before: async () => {
+        console.log('Starting test suite...');
+    },
+
+    // Runs after all tests finish
+    after: async () => {
+        console.log('Test suite completed.');
+    },
+
+    // Runs before each test file
+    beforeTest: async (test, context) => {
+        console.log(`Running: ${test.title}`);
+    },
+
+    // Runs after each test
+    afterTest: async (test, context, { error, result, duration, passed, retries }) => {
+        if (error) {
+            console.log(`Test failed: ${test.title}`);
+            // Take screenshot on failure
+            await browser.saveScreenshot(`./error-${test.title}.png`);
+        }
+    },
+
+    // Runs before each hook
+    beforeHook: async () => {
+        // Setup before each test/hook
+    },
+
+    // Runs after each hook
+    afterHook: async () => {
+        // Cleanup after each test/hook
+    }
+};</code></pre>
+
+                <h3>Custom Commands</h3>
+                <pre><code>// wdio.conf.js - Add to config
+before: async () => {
+    // Add custom command to browser object
+    browser.addCommand('waitForElementVisible', async function(selector, timeout = 5000) {
+        const element = await $(selector);
+        await element.waitForDisplayed({ timeout });
+        return element;
+    });
+
+    // Add command to element object
+    addCommand('toBeClickable', async function(timeout = 5000) {
+        await this.waitForDisplayed({ timeout });
+        await this.waitForEnabled({ timeout });
+        return this;
+    });
+};
+
+// Use in test
+await browser.waitForElementVisible('#submit-btn');
+await $('#submit-btn').toBeClickable();</code></pre>
+            </section>
+
+            <section id="exercises" class="module-section">
+                <h2>Hands-On Exercises</h2>
+
+                <div class="exercise">
+                    <h3>Exercise 1: Setup WebdriverIO</h3>
+                    <p><strong>Task:</strong> Set up WebdriverIO from scratch:</p>
+                    <ul>
+                        <li>Initialize npm project</li>
+                        <li>Install WebdriverIO</li>
+                        <li>Run config wizard</li>
+                        <li>Create a basic test that opens a page and checks title</li>
+                    </ul>
+                </div>
+
+                <div class="exercise">
+                    <h3>Exercise 2: Page Object Pattern</h3>
+                    <p><strong>Task:</strong> Refactor a basic test to use Page Objects:</p>
+                    <ul>
+                        <li>Create a LoginPage object</li>
+                        <li>Create a DashboardPage object</li>
+                        <li>Move selectors to page objects</li>
+                        <li>Update tests to use page objects</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section id="quiz" class="module-section">
+                <h2>Knowledge Quiz</h2>
+                
+                <div class="quiz-container">
+                    <div class="quiz-question" data-correct="b">
+                        <h4>Question 1: Which selector is recommended first in WebdriverIO?</h4>
+                        <div class="quiz-options">
+                            <label><input type="radio" name="q1" value="a"> XPath</label>
+                            <label><input type="radio" name="q1" value="b"> CSS Selector</label>
+                            <label><input type="radio" name="q1" value="c"> Link Text</label>
+                            <label><input type="radio" name="q1" value="d"> ID</label>
+                        </div>
+                    </div>
+
+                    <div class="quiz-question" data-correct="c">
+                        <h4>Question 2: What hook runs before each test?</h4>
+                        <div class="quiz-options">
+                            <label><input type="radio" name="q2" value="a"> before</label>
+                            <label><input type="radio" name="q2" value="b"> after</label>
+                            <label><input type="radio" name="q2" value="c"> beforeTest</label>
+                            <label><input type="radio" name="q2" value="d"> afterTest</label>
+                        </div>
+                    </div>
+
+                    <div class="quiz-question" data-correct="a">
+                        <h4>Question 3: How do you select multiple elements?</h4>
+                        <div class="quiz-options">
+                            <label><input type="radio" name="q3" value="a"> $$()</label>
+                            <label><input type="radio" name="q3" value="b"> $()</label>
+                            <label><input type="radio" name="q3" value="c"> $$$()</label>
+                            <label><input type="radio" name="q3" value="d"> element.all()</label>
+                        </div>
+                    </div>
+
+                    <div class="quiz-question" data-correct="d">
+                        <h4>Question 4: What is the purpose of Page Objects?</h4>
+                        <div class="quiz-options">
+                            <label><input type="radio" name="q4" value="a"> To run tests faster</label>
+                            <label><input type="radio" name="q4" value="b"> To take screenshots</label>
+                            <label><input type="radio" name="q4" value="c"> To configure browsers</label>
+                            <label><input type="radio" name="q4" value="d"> To separate page logic from tests</label>
+                        </div>
+                    </div>
+
+                    <div class="quiz-question" data-correct="b">
+                        <h4>Question 5: How do you add a custom command in WebdriverIO?</h4>
+                        <div class="quiz-options">
+                            <label><input type="radio" name="q5" value="a"> browser.createCommand()</label>
+                            <label><input type="radio" name="q5" value="b"> browser.addCommand()</label>
+                            <label><input type="radio" name="q5" value="c"> addCustomCommand()</label>
+                            <label><input type="radio" name="q5" value="d"> extendBrowser()</label>
+                        </div>
+                    </div>
+
+                    <button class="btn-primary" onclick="checkQuiz()">Submit Answers</button>
+                    <div id="quiz-results" class="quiz-results"></div>
+                </div>
+            </section>
+
+            <footer class="content-footer">
+                <p>WebdriverIO Complete Guide | <a href="../index.html">Back to Home</a></p>
+                <p>Next: <a href="automation-advanced.html">Advanced Automation</a></p>
+            </footer>
+        </main>
+    </div>
+
+    <script src="../js/app.js"></script>
+    <script>
+        function checkQuiz() {
+            const questions = document.querySelectorAll('.quiz-question');
+            let correct = 0;
+            questions.forEach((q, index) => {
+                const selected = q.querySelector('input[name="q' + (index + 1) + '"]:checked');
+                const options = q.querySelectorAll('.quiz-options label');
+                options.forEach(opt => opt.classList.remove('correct', 'incorrect'));
+                if (selected) {
+                    const parentLabel = selected.closest('label');
+                    if (selected.value === q.dataset.correct) {
+                        correct++;
+                        parentLabel.classList.add('correct');
+                    } else {
+                        parentLabel.classList.add('incorrect');
+                        q.querySelector('input[value="' + q.dataset.correct + '"]').closest('label').classList.add('correct');
+                    }
+                } else {
+                    q.querySelector('input[value="' + q.dataset.correct + '"]').closest('label').classList.add('correct');
+                }
+            });
+            const percentage = Math.round((correct / questions.length) * 100);
+            document.getElementById('quiz-results').innerHTML = `<h4>Results: ${correct}/${questions.length} (${percentage}%)</h4><p>${percentage >= 80 ? 'Excellent!' : percentage >= 60 ? 'Good job!' : 'Keep learning!'}</p>`;
+            document.getElementById('quiz-results').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
